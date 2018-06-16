@@ -15,41 +15,64 @@ class Sticker extends Component {
     isEditable: false,
   };
 
-  activeSticker = () => {
+  componentDidMount() {
+    document.addEventListener('click', this.deactiveSticker)
+  }
+
+  activeSticker = e => {
+    e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation()
     this.setState({ isEditable: true });
   };
+  
+  deactiveSticker = () => {
+    this.setState({ isEditable: false })
+  }
 
-  componentDidMount() {}
-
-  onResizeSticker = (id, { width, left, diff }, isLeftResize) => {
-    if(diff < 0 && width <=1 ) return
-    // console.log(width, trans);
-    console.log(diff,' ....',width);
-    this.props.dispatch(actionCreator.RESIZE_STICKER({ id, width, left, diff, isLeftResize }));
-    // if (height > 0 && width > 0) {
-    //   const style = { width };
-    // }
+  resizeOrRotateSticker = (id, style, type) => {
+    const isLeftResize = type === 'leftResize';
+    if(type === 'rotate') {
+      const { rads } = style;
+      const transform = `rotate(${-(rads)}rad)`;
+      this.props.dispatch(actionCreator.ROTATE_STICKER({ id, transform }))
+    } else {
+      const { diff, left, width } = style;
+      if(diff < 0 && width <=1 ) return
+      this.props.dispatch(actionCreator.RESIZE_STICKER({ id, width, left, diff, isLeftResize }));
+    }
   };
 
-  resize = ({ mouseX, mouseY, isLeftResize }) => {
+  onRotateSticker = (id, { width, left, diff }, isLeftResize, type) => {
+    if(diff < 0 && width <=1 ) return
+    this.props.dispatch(actionCreator.RESIZE_STICKER({ id, width, left, diff, isLeftResize }));
+  };
+
+  resizeOrRotate = ({ mouseX, mouseY, type }) => {
     const image = this.stickerRef.current;
     const { left, top, right, width } = image.getBoundingClientRect();
-    const diff = isLeftResize ? left - mouseX : mouseX - right;
 
-
-    // console.log("width: ", calLeft, calWidth);
-    
-
-    // const height = mouseY - top;
-    // // const width = w + transform;
-    // console.log("width", width - left + mouseX);
-
-
-    return { width, left, diff };
+    switch(type) {
+      case 'leftResize': {
+        const diff = left - mouseX;
+        return { width, left, diff };
+      }
+      case 'rightResize': {
+        const diff = mouseX - right;
+        return { width, left, diff }
+      }
+      case 'rotate': {
+        const centerX = left + image.offsetWidth / 2;
+        const centerY = top + image.offsetHeight / 2;
+        console.log(left, top);
+        const base = mouseX - centerX;
+        const hypotenuse = mouseY - centerY;
+        return { rads: Math.atan2(base, hypotenuse)};
+      }
+    }
   };
 
-  onResize = (e, isLeftResize) => {
-    this.resize$ = merge(fromEvent(document, 'mousemove'), fromEvent(document, 'touchmove')).pipe(
+  onResizeOrRotate = (e, type) => {
+    this.resizeOrRotate$ = merge(fromEvent(document, 'mousemove'), fromEvent(document, 'touchmove')).pipe(
       takeUntil(
         stopEvents$.pipe(
           tap(() => {
@@ -57,17 +80,17 @@ class Sticker extends Component {
           })
         )
       ),
-      throttleTime(10),
+      throttleTime(100),
       map(e => ({
         mouseX: e.touches ? e.touches[0].pageX : e.pageX,
         mouseY: e.touches ? e.touches[0].pageY : e.pageY,
-        isLeftResize,
+        type,
       })),
-      map(this.resize),
+      map(this.resizeOrRotate),
       distinctUntilChanged()
     );
-    this.resizeS = this.resize$.subscribe(distance =>
-      this.onResizeSticker(this.props.data.id, distance, isLeftResize)
+    this.resizeS = this.resizeOrRotate$.subscribe(distance =>
+      this.resizeOrRotateSticker(this.props.data.id, distance, type)
     );
   };
 
@@ -75,52 +98,25 @@ class Sticker extends Component {
     const { connectDragSource, data: { id, style, text, src } } = this.props;
     const sticker = i => {
       if (!src) {
-        return <div ref={this.stickerRef} contenteditable="true">{text}</div>;
+        return <div key={id} className="editable" ref={this.stickerRef} >{text}</div>;
       }
-      return <img ref={this.stickerRef} src={src} style={style} key={id} />;
+      const imgStyle = {width: "100%"}
+      return <img ref={this.stickerRef} src={src}  key={id} style= {imgStyle}/>;
     };
     return connectDragSource(
       <div
-        className={`text-toolbar ${this.state.isEditable ? 'active' : ''}`}
+        className={`sticker text-toolbar ${this.state.isEditable ? 'active' : ''}`}
         style={style}
         key={id}
-        onClick={this.activeSticker}
+        onClick={e => this.activeSticker(e)}
       >
         {sticker(1)}
-        <div className="h-l" onMouseDown={e => this.onResize(e, true)} />
-        <div className="h-r" onMouseDown={e => this.onResize(e, false)} />
+        <div className="h-l" onMouseDown={e => this.onResizeOrRotate(e, 'leftResize')} />
+        <div className="h-r" onMouseDown={e => this.onResizeOrRotate(e, 'rightResize')} />
+        <div className="handle rotate" onMouseDown={e => this.onResizeOrRotate(e, 'rotate')}></div>
       </div>
     );
   }
-
-  // rotate = ({ mouseX, mouseY }) => {
-  //   const image = this.stickerRef.current;
-  //   const { left, top } = image.getBoundingClientRect();
-  //   const centerX = left + image.offsetWidth / 2;
-  //   const centerY = top + image.offsetHeight / 2;
-  //   const base = mouseX - centerX;
-  //   const hypotenuse = centerY - mouseY;
-  //   return Math.atan2(base, hypotenuse);
-  // };
-
-  // startRotate = e => {
-  //   this.rotate$ = merge(fromEvent(document, 'mousemove'), fromEvent(document, 'touchmove')).pipe(
-  //     takeUntil(stopEvents$.pipe(tap(this.stopRotate))),
-  //     throttleTime(100),
-  //     map(e => ({
-  //       mouseX: e.touches ? e.touches[0].pageX : e.pageX,
-  //       mouseY: e.touches ? e.touches[0].pageY : e.pageY,
-  //     })),
-  //     map(this.rotate),
-  //     distinctUntilChanged()
-  //   );
-  //   this.rotateS = this.rotate$.subscribe(rads => this.onRotateSticker(this.props.data.id, rads));
-  // };
-
-  // onRotateSticker = (id, rads) => {
-  //   const transform = `rotate(${rads}rad)`;
-  //   this.props.dispatch(actionCreator.ROTATE_STICKER({ id, transform }));
-  // };
 }
 
 const dragType = 'Sticker';
