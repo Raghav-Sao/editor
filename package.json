@@ -25,6 +25,7 @@
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive"
   },
   "devDependencies": {
+    "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6"
   }
 }
