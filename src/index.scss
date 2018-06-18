@@ -31,21 +31,21 @@ body {
   border: 2px solid white;
 }
 
-.sticker.active .h-l {
+.sticker .h-l {
   @extend %handle;
   left: -10px;
-  &:before {
+  & > span {
     @extend %handle-before;
+    display: inline-block;
     border-right: none;
     border-radius: 17px 0 0 17px;
-    
   }
 }
 
 .sticker.active .h-r {
   @extend %handle;
   right: -8px;
-  &:before {
+  & >span {
     @extend %handle-before;
     border-left: none;
     border-radius: 0 17px 17px 0;

@@ -12,10 +12,11 @@ export default function reducer(state = initialState, action) {
 			break;
 		}
 		case 'RESIZE_STICKER': {
-			const { id, width, left, diff , isLeftResize} = action.payload;
+			const { id, left, diff , isLeftResize, leftDiff, topDiff} = action.payload;
 			const index = state.stickers.findIndex(s => s.id === id);
 			const st = state.stickers[index].style;
-			let style = { width: width+diff};
+			console.log("width:", st.width, "diff:", diff);
+			let style = { width: st.width + diff, left: st.left - leftDiff, top: st.top + topDiff };
 			if (isLeftResize) {
 				 style = { left: state.stickers[index].style.left - diff, width: state.stickers[index].style.width +diff  };
 			}
@@ -25,7 +26,7 @@ export default function reducer(state = initialState, action) {
 						...state.stickers[index].style,
 						...style,
 					},
-				};
+				};				
 				return {
 					...state,
 					stickers: [

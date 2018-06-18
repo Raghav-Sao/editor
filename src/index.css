@@ -6,18 +6,18 @@ body {
 .text-center {
   text-align: center; }
 
-.sticker.active .h-l, .sticker.active .h-r {
+.sticker .h-l, .sticker.active .h-r {
   cursor: ew-resize;
   height: 100%;
   position: absolute;
   top: 0;
   width: 10px; }
-  .sticker.active .h-l:hover:before, .sticker.active .h-r:hover:before {
+  .sticker .h-l:hover:before, .sticker.active .h-r:hover:before {
     border-color: green; }
-  .sticker.active .h-l:focus, .sticker.active .h-r:focus {
+  .sticker .h-l:focus, .sticker.active .h-r:focus {
     outline: none; }
 
-.sticker.active .h-l:before, .sticker.active .h-r:before {
+.sticker .h-l > span, .sticker.active .h-r > span {
   background: #000;
   content: '';
   right: 0;
@@ -27,15 +27,16 @@ body {
   height: 12px;
   border: 2px solid white; }
 
-.sticker.active .h-l {
+.sticker .h-l {
   left: -10px; }
-  .sticker.active .h-l:before {
+  .sticker .h-l > span {
+    display: inline-block;
     border-right: none;
     border-radius: 17px 0 0 17px; }
 
 .sticker.active .h-r {
   right: -8px; }
-  .sticker.active .h-r:before {
+  .sticker.active .h-r > span {
     border-left: none;
     border-radius: 0 17px 17px 0; }
 

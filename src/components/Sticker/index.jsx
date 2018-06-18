@@ -33,12 +33,13 @@ class Sticker extends Component {
     const isLeftResize = type === 'leftResize';
     if(type === 'rotate') {
       const { rads } = style;
-      const transform = `rotate(${-(rads)}rad)`;
+      const transform = `rotate(45deg)`;
+      // const transform = `rotate(${-(rads)}rad)`;
       this.props.dispatch(actionCreator.ROTATE_STICKER({ id, transform }))
     } else {
-      const { diff, left, width } = style;
+      const { diff, left, width, leftDiff, topDiff } = style;
       if(diff < 0 && width <=1 ) return
-      this.props.dispatch(actionCreator.RESIZE_STICKER({ id, width, left, diff, isLeftResize }));
+      this.props.dispatch(actionCreator.RESIZE_STICKER({ id, width, left, diff, isLeftResize, leftDiff, topDiff }));
     }
   };
 
@@ -55,10 +56,29 @@ class Sticker extends Component {
       case 'leftResize': {
         const diff = left - mouseX;
         return { width, left, diff };
+        break;
+      
       }
       case 'rightResize': {
-        const diff = mouseX - right;
-        return { width, left, diff }
+        const { left: l, top: t} = document.querySelector('#handle-right').getBoundingClientRect();
+        debugger;
+       const x = (mouseX - l)*(mouseX - l);
+       const y = 0;//(mouseY - t)*(mouseY - t);
+       let diff = Math.sqrt(x+y);
+       if(mouseX - l) {
+        diff = diff * -1;
+       }
+       if(mouseY - t) {
+        diff = diff * -1;
+       }
+       diff = (mouseX - l) > -1 ? diff : - diff;
+       console.log(diff, mouseX, l)
+        // const diff = mouseX - right;
+        // const diff = 10;
+        const leftDiff = (diff/2) - (0.70710678118*diff/2);
+        const topDiff = 0.70710678118 * diff / 2;
+        return { width, left, diff, leftDiff, topDiff }
+        break;
       }
       case 'rotate': {
         const centerX = left + image.offsetWidth / 2;
@@ -67,6 +87,8 @@ class Sticker extends Component {
         const base = mouseX - centerX;
         const hypotenuse = mouseY - centerY;
         return { rads: Math.atan2(base, hypotenuse)};
+        break;
+      
       }
     }
   };
@@ -103,7 +125,7 @@ class Sticker extends Component {
       const imgStyle = {width: "100%"}
       return <img ref={this.stickerRef} src={src}  key={id} style= {imgStyle}/>;
     };
-    return connectDragSource(
+    return (
       <div
         className={`sticker text-toolbar ${this.state.isEditable ? 'active' : ''}`}
         style={style}
@@ -112,7 +134,7 @@ class Sticker extends Component {
       >
         {sticker(1)}
         <div className="h-l" onMouseDown={e => this.onResizeOrRotate(e, 'leftResize')} />
-        <div className="h-r" onMouseDown={e => this.onResizeOrRotate(e, 'rightResize')} />
+        <div className="h-r" onMouseDown={e => this.onResizeOrRotate(e, 'rightResize')} ><span id="handle-right"></span></div>
         <div className="handle rotate" onMouseDown={e => this.onResizeOrRotate(e, 'rotate')}></div>
       </div>
     );
