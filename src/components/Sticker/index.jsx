@@ -33,8 +33,8 @@ class Sticker extends Component {
     const isLeftResize = type === 'leftResize';
     if(type === 'rotate') {
       const { rads } = style;
-      const transform = `rotate(45deg)`;
-      // const transform = `rotate(${-(rads)}rad)`;
+      // const transform = `rotate(45deg)`;
+      const transform = `rotate(${-(rads)}rad)`;
       this.props.dispatch(actionCreator.ROTATE_STICKER({ id, transform }))
     } else {
       const { diff, left, width, leftDiff, topDiff } = style;
@@ -75,8 +75,9 @@ class Sticker extends Component {
        console.log(diff, mouseX, l)
         // const diff = mouseX - right;
         // const diff = 10;
-        const leftDiff = (diff/2) - (0.70710678118*diff/2);
-        const topDiff = 0.70710678118 * diff / 2;
+        const rad = parseFloat(this.props.data.style.transform.split("(")[1].split("rad")[0]);
+        const leftDiff = (diff/2) - (Math.cos(rad)*diff/2);
+        const topDiff = Math.sin(rad) * diff / 2;
         return { width, left, diff, leftDiff, topDiff }
         break;
       }
