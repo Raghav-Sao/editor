@@ -53,29 +53,30 @@ class Sticker extends Component {
     const { left, top, right, width } = image.getBoundingClientRect();
 
     switch(type) {
-      case 'leftResize': {
-        const diff = left - mouseX;
-        return { width, left, diff };
-        break;
+      // case 'leftResize': {
+      //   const diff = left - mouseX;
+      //   return { width, left, diff };
+      //   break;
       
-      }
+      // }
       case 'rightResize': {
         const { left: l, top: t} = document.querySelector('#handle-right').getBoundingClientRect();
         debugger;
-       const x = (mouseX - l)*(mouseX - l);
+        const rad = parseFloat(this.props.data.style.transform.split("(")[1].split("rad")[0]);
+       const x = (rad < 4.71239 && rad > 1.5708) ? -1*(mouseX - l)*(mouseX - l) :(mouseX - l)*(mouseX - l) ;
        const y = 0;//(mouseY - t)*(mouseY - t);
-       let diff = Math.sqrt(x+y);
-       if(mouseX - l) {
-        diff = diff * -1;
-       }
-       if(mouseY - t) {
-        diff = diff * -1;
-       }
+       let diff = x+y > -1 ? Math.sqrt(x+y) : -1 * Math.sqrt(-1*(x+y));
+       // if(mouseX - l) {
+       //  diff = diff * -1;
+       // }
+       // if(mouseY - t) {
+       //  diff = diff * -1;
+       // }
        diff = (mouseX - l) > -1 ? diff : - diff;
        console.log(diff, mouseX, l)
+       if(diff == NaN) diff = 0;
         // const diff = mouseX - right;
         // const diff = 10;
-        const rad = parseFloat(this.props.data.style.transform.split("(")[1].split("rad")[0]);
         const leftDiff = (diff/2) - (Math.cos(rad)*diff/2);
         const topDiff = Math.sin(rad) * diff / 2;
         return { width, left, diff, leftDiff, topDiff }
