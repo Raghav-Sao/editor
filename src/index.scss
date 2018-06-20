@@ -14,7 +14,9 @@ body {
   top: 0;
   width: 10px;
   &:hover {
-    &:before { border-color: green;}
+    &:before {
+      border-color: green;
+    }
   }
   &:focus {
     outline: none;
@@ -45,7 +47,7 @@ body {
 .sticker.active .h-r {
   @extend %handle;
   right: -8px;
-  & >span {
+  & > span {
     @extend %handle-before;
     border-left: none;
     border-radius: 0 17px 17px 0;

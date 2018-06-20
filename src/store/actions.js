@@ -1,1 +1,1 @@
-export * from './imageEditor/actions.js';
+export * from './imageEditor/actions.js'

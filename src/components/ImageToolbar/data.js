@@ -28,4 +28,4 @@ export const imageStickerData = [
     },
     type: 'img',
   },
-];
+]
