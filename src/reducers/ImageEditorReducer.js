@@ -30,6 +30,7 @@ export default function reducer(state = initialState, action) {
 					...style,
 				},
 			}
+			state.selectedSticker = sticker
 			return {
 				...state,
 				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],
@@ -39,6 +40,7 @@ export default function reducer(state = initialState, action) {
 			const textStyle = action.payload
 			const id = Date.now()
 			const sticker = { ...textStyle, id }
+			state.selectedSticker = sticker
 			return {
 				...state,
 				stickers: [...state.stickers, sticker],
@@ -48,16 +50,17 @@ export default function reducer(state = initialState, action) {
 		case 'MOVE_STICKER': {
 			const { id: id1, style: s } = action.payload
 			const index = state.stickers.findIndex(data => data.id === id1)
-			const sticker1 = {
+			const sticker = {
 				...state.stickers[index],
 				style: {
 					...state.stickers[index].style,
 					...s,
 				},
 			}
+			state.selectedSticker = sticker
 			return {
 				...state,
-				stickers: [...state.stickers.slice(0, index), sticker1, ...state.stickers.slice(index + 1)],
+				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],
 			}
 			break
 		}
@@ -71,6 +74,7 @@ export default function reducer(state = initialState, action) {
 					transform,
 				},
 			}
+			state.selectedSticker = sticker
 			return {
 				...state,
 				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],

@@ -55,15 +55,17 @@ class Sticker extends Component {
     const { left, top, right, width } = image.getBoundingClientRect()
 
     switch (type) {
-      // case 'leftResize': {
-      //   const diff = left - mouseX;
-      //   return { width, left, diff };
-      //   break;
-
-      // }
+      case 'leftResize': {
+        const diff = left - mouseX
+        return { width, left, diff }
+        break
+      }
       case 'rightResize': {
-        const { left: l, top: t } = document.querySelector('#handle-right').getBoundingClientRect()
-        const rad = parseFloat(this.props.data.style.transform.split('(')[1].split('rad')[0])
+        const { data: { style: { transform } } } = this.props
+        const { left: l, top: t } = document
+          .querySelector('.sticker.active #handle-right')
+          .getBoundingClientRect()
+        const rad = transform ? parseFloat(transform.split('(')[1].split('rad')[0]) : 0
         const y = 0 //(mouseY - t)*(mouseY - t); think later
         let x = (mouseX - l) * (mouseX - l)
         if (rad < 4.71239 && rad > 1.5708) {

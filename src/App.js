@@ -5,6 +5,7 @@ import './App.css'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import CardEditorSpace from './components/CardEditorSpace'
+import TextEditorTool from 'components/TextEditorTool'
 import Style from './index.css'
 // import Alert from './components/Alert';
 // import { Button } from 'reactstrap';
@@ -24,6 +25,7 @@ class App extends Component {
       <div className="row">
         <Header className="col-12" />
         <Sidebar className="col-3" />
+        <TextEditorTool className="text-editor-tool col-9" />
         <div className="col-9 text-center">
           <CardEditorSpace />
         </div>
