@@ -5,6 +5,18 @@ const initialState = {
 }
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
+		case 'ADD_TEXT_STICKER': {
+			const textStyle = action.payload
+			const id = Date.now()
+			const sticker = { ...textStyle, id }
+			state.activeSticker = sticker
+			return {
+				...state,
+				stickers: [...state.stickers, sticker],
+			}
+			break
+		}
+
 		case 'DISMISS_ALERT': {
 			return {
 				...state,
@@ -12,6 +24,19 @@ export default function reducer(state = initialState, action) {
 			}
 			break
 		}
+
+		case 'DELETE_STICKER': {
+			const { id } = state.activeSticker
+			const stickers = state.stickers.filter(s => s.id !== id)
+			const activeSticker = {}
+			console.log(initialState)
+			return {
+				...state,
+				stickers,
+				activeSticker,
+			}
+		}
+
 		case 'RESIZE_STICKER': {
 			const { id, left, diff, isLeftResize, leftDiff, topDiff } = action.payload
 			const index = state.stickers.findIndex(s => s.id === id)
@@ -37,17 +62,7 @@ export default function reducer(state = initialState, action) {
 				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],
 			}
 		}
-		case 'ADD_TEXT_STICKER': {
-			const textStyle = action.payload
-			const id = Date.now()
-			const sticker = { ...textStyle, id }
-			state.activeSticker = sticker
-			return {
-				...state,
-				stickers: [...state.stickers, sticker],
-			}
-			break
-		}
+
 		case 'MOVE_STICKER': {
 			const { id: id1, style: s } = action.payload
 			const index = state.stickers.findIndex(data => data.id === id1)
@@ -65,6 +80,7 @@ export default function reducer(state = initialState, action) {
 			}
 			break
 		}
+
 		case 'ROTATE_STICKER': {
 			const { id, transform } = action.payload
 			const index = state.stickers.findIndex(s => s.id === id)
@@ -82,6 +98,7 @@ export default function reducer(state = initialState, action) {
 			}
 			break
 		}
+
 		case 'CHANGE_TEXT_STICKER_STYLE': {
 			debugger
 			const style = action.payload.style
@@ -97,12 +114,14 @@ export default function reducer(state = initialState, action) {
 				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],
 			}
 		}
+
 		case 'ADD_IMAGE_STICKER': {
 			return {
 				...state,
 			}
 			break
 		}
+
 		case 'SET_ACTIVE_STICKER': {
 			const { id } = action.payload
 			if (id === null) {
@@ -118,6 +137,7 @@ export default function reducer(state = initialState, action) {
 			}
 			break
 		}
+
 		default:
 			return state
 	}

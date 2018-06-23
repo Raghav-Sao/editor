@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { actionCreator } from '../../store/actionCreator'
 
+import { actionCreator } from '../../store/actionCreator'
 import Style from './Style.css'
 
 class TextEditorTool extends Component {
@@ -10,14 +10,17 @@ class TextEditorTool extends Component {
   }
 
   onTextStyleChange = e => {
-    debugger
-    console.log({ [e.currentTarget.name]: e.currentTarget.value })
     this.props.dispatch(
       actionCreator.CHANGE_TEXT_STICKER_STYLE({
         style: { [e.currentTarget.name]: e.currentTarget.value },
       })
     )
   }
+
+  deleteSticker = id => {
+    this.props.dispatch(actionCreator.DELETE_STICKER({ id }))
+  }
+
   preventPropagation = e => {
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
@@ -25,7 +28,6 @@ class TextEditorTool extends Component {
 
   render() {
     const { activeSticker: { style: activeStyle = {}, type: activeType } } = this.props
-    debugger
 
     return (
       <div
@@ -94,7 +96,7 @@ class TextEditorTool extends Component {
           </label>
         </div>
         <div className={`inline common__editor__tool ${activeType !== undefined ? 'active' : ''}`}>
-          <label class="btn">
+          <label class="btn" onClick={this.deleteSticker}>
             <i className="fa fa-trash" />
           </label>
         </div>

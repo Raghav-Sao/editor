@@ -141,7 +141,9 @@ class Sticker extends Component {
         onClick={e => this.activeSticker(e, id)}
       >
         {sticker(1)}
-        <div className="h-l" onMouseDown={e => this.onResizeOrRotate(e, 'leftResize')} />
+        <div className="h-l" onMouseDown={e => this.onResizeOrRotate(e, 'leftResize')}>
+          <span id="handle-left" />
+        </div>
         <div className="h-r" onMouseDown={e => this.onResizeOrRotate(e, 'rightResize')}>
           <span id="handle-right" />
         </div>
