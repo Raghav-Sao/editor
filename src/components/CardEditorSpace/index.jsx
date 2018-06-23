@@ -17,7 +17,7 @@ class CardEditorSpace extends Component {
       position: 'absolute',
       width: 250,
     }
-    this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ text, src, style }))
+    this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ text, src, style, type }))
   }
   onMoveSticker = (id, position) => {
     const rootRef = findDOMNode(this)

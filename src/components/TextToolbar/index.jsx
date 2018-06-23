@@ -6,7 +6,7 @@ import './Style.css'
 
 class TextToolbar extends Component {
   render() {
-    const { connectDragSource, data: { id, style, text } } = this.props
+    const { connectDragSource, data: { id, style, text, type } } = this.props
 
     return connectDragSource(
       <div type="text" class="text-toolbar" style={style} key={id}>

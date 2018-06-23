@@ -23,11 +23,11 @@ class TextEditorTool extends Component {
   }
 
   render() {
-    const { activeSticker: { style: activeStyle = {}, id: activeId } } = this.props
+    const { activeSticker: { style: activeStyle = {}, type: activeType } } = this.props
     debugger
 
     return (
-      <div className={`col-9 text__editor__tool ${activeId === undefined ? '' : 'active'}`}>
+      <div className={`col-9 text__editor__tool ${activeType === 'text' ? 'active': ''}`}>
         <input
           id="left"
           checked={activeStyle.fontWeight === 'bold'}
