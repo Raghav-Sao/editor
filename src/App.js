@@ -22,7 +22,7 @@ class App extends Component {
   render() {
     const { showAlert, dispatch } = this.props
     return (
-      <div className="row">
+      <div className="row h-100">
         <Header className="col-12" />
         <Sidebar className="col-3" />
         <TextEditorTool className="text-editor-tool col-9" />

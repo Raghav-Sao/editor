@@ -1,13 +1,43 @@
-.btn {
-  width: 200px;
-  height: 30px;
-}
-.text__editor__tool {
-  transform: translateY(0px);
+.sticker__editor__tool {
+  position: absolute;
+  transform: translateY(-100px);
   transition: all 0.3s;
   right: 0;
-  position: absolute;
+  &.active {
+    transform: translateY(50px);
+  }
+  & label {
+    display: inline-grid;
+    align-content: center;
+    justify-content: space-evenly;
+    background: #fff;
+    margin: 5px 2px;
+    border-radius: 5px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    &:hover {
+      background: #ccc;
+    }
+  }
 }
-.text__editor__tool.active {
-  transform: translateY(50px);
+.text__editor__tool {
+  display: inline-block;
+  // grid-template-columns: auto auto auto auto auto;
+  // justify-content: space-evenly;
+  // align-content: center;
+  & input[type='checkbox']:checked + label,
+  input[type='radio']:checked + label {
+    background: #ccc;
+  }
+  & input {
+    display: none;
+  }
+  transform: translateY(-100px);
+  &.active {
+    transform: translateY(0px);
+  }
+}
+.common__editor__tool {
+  display: inline-block;
 }
