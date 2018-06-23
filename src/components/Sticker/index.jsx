@@ -49,7 +49,7 @@ class Sticker extends Component {
 
   resizeOrRotate = ({ mouseX, mouseY, type }) => {
     const image = this.stickerRef.current
-    const { left, top, right, width } = image.getBoundingClientRect()
+    const { left, top, right, width, height } = image.getBoundingClientRect()
 
     switch (type) {
       case 'leftResize': {
@@ -83,8 +83,8 @@ class Sticker extends Component {
         break
       }
       case 'rotate': {
-        const centerX = left + image.offsetWidth / 2
-        const centerY = top + image.offsetHeight / 2
+        const centerX = left + width / 2
+        const centerY = top + height / 2
         console.log(left, top)
         const base = mouseX - centerX
         const hypotenuse = mouseY - centerY
