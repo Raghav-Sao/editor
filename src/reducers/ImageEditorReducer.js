@@ -1,6 +1,7 @@
+import * as type from 'store/imageEditor/actions'
 const initialState = {
 	stickers: [],
-	selectedSticker: null,
+	activeSticker: {},
 }
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
@@ -30,7 +31,7 @@ export default function reducer(state = initialState, action) {
 					...style,
 				},
 			}
-			state.selectedSticker = sticker
+			state.activeSticker = sticker
 			return {
 				...state,
 				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],
@@ -40,7 +41,7 @@ export default function reducer(state = initialState, action) {
 			const textStyle = action.payload
 			const id = Date.now()
 			const sticker = { ...textStyle, id }
-			state.selectedSticker = sticker
+			state.activeSticker = sticker
 			return {
 				...state,
 				stickers: [...state.stickers, sticker],
@@ -57,7 +58,7 @@ export default function reducer(state = initialState, action) {
 					...s,
 				},
 			}
-			state.selectedSticker = sticker
+			state.activeSticker = sticker
 			return {
 				...state,
 				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],
@@ -74,16 +75,46 @@ export default function reducer(state = initialState, action) {
 					transform,
 				},
 			}
-			state.selectedSticker = sticker
+			state.activeSticker = sticker
 			return {
 				...state,
 				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],
 			}
 			break
 		}
+		case 'CHANGE_TEXT_STICKER_STYLE': {
+			debugger
+			const style = action.payload.style
+			const sticker = {
+				...state.activeSticker,
+				style: { ...state.activeSticker.style, ...style },
+			}
+			const index = state.stickers.findIndex(s => s.id === sticker.id)
+
+			state.activeSticker = sticker
+			return {
+				...state,
+				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],
+			}
+		}
 		case 'ADD_IMAGE_STICKER': {
 			return {
 				...state,
+			}
+			break
+		}
+		case 'SET_ACTIVE_STICKER': {
+			const { id } = action.payload
+			if (id === null) {
+				return {
+					...state,
+					activeSticker: {},
+				}
+			}
+			const index = state.stickers.findIndex(s => s.id === id)
+			return {
+				...state,
+				activeSticker: state.stickers[index],
 			}
 			break
 		}

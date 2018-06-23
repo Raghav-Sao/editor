@@ -2,6 +2,12 @@
   width: 200px;
   height: 30px;
 }
-.text__editor__tool input {
-  // display: none;
+.text__editor__tool {
+  transform: translateY(0px);
+  transition: all 0.3s;
+  right: 0;
+  position: absolute;
+}
+.text__editor__tool.active {
+  transform: translateY(50px);
 }

@@ -26,7 +26,7 @@ class App extends Component {
         <Header className="col-12" />
         <Sidebar className="col-3" />
         <TextEditorTool className="text-editor-tool col-9" />
-        <div className="col-9 text-center">
+        <div className="col-9 text-center m-t-60">
           <CardEditorSpace />
         </div>
       </div>

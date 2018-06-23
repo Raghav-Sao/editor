@@ -5,57 +5,56 @@ import { actionCreator } from '../../store/actionCreator'
 import Style from './Style.css'
 
 class TextEditorTool extends Component {
-  state = { textAlign: 'right' }
   componentDidMount() {
     document.addEventListener('click', this.deactiveSticker)
   }
 
-  activeSticker = e => {
+  onTextStyleChange = e => {
+    debugger
+    console.log({ [e.currentTarget.name]: e.currentTarget.value })
+    this.props.dispatch(
+      actionCreator.CHANGE_TEXT_STICKER_STYLE({
+        style: { [e.currentTarget.name]: e.currentTarget.value },
+      })
+    )
+
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
-    this.setState({ isEditable: true })
-  }
-
-  deactiveSticker = () => {
-    this.setState({ isEditable: false })
-  }
-
-  onTextStyleChange = e => {
-    this.setState({ [e.currentTarget.name]: e.currentTarget.value }, () => console.log(this.state))
   }
 
   render() {
-    // const { connectDragSource, data: { id, style, text, src } } = this.props
+    const { activeSticker: { style: activeStyle = {}, id: activeId } } = this.props
+    debugger
 
     return (
-      <div className="text__editor__tool">
+      <div className={`col-9 text__editor__tool ${activeId === undefined ? '' : 'active'}`}>
         <input
           id="left"
-          checked={this.state.fontWeight === 'bold'}
+          checked={activeStyle.fontWeight === 'bold'}
           type="checkbox"
           name="fontWeight"
-          value={this.state.fontWeight === 'bold' ? 'normal' : 'bold'}
+          value={activeStyle.fontWeight === 'bold' ? 'normal' : 'bold'}
           onChange={e => this.onTextStyleChange(e)}
         />
         <label class="btn" for="left">
-          <i className="fa fa-align-left" />
+          <i className="fa fa-bold" />
         </label>
 
         <input
           id="middle"
-          checked={this.state.fontStyle === 'italic'}
+          checked={activeStyle.fontStyle === 'italic'}
           type="checkbox"
           name="fontStyle"
-          value={this.state.fontStyle === 'italic' ? 'normal' : 'italic'}
+          value={activeStyle.fontStyle === 'italic' ? 'normal' : 'italic'}
           onChange={e => this.onTextStyleChange(e)}
         />
         <label class="btn" for="middle">
-          <i className="fa fa-align-center" />
+          <i className="fa fa-italic" />
         </label>
 
         <input
           id="left"
-          checked={this.state.textAlign === 'left'}
+          checked={activeStyle.textAlign === 'left'}
           type="radio"
           name="textAlign"
           value="left"
@@ -67,7 +66,7 @@ class TextEditorTool extends Component {
 
         <input
           id="middle"
-          checked={this.state.textAlign === 'center'}
+          checked={activeStyle.textAlign === 'center'}
           type="radio"
           name="textAlign"
           value="center"
@@ -79,7 +78,7 @@ class TextEditorTool extends Component {
 
         <input
           id="right"
-          checked={this.state.textAlign === 'right'}
+          checked={activeStyle.textAlign === 'right'}
           type="radio"
           name="textAlign"
           value="right"
@@ -94,6 +93,6 @@ class TextEditorTool extends Component {
 }
 
 const mapStateToProps = state => ({
-  stickers: state.imageEditor.sticker,
+  activeSticker: state.imageEditor.activeSticker,
 })
 export default connect(mapStateToProps)(TextEditorTool)

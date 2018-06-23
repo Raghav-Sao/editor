@@ -11,22 +11,19 @@ const stopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, '
 
 class Sticker extends Component {
   stickerRef = createRef()
-  state = {
-    isEditable: false,
-  }
 
   componentDidMount() {
     document.addEventListener('click', this.deactiveSticker)
   }
 
-  activeSticker = e => {
+  activeSticker = (e, id) => {
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
-    this.setState({ isEditable: true })
+    this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id }))
   }
 
   deactiveSticker = () => {
-    this.setState({ isEditable: false })
+    this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id: null }))
   }
 
   resizeOrRotateSticker = (id, style, type) => {
@@ -124,7 +121,7 @@ class Sticker extends Component {
   }
 
   render() {
-    const { connectDragSource, data: { id, style, text, src } } = this.props
+    const { connectDragSource, data: { id, style, text, src }, activeSticker } = this.props
     const sticker = i => {
       if (!src) {
         return (
@@ -138,10 +135,10 @@ class Sticker extends Component {
     }
     return (
       <div
-        className={`sticker text-toolbar ${this.state.isEditable ? 'active' : ''}`}
+        className={`sticker text-toolbar ${activeSticker.id === id ? 'active' : ''}`}
         style={style}
         key={id}
-        onClick={e => this.activeSticker(e)}
+        onClick={e => this.activeSticker(e, id)}
       >
         {sticker(1)}
         <div className="h-l" onMouseDown={e => this.onResizeOrRotate(e, 'leftResize')} />
@@ -167,5 +164,6 @@ const dragCollect = (connect, monitor) => ({
 
 const mapStateToProps = state => ({
   stickers: state.imageEditor.sticker,
+  activeSticker: state.imageEditor.activeSticker,
 })
 export default connect(mapStateToProps)(DragSource(dragType, dragSpec, dragCollect)(Sticker))
