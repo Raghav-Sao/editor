@@ -2,4 +2,9 @@
   background: #555;
   color: #fff;
   text-align: center;
+  height: calc(100% - 50px);
+  overflow: hidden;
+  &:hover {
+  	overflow: auto;
+  }
 }

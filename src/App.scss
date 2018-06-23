@@ -1,10 +1,16 @@
 * {
   box-sizing: border-box;
 }
-.row::after {
+#root {
+  height: 100%;
+}
+.row {
+  height: 100%;
+  &::after {
   content: '';
   clear: both;
   display: table;
+}
 }
 [class*='col-'] {
   float: left;
