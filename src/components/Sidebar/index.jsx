@@ -13,11 +13,11 @@ class SideBar extends Component {
     console.log(e.currentTarget)
   }
   render() {
-    const textStickers = textStickerData.map(sticker => (
-      <TextToolbar data={sticker} onClick={e => this.onTextToolbarClick(e)} />
+    const textStickers = textStickerData.map((sticker, index) => (
+      <TextToolbar data={sticker} key={index} onClick={e => this.onTextToolbarClick(e)} />
     ))
-    const imageStickers = imageStickerData.map(sticker => (
-      <ImageToolbar data={sticker} onClick={e => this.onTextToolbarClick(e)} />
+    const imageStickers = imageStickerData.map((sticker, index) => (
+      <ImageToolbar data={sticker} key={index} onClick={e => this.onTextToolbarClick(e)} />
     ))
     return (
       <div className="col-3 sidebar">

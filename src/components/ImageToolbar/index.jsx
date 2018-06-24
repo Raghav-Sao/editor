@@ -11,6 +11,7 @@ class ImageToolbar extends Component {
       if (true) {
         return (
           <img
+            alt={data.type}
             className="img-toolbar"
             onClick={onClick}
             key={data.id}

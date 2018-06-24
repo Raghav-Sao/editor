@@ -27,8 +27,8 @@ class CardEditorSpace extends Component {
   }
   render() {
     const { connectDropTarget, textStickers } = this.props
-    const addedSticker = textStickers.map(sticker => {
-      return <Sticker data={sticker} onClick={e => this.onTextToolbarClick(e)} />
+    const addedSticker = textStickers.map((sticker, index) => {
+      return <Sticker data={sticker} key={index} onClick={e => this.onTextToolbarClick(e)} />
     })
 
     return connectDropTarget(

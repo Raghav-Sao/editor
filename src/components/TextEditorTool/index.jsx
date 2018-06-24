@@ -43,7 +43,7 @@ class TextEditorTool extends Component {
             value={activeStyle.fontWeight === 'bold' ? 'normal' : 'bold'}
             onChange={e => this.onTextStyleChange(e)}
           />
-          <label for="text__bold">
+          <label htmlFor="text__bold">
             <i className="fa fa-bold" />
           </label>
 
@@ -55,7 +55,7 @@ class TextEditorTool extends Component {
             value={activeStyle.fontStyle === 'italic' ? 'normal' : 'italic'}
             onChange={e => this.onTextStyleChange(e)}
           />
-          <label for="text__italic">
+          <label htmlFor="text__italic">
             <i className="fa fa-italic" />
           </label>
 
@@ -67,7 +67,7 @@ class TextEditorTool extends Component {
             value="left"
             onChange={e => this.onTextStyleChange(e)}
           />
-          <label for="text__left">
+          <label htmlFor="text__left">
             <i className="fa fa-align-left" />
           </label>
 
@@ -79,7 +79,7 @@ class TextEditorTool extends Component {
             value="center"
             onChange={e => this.onTextStyleChange(e)}
           />
-          <label for="text__middle">
+          <label htmlFor="text__middle">
             <i className="fa fa-align-center" />
           </label>
 
@@ -91,12 +91,12 @@ class TextEditorTool extends Component {
             value="right"
             onChange={e => this.onTextStyleChange(e)}
           />
-          <label for="text__right">
+          <label htmlFor="text__right">
             <i className="fa fa-align-right" />
           </label>
         </div>
         <div className={`inline common__editor__tool ${activeType !== undefined ? 'active' : ''}`}>
-          <label class="btn" onClick={this.deleteSticker}>
+          <label className="btn" onClick={this.deleteSticker}>
             <i className="fa fa-trash" />
           </label>
         </div>

@@ -9,7 +9,7 @@ class TextToolbar extends Component {
     const { connectDragSource, data: { id, style, text, type } } = this.props
 
     return connectDragSource(
-      <div type="text" class="text-toolbar" style={style} key={id}>
+      <div type="text" className="text-toolbar" style={style} key={id}>
         {text}
       </div>
     )

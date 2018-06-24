@@ -4,6 +4,7 @@ export const textStickerData = [
     text: 'Sample Big-Text',
     style: {
       fontSize: '25px',
+      lineHeight: 1.9,
     },
     type: 'text',
   },
@@ -12,6 +13,7 @@ export const textStickerData = [
     text: 'Sample Medium-Text',
     style: {
       fontSize: '20px',
+      lineHeight: 1.4,
     },
     type: 'text',
   },
@@ -20,6 +22,7 @@ export const textStickerData = [
     text: 'Sample Small-Text',
     style: {
       fontSize: '15px',
+      lineHeight: 1,
     },
     type: 'text',
   },

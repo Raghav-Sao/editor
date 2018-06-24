@@ -11,12 +11,18 @@ const stopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, '
 
 class Sticker extends Component {
   stickerRef = createRef()
+  state = {
+    isEditable: false,
+  }
 
   componentDidMount() {
     document.addEventListener('click', this.deactiveSticker)
   }
 
   activeSticker = (e, id) => {
+    this.setState({
+      isEditable: true,
+    })
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
     this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id }))
@@ -125,7 +131,13 @@ class Sticker extends Component {
     const sticker = i => {
       if (!src) {
         return (
-          <div key={id} className="editable" ref={this.stickerRef}>
+          <div
+            key={id}
+            className={` ${this.state.isEditable ? 'editable' : ''}`}
+            ref={this.stickerRef}
+            contentEditable={this.state.isEditable}
+            suppressContentEditableWarning
+          >
             {text}
           </div>
         )
