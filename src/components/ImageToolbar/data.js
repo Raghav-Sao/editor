@@ -1,8 +1,7 @@
 export const imageStickerData = [
   {
     id: 1,
-    src:
-      'http://www.couponsaregreat.net/wp-content/uploads/2012/07/treat-two-hearts-wedding-card.png',
+    src: require('./images/1.png'),
     style: {
       width: '200px',
       height: 'auto',

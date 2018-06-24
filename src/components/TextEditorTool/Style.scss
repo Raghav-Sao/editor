@@ -9,6 +9,9 @@
   &.active {
     transform: translateY(0);
   }
+  & input {
+    display: none;
+  }
   & label {
     display: inline-grid;
     align-content: center;
@@ -33,14 +36,14 @@
   input[type='radio']:checked + label {
     background: #ccc;
   }
-  & input {
-    display: none;
-  }
   transform: translateY(-100px);
   &.active {
     transform: translateY(0px);
   }
 }
 .common__editor__tool {
+  display: inline-block;
+}
+.sticker__editor__tool__image {
   display: inline-block;
 }

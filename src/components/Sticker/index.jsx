@@ -11,18 +11,15 @@ const stopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, '
 
 class Sticker extends Component {
   stickerRef = createRef()
-  state = {
-    isEditable: false,
-  }
 
   componentDidMount() {
     document.addEventListener('click', this.deactiveSticker)
   }
 
   activeSticker = (e, id) => {
-    this.setState({
-      isEditable: true,
-    })
+    this.props.dispatch(
+      actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: false })
+    )
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
     this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id }))
@@ -128,14 +125,16 @@ class Sticker extends Component {
 
   render() {
     const { connectDragSource, data: { id, style, text, src }, activeSticker } = this.props
+    const isStickerActive = activeSticker.id == id
     const sticker = i => {
       if (!src) {
         return (
           <div
             key={id}
-            className={` ${this.state.isEditable ? 'editable' : ''}`}
+            className={` ${isStickerActive ? 'editable' : ''}`}
+            className="editable"
             ref={this.stickerRef}
-            contentEditable={this.state.isEditable}
+            contentEditable={isStickerActive}
             suppressContentEditableWarning
           >
             {text}
@@ -176,8 +175,8 @@ const dragCollect = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 })
 
-const mapStateToProps = state => ({
-  stickers: state.imageEditor.sticker,
-  activeSticker: state.imageEditor.activeSticker,
+const mapStateToProps = ({ imageEditor: { stickers, activeSticker } }) => ({
+  stickers,
+  activeSticker,
 })
 export default connect(mapStateToProps)(DragSource(dragType, dragSpec, dragCollect)(Sticker))

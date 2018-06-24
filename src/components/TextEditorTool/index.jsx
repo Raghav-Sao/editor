@@ -5,8 +5,29 @@ import { actionCreator } from '../../store/actionCreator'
 import Style from './Style.css'
 
 class TextEditorTool extends Component {
+  fileReader = new FileReader()
   componentDidMount() {
-    document.addEventListener('click', this.deactiveSticker)
+    this.fileReader.addEventListener('load', this.imageLoaded)
+  }
+
+  componentWillUnmount() {
+    this.fileReader.removeEventListener('load', this.imageLoaded)
+  }
+
+  imageLoaded = event => {
+    const dataURI = this.fileReader.result
+    this.props.dispatch(
+      actionCreator.CHANGE_BACKGRUOND_IMAGE({
+        backgroundImage: dataURI,
+      })
+    )
+  }
+
+  changeBackground = event => {
+    const file = event.target.files[0]
+    if (file) {
+      this.fileReader.readAsDataURL(file)
+    }
   }
 
   onTextStyleChange = e => {
@@ -27,13 +48,26 @@ class TextEditorTool extends Component {
   }
 
   render() {
-    const { activeSticker: { style: activeStyle = {}, type: activeType } } = this.props
+    const {
+      activeSticker: { style: activeStyle = {}, type: activeType },
+      isBackgroundImageSelected,
+    } = this.props
+
+    const showEditorTool = typeof activeType !== 'undefined' || isBackgroundImageSelected
 
     return (
       <div
-        className={`col-9 sticker__editor__tool ${activeType !== undefined ? 'active' : ''}`}
+        className={`col-9 sticker__editor__tool ${showEditorTool ? 'active' : ''}`}
         onClick={e => this.preventPropagation(e)}
       >
+        {isBackgroundImageSelected && (
+          <div className="sticker__editor__tool__image">
+            <input id="imageUpload" accept="image/*" type="file" onChange={this.changeBackground} />
+            <label htmlFor="imageUpload" className="btn">
+              <i className="fa fa-camera" />
+            </label>
+          </div>
+        )}
         {activeType === 'text' && (
           <div className={`text__editor__tool ${activeType === 'text' ? 'active' : ''}`}>
             <select name="fontSize" onChange={this.onTextStyleChange} value={activeStyle.fontSize}>
@@ -103,7 +137,11 @@ class TextEditorTool extends Component {
             </label>
           </div>
         )}
-        <div className={`inline common__editor__tool ${activeType !== undefined ? 'active' : ''}`}>
+        <div
+          className={`inline common__editor__tool ${
+            typeof activeType !== 'undefined' ? 'active' : ''
+          }`}
+        >
           <label className="btn" onClick={this.deleteSticker}>
             <i className="fa fa-trash" />
           </label>
@@ -113,7 +151,8 @@ class TextEditorTool extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  activeSticker: state.imageEditor.activeSticker,
+const mapStateToProps = ({ imageEditor: { activeSticker, isBackgroundImageSelected } }) => ({
+  activeSticker,
+  isBackgroundImageSelected,
 })
 export default connect(mapStateToProps)(TextEditorTool)

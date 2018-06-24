@@ -7,6 +7,25 @@ import Style from './Style.css'
 import Sticker from '../Sticker'
 
 class CardEditorSpace extends Component {
+  componentDidMount() {
+    document.addEventListener('click', this.deactiveBackgroundImage)
+  }
+
+  deactiveBackgroundImage = () => {
+    this.props.dispatch(
+      actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: false })
+    )
+  }
+
+  aciveBackgroundImage = e => {
+    this.props.dispatch(
+      actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: true })
+    )
+    this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id: null }))
+
+    e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation()
+  }
   onAddSticker = ({ position, src, style, text, type }) => {
     const rootRef = findDOMNode(this)
     const { x, y } = rootRef.getBoundingClientRect()
@@ -26,17 +45,19 @@ class CardEditorSpace extends Component {
     this.props.dispatch(actionCreator.MOVE_STICKER({ id, style }))
   }
   render() {
-    const { connectDropTarget, textStickers } = this.props
-    const addedSticker = textStickers.map((sticker, index) => {
+    const { backgroundImage, connectDropTarget, isBackgroundImageSelected, stickers } = this.props
+    const addedSticker = stickers.map((sticker, index) => {
       return <Sticker data={sticker} key={index} onClick={e => this.onTextToolbarClick(e)} />
     })
 
     return connectDropTarget(
-      <div id="c" className="drop-target">
+      <div id="background__image__container" className="col-10 drop-target">
         <img
+          id="card__image"
+          className={`${isBackgroundImageSelected ? 'active' : ''}`}
           alt="img"
-          src="http://www.couponsaregreat.net/wp-content/uploads/2012/07/treat-two-hearts-wedding-card.png"
-          onClick={this.onDrop}
+          src={backgroundImage}
+          onClick={e => this.aciveBackgroundImage(e)}
         />
         {addedSticker}
       </div>
@@ -70,7 +91,9 @@ const dropCollect = (connect, monitor) => ({
 })
 
 const mapStateToProps = state => ({
-  textStickers: state.imageEditor.stickers,
+  stickers: state.imageEditor.stickers,
+  backgroundImage: state.imageEditor.backgroundImage,
+  isBackgroundImageSelected: state.imageEditor.isBackgroundImageSelected,
 })
 export default connect(mapStateToProps)(
   DropTarget(dropTypes, dropSpecs, dropCollect)(CardEditorSpace)

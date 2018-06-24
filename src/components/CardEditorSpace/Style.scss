@@ -1,8 +1,10 @@
-#c {
+#background__image__container {
   position: relative;
   display: inline-block;
   margin: auto;
-  & img {
+  float: none;
+  & img#card__image {
     user-select: none;
+    width: 100%;
   }
 }

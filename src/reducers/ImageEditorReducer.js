@@ -2,6 +2,9 @@ import * as type from 'store/imageEditor/actions'
 const initialState = {
 	stickers: [],
 	activeSticker: {},
+	isBackgroundImageSelected: false,
+	backgroundImage:
+		'http://www.couponsaregreat.net/wp-content/uploads/2012/07/treat-two-hearts-wedding-card.png',
 }
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
@@ -15,6 +18,14 @@ export default function reducer(state = initialState, action) {
 				stickers: [...state.stickers, sticker],
 			}
 			break
+		}
+
+		case 'CHANGE_BACKGRUOND_IMAGE': {
+			const { backgroundImage } = action.payload
+			return {
+				...state,
+				backgroundImage,
+			}
 		}
 
 		case 'DISMISS_ALERT': {
@@ -136,6 +147,14 @@ export default function reducer(state = initialState, action) {
 				activeSticker: state.stickers[index],
 			}
 			break
+		}
+
+		case 'UPDATE_BACKGROUND_IMAGE_STATUS': {
+			const { isBackgroundImageSelected } = action.payload
+			return {
+				...state,
+				isBackgroundImageSelected,
+			}
 		}
 
 		default:
