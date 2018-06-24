@@ -1,11 +1,13 @@
 .sticker__editor__tool {
-  position: absolute;
+  position: fixed;
+  top: 50px;
   text-align: right; //??
   transform: translateY(-100px);
   transition: all 0.3s;
   right: 0;
+  z-index: 1;
   &.active {
-    transform: translateY(50px);
+    transform: translateY(0);
   }
   & label {
     display: inline-grid;
