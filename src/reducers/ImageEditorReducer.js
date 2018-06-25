@@ -2,6 +2,7 @@ import * as type from 'store/imageEditor/actions'
 const initialState = {
 	stickers: [],
 	activeSticker: {},
+	backgroundImageStyle: {},
 	isBackgroundImageSelected: false,
 	backgroundImage:
 		'http://www.couponsaregreat.net/wp-content/uploads/2012/07/treat-two-hearts-wedding-card.png',
@@ -25,6 +26,14 @@ export default function reducer(state = initialState, action) {
 			return {
 				...state,
 				backgroundImage,
+			}
+		}
+
+		case 'CHANGE_BACKGRUOND_IMAGE_STYLE': {
+			const { backgroundImageStyle } = action.payload
+			return {
+				...state,
+				backgroundImageStyle,
 			}
 		}
 

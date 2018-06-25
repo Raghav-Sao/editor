@@ -45,7 +45,13 @@ class CardEditorSpace extends Component {
     this.props.dispatch(actionCreator.MOVE_STICKER({ id, style }))
   }
   render() {
-    const { backgroundImage, connectDropTarget, isBackgroundImageSelected, stickers } = this.props
+    const {
+      backgroundImage,
+      backgroundImageStyle,
+      connectDropTarget,
+      isBackgroundImageSelected,
+      stickers,
+    } = this.props
     const addedSticker = stickers.map((sticker, index) => {
       return <Sticker data={sticker} key={index} onClick={e => this.onTextToolbarClick(e)} />
     })
@@ -58,6 +64,7 @@ class CardEditorSpace extends Component {
           alt="img"
           src={backgroundImage}
           onClick={e => this.aciveBackgroundImage(e)}
+          style={backgroundImageStyle}
         />
         {addedSticker}
       </div>
@@ -90,10 +97,13 @@ const dropCollect = (connect, monitor) => ({
   canDrop: monitor.canDrop(),
 })
 
-const mapStateToProps = state => ({
-  stickers: state.imageEditor.stickers,
-  backgroundImage: state.imageEditor.backgroundImage,
-  isBackgroundImageSelected: state.imageEditor.isBackgroundImageSelected,
+const mapStateToProps = ({
+  imageEditor: { stickers, backgroundImage, isBackgroundImageSelected, backgroundImageStyle },
+}) => ({
+  stickers,
+  backgroundImage,
+  isBackgroundImageSelected,
+  backgroundImageStyle,
 })
 export default connect(mapStateToProps)(
   DropTarget(dropTypes, dropSpecs, dropCollect)(CardEditorSpace)

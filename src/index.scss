@@ -88,3 +88,23 @@ div.editable {
 .text-editor-tool {
   border: 1px solid red;
 }
+
+%cap {
+  // Todo: make it common
+  content: '';
+  border: none;
+  border: 17px;
+  border-color: transparent transparent red;
+  border-style: solid;
+  position: absolute;
+  top: -17px;
+  display: inline-block;
+}
+
+/********************************************* common *********************************************/
+.inline-block {
+  display: inline-block;
+}
+.relative {
+  position: relative;
+}

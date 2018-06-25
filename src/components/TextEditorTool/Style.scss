@@ -1,7 +1,6 @@
 .sticker__editor__tool {
   position: fixed;
   top: 50px;
-  text-align: right; //??
   transform: translateY(-100px);
   transition: all 0.3s;
   right: 0;
@@ -9,10 +8,10 @@
   &.active {
     transform: translateY(0);
   }
-  & input {
+  & input.hidden {
     display: none;
   }
-  & label {
+  & label.btn {
     display: inline-grid;
     align-content: center;
     justify-content: space-evenly;
@@ -24,6 +23,29 @@
     cursor: pointer;
     &:hover {
       background: #ccc;
+    }
+  }
+  .filter__container {
+    position: absolute;
+    top: 146%;
+    left: -20px;
+    width: 250px;
+    background: rgba(0, 0, 0, 0.6);
+    &:before {
+      // @extend %cap; Todo: // Make it workable
+      content: '';
+      border: none;
+      border: 17px;
+      border-color: transparent transparent rgba(0, 0, 0, 0.6);
+      border-style: solid;
+      position: absolute;
+      top: -34px;
+      display: inline-block;
+      left: 24px;
+    }
+    & > div {
+      padding: 10px;
+      color: white;
     }
   }
 }
@@ -46,4 +68,5 @@
 }
 .sticker__editor__tool__image {
   display: inline-block;
+  left: 0;
 }
