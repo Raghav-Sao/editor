@@ -29,7 +29,7 @@
     position: absolute;
     top: 146%;
     left: -20px;
-    width: 250px;
+    width: auto;
     background: rgba(0, 0, 0, 0.6);
     &:before {
       // @extend %cap; Todo: // Make it workable
@@ -47,6 +47,20 @@
       padding: 10px;
       color: white;
     }
+  }
+  .filter__wrapper {
+    display: grid;
+    grid-template-columns: auto auto 50px auto;
+    text-align: center;
+    .reset__filter {
+      cursor: pointer;
+      &:active {
+        transform: rotate(-360deg);
+        transition: all 0.3s;
+      }
+    }
+  }
+  .resetBlur {
   }
 }
 .text__editor__tool {
