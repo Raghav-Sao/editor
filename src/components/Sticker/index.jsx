@@ -66,14 +66,11 @@ class Sticker extends Component {
           .querySelector('.sticker.active #handle-right')
           .getBoundingClientRect()
         const rad = transform ? parseFloat(transform.split('(')[1].split('rad')[0]) : 0
-        const y = 0 //(mouseY - t)*(mouseY - t); think later
+        let y = (mouseY - t)*(mouseY - t)
         let x = (mouseX - l) * (mouseX - l)
-        if (rad < 4.71239 && rad > 1.5708) {
-          x = mouseX > l ? -x : x
-        } else {
-          x = mouseX > l ? x : -x
-        }
+        let slop = Math.atan((mouseY-t)/(mouseX-l))
         let diff = x + y > -0 ? Math.sqrt(x + y) : -1 * Math.sqrt(-1 * (x + y))
+        diff = diff * Math.cos(slop-rad) * ((mouseX  > l) ? 1 : -1)
         if (isNaN(diff)) {
           console.log(x, y)
           debugger
