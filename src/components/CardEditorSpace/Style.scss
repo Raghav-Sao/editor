@@ -3,6 +3,7 @@
   display: inline-block;
   margin: auto;
   float: none;
+  user-select: none;
   & img#card__image {
     user-select: none;
     width: 100%;

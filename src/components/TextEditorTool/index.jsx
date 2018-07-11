@@ -91,7 +91,7 @@ class TextEditorTool extends Component {
             <input
               id="imageUpload"
               accept="image/*"
-              class="hidden"
+              className="hidden"
               type="file"
               onChange={this.changeBackground}
             />
@@ -100,7 +100,7 @@ class TextEditorTool extends Component {
             </label>
             <div className="relative inline-block">
               <label className="btn relative" onClick={() => this.setState({ showFilter: true })}>
-                <i class="fa fa-filter" aria-hidden="true" />
+                <i className="fa fa-filter" aria-hidden="true" />
               </label>
               {this.state.showFilter && (
                 <div className="filter__container">
@@ -328,7 +328,7 @@ class TextEditorTool extends Component {
             <input
               id="text__bold"
               checked={activeStyle.fontSize === 'bold'}
-              class="hidden"
+              className="hidden"
               type="checkbox"
               name="fontWeight"
               value={activeStyle.fontWeight === 'bold' ? 'normal' : 'bold'}
@@ -341,7 +341,7 @@ class TextEditorTool extends Component {
             <input
               id="text__italic"
               checked={activeStyle.fontStyle === 'italic'}
-              class="hidden"
+              className="hidden"
               type="checkbox"
               name="fontStyle"
               value={activeStyle.fontStyle === 'italic' ? 'normal' : 'italic'}
@@ -354,7 +354,7 @@ class TextEditorTool extends Component {
             <input
               id="text__left"
               checked={activeStyle.textAlign === 'left'}
-              class="hidden"
+              className="hidden"
               type="radio"
               name="textAlign"
               value="left"
@@ -367,7 +367,7 @@ class TextEditorTool extends Component {
             <input
               id="text__middle"
               checked={activeStyle.textAlign === 'center'}
-              class="hidden"
+              className="hidden"
               type="radio"
               name="textAlign"
               value="center"
@@ -380,7 +380,7 @@ class TextEditorTool extends Component {
             <input
               id="text__right"
               checked={activeStyle.textAlign === 'right'}
-              class="hidden"
+              className="hidden"
               type="radio"
               name="textAlign"
               value="right"
