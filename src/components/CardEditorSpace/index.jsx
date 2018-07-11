@@ -65,6 +65,7 @@ class CardEditorSpace extends Component {
           src={backgroundImage}
           onClick={e => this.aciveBackgroundImage(e)}
           style={backgroundImageStyle}
+          draggable="false"
         />
         {addedSticker}
       </div>
@@ -90,7 +91,7 @@ const dropSpecs = {
     return { name: 'Content' }
   },
 }
-const dropTypes = ['TextToolbar', 'ImageToolbar', 'Sticker']
+const dropTypes = ['TextToolbar', 'ImageToolbar']
 const dropCollect = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
