@@ -11,11 +11,11 @@ const stopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, '
 
 class Sticker extends Component {
   stickerRef = createRef()
-state = { // Todo: make it in state if make sence
-  isRotating: false,
-  isDragging: false,
-  isResizing: false,
-}
+  state = { // Todo: make it in state if make sence
+    isRotating: false,
+    isDragging: false,
+    isResizing: false,
+  }
   componentDidMount() {
     document.addEventListener('click', this.deactiveSticker)
   }
@@ -30,6 +30,9 @@ state = { // Todo: make it in state if make sence
   }
 
   deactiveSticker = () => {
+    if(this.state.isRotatedRecently) { // Todo: why without setting false its working??
+      return
+    }
     this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id: null }))
   }
 
@@ -119,6 +122,7 @@ state = { // Todo: make it in state if make sence
   }
 
   onResizeOrRotate = (e, type) => { // Todo: make some name for other e
+    this.setState({isRotatedRecently: true});
     const sticker = this.stickerRef.current
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
@@ -163,8 +167,7 @@ state = { // Todo: make it in state if make sence
         return (
           <div
             key={id}
-            className={` ${isStickerActive ? 'editable' : ''}`}
-            className="editable"
+            className={`sticker__text ${isEditable ? 'editable' : ''}`}
             ref={this.stickerRef}
             contentEditable={isEditable}
             suppressContentEditableWarning
@@ -182,7 +185,7 @@ state = { // Todo: make it in state if make sence
         style={style}
         key={id}
         onClick={e => this.activeSticker(e, id)}
-        onMouseDown={e => this.onResizeOrRotate(e, 'drag')} // Todo: use id from key
+        onMouseDown={e => this.onResizeOrRotate(e, 'drag')} // Todo: use id from key and make better for isRotating true event
       >
         {sticker(1)}
         <div className="h-l" onMouseDown={e => this.onResizeOrRotate(e, 'leftResize')}>

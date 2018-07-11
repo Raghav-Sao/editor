@@ -1,6 +1,106 @@
-.active {
-  border: 1px dashed #ccc;
+%handle {
+  cursor: ew-resize;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 25px;
+  &:hover {
+    &:before {
+      border-color: green;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
 }
-.editable {
-  cursor: text;
+%handle-before {
+  // background: #000;
+  // content: '';
+  // right: 0;
+  // position: absolute;
+  // top: calc(50% - 8px);
+  // width: 7px;
+  // height: 12px;
+  // border: 2px solid white;
+  // border: 2px solid white;
+      background: #000;
+    content: '';
+    right: 7px;
+    position: absolute;
+    top: calc(50%);
+    width: 1px;
+    height: 1px;
+}
+
+.sticker.active .h-l {
+  @extend %handle;
+  left: -15px;
+  & > span {
+    @extend %handle-before;
+    display: inline-block;
+    border-right: none;
+    border-radius: 17px 0 0 17px;
+    left: 15px;
+  }
+}
+
+.sticker{
+  border: 1px dashed transparent;
+  &:hover {
+    border: 1px dashed #ccc;
+  }
+  &.active {
+    border: 1px dashed #bbb;
+    & .h-r {
+      @extend %handle;
+      right: -8px;
+      & > span {
+        @extend %handle-before;
+        // border-left: none;
+        // border-radius: 0 17px 17px 0;
+      }
+    }
+  }
+}
+
+.sticker.active .handle.rotate {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  &:after {
+    content: '';
+    background: url(https://static.canva.com/static/images/icon_rotate_hover.svg);
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    background-repeat: no-repeat;
+    left: calc(50% - 7px);
+    bottom: -40px;
+  }
+  &:before {
+    content: '';
+    height: 25px;
+    position: absolute;
+    border-left: 1px dashed #ccc;
+  }
+}
+
+div.editable {
+  outline: none;
+}
+
+.text-editor-tool {
+  border: 1px solid red;
+}
+
+%cap {
+  // Todo: make it common
+  content: '';
+  border: none;
+  border: 17px;
+  border-color: transparent transparent red;
+  border-style: solid;
+  position: absolute;
+  top: -17px;
+  display: inline-block;
 }

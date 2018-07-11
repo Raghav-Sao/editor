@@ -5,7 +5,7 @@ import './style.css'
 
 class Header extends Component {
   render() {
-    return <div className="col-12 header">Header</div>
+    return <div className="col-12 header">E-Cards</div>
   }
 }
 

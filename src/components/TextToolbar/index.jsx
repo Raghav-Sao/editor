@@ -9,8 +9,8 @@ class TextToolbar extends Component {
   onTextToolbarClick = (e, { type, text, src, style }) => {
     style = { // Todo: make some logic
       ...style,
-      left: 40,
-      top: 40,
+      left: 260,
+      top:60,
       position: 'absolute',
       width: 250,
     }
