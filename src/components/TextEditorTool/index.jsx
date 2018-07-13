@@ -391,6 +391,7 @@ class TextEditorTool extends Component {
             </label>
           </div>
         )}
+        {showEditorTool && (
         <div
           className={`inline common__editor__tool ${
             typeof activeType !== 'undefined' ? 'active' : ''
@@ -399,7 +400,7 @@ class TextEditorTool extends Component {
           <label className="btn" onClick={this.deleteSticker}>
             <i className="fa fa-trash" />
           </label>
-        </div>
+        </div>)}
       </div>
     )
   }
