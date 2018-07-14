@@ -1,11 +1,11 @@
 .sticker__editor__tool {
-  border: 1px solid #ccc;
   position: fixed;
   top: 50px;
   transform: translateY(-100px);
   transition: all 0.3s;
   right: 0;
   z-index: 1;
+  background: rgba(0,0,0,0.5);
   &.active {
     transform: translateY(0);
   }
@@ -17,7 +17,7 @@
     align-content: center;
     justify-content: space-evenly;
     background: #fff;
-    margin: 5px 2px;
+    margin: 5px 4px;
     border-radius: 5px;
     width: 35px;
     height: 35px;
@@ -83,5 +83,5 @@
 }
 .sticker__editor__tool__image {
   display: inline-block;
-  left: 0;
+  float: right;
 }

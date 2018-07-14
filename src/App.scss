@@ -66,3 +66,24 @@ select {
   outline: none;
   padding: 5px;
 }
+
+/************************************************* button **************************************************/
+button {
+    margin: 5px; //remove later and generate m-*
+    min-height: 30px;
+    background: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px #111;
+    outline: none;
+    border-radius: 0 5px 0 5px;
+    font-weight: bold;
+  &:active{
+    border-radius: 5px 0px;
+    box-shadow: 1px 1px 1px transparent;
+    transform: translateX(1px) translateY(1px);
+  }
+  &:hover{
+    border-radius: 5px 0px;
+  }
+}

@@ -14,22 +14,22 @@
   }
 }
 %handle-before {
-  // background: #000;
-  // content: '';
-  // right: 0;
-  // position: absolute;
-  // top: calc(50% - 8px);
-  // width: 7px;
-  // height: 12px;
-  // border: 2px solid white;
-  // border: 2px solid white;
-      background: #000;
-    content: '';
-    right: 7px;
-    position: absolute;
-    top: calc(50%);
-    width: 1px;
-    height: 1px;
+  background: #000;
+  content: '';
+  right: 0;
+  position: absolute;
+  top: calc(50% - 8px);
+  width: 7px;
+  height: 12px;
+  border: 2px solid white;
+  border: 2px solid white;
+    //   background: #000;
+    // content: '';
+    // right: 7px;
+    // position: absolute;
+    // top: calc(50%);
+    // width: 1px;
+    // height: 1px;
 }
 
 .sticker.active .h-l {
@@ -40,24 +40,26 @@
     display: inline-block;
     border-right: none;
     border-radius: 17px 0 0 17px;
-    left: 15px;
+    left: 7px;
   }
 }
 
 .sticker{
   border: 1px dashed transparent;
+  cursor: move;
   &:hover {
     border: 1px dashed #ccc;
   }
   &.active {
     border: 1px dashed #bbb;
+    cursor: text;
     & .h-r {
       @extend %handle;
       right: -8px;
       & > span {
         @extend %handle-before;
-        // border-left: none;
-        // border-radius: 0 17px 17px 0;
+        border-left: none;
+        border-radius: 0 17px 17px 0;
       }
     }
   }

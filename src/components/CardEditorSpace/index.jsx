@@ -66,6 +66,7 @@ class CardEditorSpace extends Component {
           onClick={e => this.aciveBackgroundImage(e)}
           style={backgroundImageStyle}
           draggable="false"
+          width="100%"
         />
         {addedSticker}
       </div>

@@ -39,6 +39,33 @@ class TextEditorTool extends Component {
       }
     )
   }
+  onDownloadImage = () => {
+    const canvas = document.createElement('canvas')
+    const htmlElement = document.querySelector('#background__image__container')
+    const {offsetHeight: height, offsetWidth: width }  = htmlElement.querySelector('#card__image')
+    canvas.height = height
+    canvas.width = width
+    const ctx = canvas.getContext('2d')
+    const html = new XMLSerializer().serializeToString(htmlElement)
+    const data =
+      `<svg height="${height}" width="${width}" xmlns="http://www.w3.org/2000/svg" >' +
+      '<foreignObject height="100%" width="100%" >
+      ${html}
+      </foreignObject>
+      </svg>`
+    const image = new Image()
+    image.onload = () => {
+      ctx.drawImage(image, 0, 0)
+      const outputDataURI = canvas.toDataURL()
+      var link = document.createElement('a')
+      link.download = "name.png"
+      link.href = outputDataURI
+      document.body.appendChild(link);
+      link.click()
+      document.body.removeChild(link);
+    }
+    image.src = 'data:image/svg+xml; charset=utf8, ' + data
+  }
 
   imageLoaded = event => {
     const dataURI = this.fileReader.result
@@ -49,8 +76,9 @@ class TextEditorTool extends Component {
     )
   }
 
-  changeBackground = event => {
-    const file = event.target.files[0]
+  changeBackground = (event, imageUrl = null) => {
+    const file = imageUrl ? imageUrl : event.target.files[0]
+    console.log(file)
     if (file) {
       this.fileReader.readAsDataURL(file)
     }
@@ -83,11 +111,11 @@ class TextEditorTool extends Component {
 
     return (
       <div
-        className={`col-9 sticker__editor__tool ${showEditorTool ? 'active' : ''}`}
+        className={`col-9 sticker__editor__tool active`}
         onClick={e => this.preventPropagation(e)}
       >
-        {isBackgroundImageSelected && (
-          <div className="sticker__editor__tool__image">
+        <div className="sticker__editor__tool__image">
+          <div className="relative inline-block" title="Change Backgroud-image">
             <input
               id="imageUpload"
               accept="image/*"
@@ -98,225 +126,228 @@ class TextEditorTool extends Component {
             <label htmlFor="imageUpload" className="btn">
               <i className="fa fa-camera" />
             </label>
-            <div className="relative inline-block">
-              <label className="btn relative" onClick={() => this.setState({ showFilter: true })}>
-                <i className="fa fa-filter" aria-hidden="true" />
-              </label>
-              {this.state.showFilter && (
-                <div className="filter__container">
-                  <div className="filter__wrapper">
-                    <label>blur </label>
-                    <input
-                      id="filter__blur"
-                      type="range"
-                      min="0"
-                      max="25"
-                      defaultValue="0"
-                      step="1"
-                      value={this.state.blur}
-                      name="blur"
-                      onChange={e => this.onFilterChange(e)}
-                    />
-                    <label>{this.state.blur}</label>
-                    <input
-                      id="resetBlur"
-                      type="button"
-                      name="blur"
-                      value="0"
-                      className="hidden"
-                      onClick={e => this.onFilterChange(e)}
-                    />
-                    <label className="reset__filter" title="reset ?" htmlFor="resetBlur">
-                      <i className="fa fa-undo" />
-                    </label>
-                  </div>
-                  <div className="filter__wrapper">
-                    <label>brightness </label>
-                    <input
-                      id="filter__brightness"
-                      type="range"
-                      min="0"
-                      max="200"
-                      name="brightness"
-                      defaultValue="100"
-                      value={this.state.brightness}
-                      step="1"
-                      onChange={e => this.onFilterChange(e)}
-                    />
-                    <label>{this.state.brightness}%</label>
-                    <input
-                      id="reset__brightness"
-                      type="button"
-                      name="brightness"
-                      value="100"
-                      className="hidden"
-                      onClick={e => this.onFilterChange(e)}
-                    />
-                    <label className="reset__filter" title="reset ?" htmlFor="reset__brightness">
-                      <i className="fa fa-undo" />
-                    </label>
-                  </div>
-                  <div className="filter__wrapper">
-                    <label>contrast </label>
-                    <input
-                      id="filter__contrast"
-                      type="range"
-                      min="0"
-                      max="200"
-                      name="contrast"
-                      defaultValue="100"
-                      value={this.state.contrast}
-                      step="1"
-                      onChange={e => this.onFilterChange(e)}
-                    />
-                    <label>{this.state.contrast}%</label>
-                    <input
-                      id="reset__contrast"
-                      type="button"
-                      name="contrast"
-                      value="100"
-                      className="hidden"
-                      onClick={e => this.onFilterChange(e)}
-                    />
-                    <label className="reset__filter" title="reset ?" htmlFor="reset__contrast">
-                      <i className="fa fa-undo" />
-                    </label>
-                  </div>
-                  <div className="filter__wrapper">
-                    <label>grayscale </label>
-                    <input
-                      id="filter__grayscale"
-                      type="range"
-                      min="0"
-                      max="100"
-                      name="grayscale"
-                      defaultValue="0"
-                      value={this.state.grayscale}
-                      step="1"
-                      onChange={e => this.onFilterChange(e)}
-                    />
-                    <label>{this.state.grayscale}%</label>
-                    <input
-                      id="reset__grayscale"
-                      type="button"
-                      name="grayscale"
-                      value="0"
-                      className="hidden"
-                      onClick={e => this.onFilterChange(e)}
-                    />
-                    <label className="reset__filter" title="reset ?" htmlFor="reset__grayscale">
-                      <i className="fa fa-undo" />
-                    </label>
-                  </div>
-                  <div className="filter__wrapper">
-                    <label>invert </label>
-                    <input
-                      id="filter__invert"
-                      type="range"
-                      min="0"
-                      max="100"
-                      name="invert"
-                      defaultValue="0"
-                      value={this.state.invert}
-                      step="1"
-                      onChange={e => this.onFilterChange(e)}
-                    />
-                    <label>{this.state.invert}%</label>
-                    <input
-                      id="reset__invert"
-                      type="button"
-                      name="invert"
-                      value="0"
-                      className="hidden"
-                      onClick={e => this.onFilterChange(e)}
-                    />
-                    <label className="reset__filter" title="reset ?" htmlFor="reset__invert">
-                      <i className="fa fa-undo" />
-                    </label>
-                  </div>
-                  <div className="filter__wrapper">
-                    <label>opacity </label>
-                    <input
-                      id="filter__opacity"
-                      type="range"
-                      min="0"
-                      max="1"
-                      name="opacity"
-                      defaultValue="1"
-                      value={this.state.opacity}
-                      step="0.1"
-                      onChange={e => this.onFilterChange(e)}
-                    />
-                    <label>{this.state.opacity}</label>
-                    <input
-                      id="reset__opacity"
-                      type="button"
-                      name="opacity"
-                      value="1"
-                      className="hidden"
-                      onClick={e => this.onFilterChange(e)}
-                    />
-                    <label className="reset__filter" title="reset ?" htmlFor="reset__opacity">
-                      <i className="fa fa-undo" />
-                    </label>
-                  </div>
-                  <div className="filter__wrapper">
-                    <label>saturate </label>
-                    <input
-                      id="filter__saturate"
-                      type="range"
-                      min="0"
-                      max="100"
-                      name="saturate"
-                      defaultValue="1"
-                      value={this.state.saturate}
-                      step="1"
-                      onChange={e => this.onFilterChange(e)}
-                    />
-                    <label>{this.state.saturate}%</label>
-                    <input
-                      id="reset__saturate"
-                      type="button"
-                      name="saturate"
-                      value="1"
-                      className="hidden"
-                      onClick={e => this.onFilterChange(e)}
-                    />
-                    <label className="reset__filter" title="reset ?" htmlFor="reset__saturate">
-                      <i className="fa fa-undo" />
-                    </label>
-                  </div>
-                  <div className="filter__wrapper">
-                    <label>sepia </label>
-                    <input
-                      id="filter__sepia"
-                      type="range"
-                      min="0"
-                      max="100"
-                      name="sepia"
-                      defaultValue="0"
-                      value={this.state.sepia}
-                      step="1"
-                      onChange={e => this.onFilterChange(e)}
-                    />
-                    <label>{this.state.sepia}%</label>
-                    <input
-                      id="reset__sepia"
-                      type="button"
-                      name="sepia"
-                      value="0"
-                      className="hidden"
-                      onClick={e => this.onFilterChange(e)}
-                    />
-                    <label className="reset__filter" title="reset ?" htmlFor="reset__sepia">
-                      <i className="fa fa-undo" />
-                    </label>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
-        )}
+          <div className="relative inline-block" title="Image-Filter">
+            <label className="btn relative" onClick={() => this.setState({ showFilter: true })}>
+              <i className="fa fa-filter" aria-hidden="true" />
+            </label>
+            {this.state.showFilter && (
+              <div className="filter__container">
+                <div className="filter__wrapper">
+                  <label>blur </label>
+                  <input
+                    id="filter__blur"
+                    type="range"
+                    min="0"
+                    max="25"
+                    defaultValue="0"
+                    step="1"
+                    value={this.state.blur}
+                    name="blur"
+                    onChange={e => this.onFilterChange(e)}
+                  />
+                  <label>{this.state.blur}</label>
+                  <input
+                    id="resetBlur"
+                    type="button"
+                    name="blur"
+                    value="0"
+                    className="hidden"
+                    onClick={e => this.onFilterChange(e)}
+                  />
+                  <label className="reset__filter" title="reset ?" htmlFor="resetBlur">
+                    <i className="fa fa-undo" />
+                  </label>
+                </div>
+                <div className="filter__wrapper">
+                  <label>brightness </label>
+                  <input
+                    id="filter__brightness"
+                    type="range"
+                    min="0"
+                    max="200"
+                    name="brightness"
+                    defaultValue="100"
+                    value={this.state.brightness}
+                    step="1"
+                    onChange={e => this.onFilterChange(e)}
+                  />
+                  <label>{this.state.brightness}%</label>
+                  <input
+                    id="reset__brightness"
+                    type="button"
+                    name="brightness"
+                    value="100"
+                    className="hidden"
+                    onClick={e => this.onFilterChange(e)}
+                  />
+                  <label className="reset__filter" title="reset ?" htmlFor="reset__brightness">
+                    <i className="fa fa-undo" />
+                  </label>
+                </div>
+                <div className="filter__wrapper">
+                  <label>contrast </label>
+                  <input
+                    id="filter__contrast"
+                    type="range"
+                    min="0"
+                    max="200"
+                    name="contrast"
+                    defaultValue="100"
+                    value={this.state.contrast}
+                    step="1"
+                    onChange={e => this.onFilterChange(e)}
+                  />
+                  <label>{this.state.contrast}%</label>
+                  <input
+                    id="reset__contrast"
+                    type="button"
+                    name="contrast"
+                    value="100"
+                    className="hidden"
+                    onClick={e => this.onFilterChange(e)}
+                  />
+                  <label className="reset__filter" title="reset ?" htmlFor="reset__contrast">
+                    <i className="fa fa-undo" />
+                  </label>
+                </div>
+                <div className="filter__wrapper">
+                  <label>grayscale </label>
+                  <input
+                    id="filter__grayscale"
+                    type="range"
+                    min="0"
+                    max="100"
+                    name="grayscale"
+                    defaultValue="0"
+                    value={this.state.grayscale}
+                    step="1"
+                    onChange={e => this.onFilterChange(e)}
+                  />
+                  <label>{this.state.grayscale}%</label>
+                  <input
+                    id="reset__grayscale"
+                    type="button"
+                    name="grayscale"
+                    value="0"
+                    className="hidden"
+                    onClick={e => this.onFilterChange(e)}
+                  />
+                  <label className="reset__filter" title="reset ?" htmlFor="reset__grayscale">
+                    <i className="fa fa-undo" />
+                  </label>
+                </div>
+                <div className="filter__wrapper">
+                  <label>invert </label>
+                  <input
+                    id="filter__invert"
+                    type="range"
+                    min="0"
+                    max="100"
+                    name="invert"
+                    defaultValue="0"
+                    value={this.state.invert}
+                    step="1"
+                    onChange={e => this.onFilterChange(e)}
+                  />
+                  <label>{this.state.invert}%</label>
+                  <input
+                    id="reset__invert"
+                    type="button"
+                    name="invert"
+                    value="0"
+                    className="hidden"
+                    onClick={e => this.onFilterChange(e)}
+                  />
+                  <label className="reset__filter" title="reset ?" htmlFor="reset__invert">
+                    <i className="fa fa-undo" />
+                  </label>
+                </div>
+                <div className="filter__wrapper">
+                  <label>opacity </label>
+                  <input
+                    id="filter__opacity"
+                    type="range"
+                    min="0"
+                    max="1"
+                    name="opacity"
+                    defaultValue="1"
+                    value={this.state.opacity}
+                    step="0.1"
+                    onChange={e => this.onFilterChange(e)}
+                  />
+                  <label>{this.state.opacity}</label>
+                  <input
+                    id="reset__opacity"
+                    type="button"
+                    name="opacity"
+                    value="1"
+                    className="hidden"
+                    onClick={e => this.onFilterChange(e)}
+                  />
+                  <label className="reset__filter" title="reset ?" htmlFor="reset__opacity">
+                    <i className="fa fa-undo" />
+                  </label>
+                </div>
+                <div className="filter__wrapper">
+                  <label>saturate </label>
+                  <input
+                    id="filter__saturate"
+                    type="range"
+                    min="0"
+                    max="100"
+                    name="saturate"
+                    defaultValue="1"
+                    value={this.state.saturate}
+                    step="1"
+                    onChange={e => this.onFilterChange(e)}
+                  />
+                  <label>{this.state.saturate}%</label>
+                  <input
+                    id="reset__saturate"
+                    type="button"
+                    name="saturate"
+                    value="1"
+                    className="hidden"
+                    onClick={e => this.onFilterChange(e)}
+                  />
+                  <label className="reset__filter" title="reset ?" htmlFor="reset__saturate">
+                    <i className="fa fa-undo" />
+                  </label>
+                </div>
+                <div className="filter__wrapper">
+                  <label>sepia </label>
+                  <input
+                    id="filter__sepia"
+                    type="range"
+                    min="0"
+                    max="100"
+                    name="sepia"
+                    defaultValue="0"
+                    value={this.state.sepia}
+                    step="1"
+                    onChange={e => this.onFilterChange(e)}
+                  />
+                  <label>{this.state.sepia}%</label>
+                  <input
+                    id="reset__sepia"
+                    type="button"
+                    name="sepia"
+                    value="0"
+                    className="hidden"
+                    onClick={e => this.onFilterChange(e)}
+                  />
+                  <label className="reset__filter" title="reset ?" htmlFor="reset__sepia">
+                    <i className="fa fa-undo" />
+                  </label>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="relative inline-block">
+            <button onClick={this.onDownloadImage}>Download</button>
+          </div>
+        </div>
         {activeType === 'text' && (
           <div className={`text__editor__tool ${activeType === 'text' ? 'active' : ''}`}>
             <select name="fontSize" onChange={this.onTextStyleChange} value={activeStyle.fontSize}>
@@ -391,11 +422,9 @@ class TextEditorTool extends Component {
             </label>
           </div>
         )}
-        {showEditorTool && (
+        {activeType === 'text' && (
         <div
-          className={`inline common__editor__tool ${
-            typeof activeType !== 'undefined' ? 'active' : ''
-          }`}
+          className={'inline common__editor__tool'}
         >
           <label className="btn" onClick={this.deleteSticker}>
             <i className="fa fa-trash" />
