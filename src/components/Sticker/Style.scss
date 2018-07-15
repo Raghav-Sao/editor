@@ -23,13 +23,13 @@
   height: 12px;
   border: 2px solid white;
   border: 2px solid white;
-    //   background: #000;
-    // content: '';
-    // right: 7px;
-    // position: absolute;
-    // top: calc(50%);
-    // width: 1px;
-    // height: 1px;
+  //   background: #000;
+  // content: '';
+  // right: 7px;
+  // position: absolute;
+  // top: calc(50%);
+  // width: 1px;
+  // height: 1px;
 }
 
 .sticker.active .h-l {
@@ -44,7 +44,7 @@
   }
 }
 
-.sticker{
+.sticker {
   border: 1px dashed transparent;
   cursor: move;
   &:hover {

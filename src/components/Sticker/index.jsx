@@ -11,7 +11,8 @@ const stopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, '
 
 class Sticker extends Component {
   stickerRef = createRef()
-  state = { // Todo: make it in state if make sence
+  state = {
+    // Todo: make it in state if make sence
     isRotating: false,
     isDragging: false,
     isResizing: false,
@@ -30,14 +31,15 @@ class Sticker extends Component {
   }
 
   deactiveSticker = () => {
-    if(this.state.isRotatedRecently) { // Todo: why without setting false its working??
+    if (this.state.isRotatedRecently) {
+      // Todo: why without setting false its working??
       return
     }
     this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id: null }))
   }
 
   resizeOrRotateSticker = (id, calculatedStyle, type) => {
-    const { data: {style: { transform }}} = this.props
+    const { data: { style: { transform } } } = this.props
     if (type === 'rotate') {
       const trans = transform ? transform.split('translate(')[1].split(')')[0] : 0
       const transX = trans ? parseFloat(trans.split('px')[0]) : 0
@@ -45,17 +47,15 @@ class Sticker extends Component {
       const { rads } = calculatedStyle
       const transformRes = `translate(${transX}px, ${transY}px) rotate(${-rads}rad) `
       this.props.dispatch(actionCreator.ROTATE_STICKER({ id, transform: transformRes }))
-    }  else if( type === 'drag') {
-        const { translateX, translateY } = calculatedStyle
-        const rad = transform ? parseFloat(transform.split('rotate(')[1].split('rad')[0]) : 0
-        const style = {transform: `translate(${translateX}px, ${translateY}px) rotate(${rad}rad)`}
-        this.props.dispatch(actionCreator.MOVE_STICKER({ id, style }))
+    } else if (type === 'drag') {
+      const { translateX, translateY } = calculatedStyle
+      const rad = transform ? parseFloat(transform.split('rotate(')[1].split('rad')[0]) : 0
+      const style = { transform: `translate(${translateX}px, ${translateY}px) rotate(${rad}rad)` }
+      this.props.dispatch(actionCreator.MOVE_STICKER({ id, style }))
     } else {
       const { diff, leftDiff, offsetWidth, topDiff } = calculatedStyle
       if (diff < 0 && offsetWidth <= 2) return
-      this.props.dispatch(
-        actionCreator.RESIZE_STICKER({ id, diff, leftDiff, topDiff })
-      )
+      this.props.dispatch(actionCreator.RESIZE_STICKER({ id, diff, leftDiff, topDiff }))
     }
   }
 
@@ -68,16 +68,17 @@ class Sticker extends Component {
     switch (type) {
       case 'leftResize':
       case 'rightResize': {
-        this.setState({isResizing: true})
-        const { left: l, top: t } = type === 'rightResize'
-          ? document.querySelector('.sticker.active #handle-right').getBoundingClientRect()
-          : document.querySelector('.sticker.active #handle-left').getBoundingClientRect()
+        this.setState({ isResizing: true })
+        const { left: l, top: t } =
+          type === 'rightResize'
+            ? document.querySelector('.sticker.active #handle-right').getBoundingClientRect()
+            : document.querySelector('.sticker.active #handle-left').getBoundingClientRect()
         const rad = transform ? parseFloat(transform.split('rotate(')[1].split('rad')[0]) : 0
         let y = (mouseY - t) * (mouseY - t)
         let x = (mouseX - l) * (mouseX - l)
-        let slop = Math.atan((mouseY-t)/(mouseX-l))
+        let slop = Math.atan((mouseY - t) / (mouseX - l))
         let diff = x + y > 0 ? Math.sqrt(x + y) : -1 * Math.sqrt(-1 * (x + y))
-        diff = diff * Math.cos(slop-rad) * ((mouseX  > l) ? 1 : -1)
+        diff = diff * Math.cos(slop - rad) * (mouseX > l ? 1 : -1)
         if (isNaN(diff)) {
           console.log(x, y)
           debugger
@@ -85,18 +86,19 @@ class Sticker extends Component {
           return { width, left, diff: 0, leftDiff: 0, topDiff: 0 }
         }
         diff = type === 'leftResize' ? -diff : diff
-        if(diff+offsetWidth < 2){ // coz rotated getBoundingClientRect may be differ
-          diff = 2-offsetWidth
+        if (diff + offsetWidth < 2) {
+          // coz rotated getBoundingClientRect may be differ
+          diff = 2 - offsetWidth
         }
-        const extraLeftDiff = type === 'leftResize' ? (diff * Math.cos(rad)) : 0
-        const extraTopDiff = type === 'leftResize' ? (diff * Math.sin(rad)) : 0
+        const extraLeftDiff = type === 'leftResize' ? diff * Math.cos(rad) : 0
+        const extraTopDiff = type === 'leftResize' ? diff * Math.sin(rad) : 0
         const leftDiff = diff / 2 - Math.cos(rad) * diff / 2 + extraLeftDiff
         const topDiff = Math.sin(rad) * diff / 2 - extraTopDiff
         return { diff, leftDiff, offsetWidth, topDiff }
       }
 
       case 'rotate': {
-        this.setState({isRotating: true})
+        this.setState({ isRotating: true })
         const centerX = left + width / 2
         const centerY = top + height / 2
         console.log(left, top)
@@ -106,29 +108,32 @@ class Sticker extends Component {
       }
 
       case 'drag': {
-        if(this.state.isRotating) return
-        this.setState({isDragging: true})
+        if (this.state.isRotating) return
+        this.setState({ isDragging: true })
         const newDx = e.pageX - startX,
-            newDy = e.pageY - startY
-        sticker.dataset.lastTransform = JSON.stringify({lastOffsetX: newDx, lastOffsetY: newDy })
+          newDy = e.pageY - startY
+        sticker.dataset.lastTransform = JSON.stringify({ lastOffsetX: newDx, lastOffsetY: newDy })
         console.log(sticker.dataset.lastTransform)
-        return  { translateX: newDx, translateY: newDy}
+        return { translateX: newDx, translateY: newDy }
       }
     }
   }
 
-  stopEvents = (type) => { // Todo: Make it better
-    this.setState({isResizing: false, isRotating: false, isDragging: false})
+  stopEvents = type => {
+    // Todo: Make it better
+    this.setState({ isResizing: false, isRotating: false, isDragging: false })
   }
 
-  onResizeOrRotate = (e, type) => { // Todo: make some name for other e
-    this.setState({isRotatedRecently: true})
+  onResizeOrRotate = (e, type) => {
+    // Todo: make some name for other e
+    this.setState({ isRotatedRecently: true })
     const sticker = this.stickerRef.current
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
-    const { dataset: { lastTransform = JSON.stringify({}) }} = sticker
+    const { dataset: { lastTransform = JSON.stringify({}) } } = sticker
     const { lastOffsetX = 0, lastOffsetY = 0 } = JSON.parse(lastTransform)
-    var startX = e.pageX - lastOffsetX, startY = e.pageY - lastOffsetY
+    var startX = e.pageX - lastOffsetX,
+      startY = e.pageY - lastOffsetY
     this.resizeOrRotate$ = merge(
       fromEvent(document, 'mousemove'),
       fromEvent(document, 'touchmove')
@@ -161,7 +166,8 @@ class Sticker extends Component {
   render() {
     const { connectDragSource, data: { id, style, text, src }, activeSticker } = this.props
     const isStickerActive = activeSticker.id == id
-    const isEditable = isStickerActive && !this.state.isRotating && !this.state.isDragging && !this.state.isResizing
+    const isEditable =
+      isStickerActive && !this.state.isRotating && !this.state.isDragging && !this.state.isResizing
     const sticker = i => {
       if (!src) {
         return (
@@ -176,8 +182,15 @@ class Sticker extends Component {
           </div>
         )
       }
-      const imgStyle = { }
-        return <div  dangerouslySetInnerHTML={{__html: src }} ref={this.stickerRef}  key={id} style={imgStyle}/>
+      const imgStyle = {}
+      return (
+        <div
+          dangerouslySetInnerHTML={{ __html: src }}
+          ref={this.stickerRef}
+          key={id}
+          style={imgStyle}
+        />
+      )
     }
     return (
       <div

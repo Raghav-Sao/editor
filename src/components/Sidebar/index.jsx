@@ -6,10 +6,9 @@ import * as imageStickersData from 'components/ImageToolbar/images/svg/index.js'
 import './Style.css'
 
 class SideBar extends Component {
-
   render() {
     const textStickers = textStickerData.map((sticker, index) => (
-      <TextToolbar data={sticker} key={index}  />
+      <TextToolbar data={sticker} key={index} />
     ))
     const imageStickers = Object.keys(imageStickersData).map((key, index) => {
       const data = {
@@ -22,7 +21,7 @@ class SideBar extends Component {
         type: 'img',
       }
       return <ImageToolbar data={data} key={index} />
-    });
+    })
 
     return (
       <div className="col-3 sidebar">

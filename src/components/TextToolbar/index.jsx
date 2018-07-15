@@ -7,10 +7,11 @@ import './Style.css'
 
 class TextToolbar extends Component {
   onTextToolbarClick = (e, { type, text, src, style }) => {
-    style = { // Todo: make some logic
+    style = {
+      // Todo: make some logic
       ...style,
       left: 260,
-      top:60,
+      top: 60,
       position: 'absolute',
       width: 250,
     }
@@ -20,7 +21,13 @@ class TextToolbar extends Component {
     const { connectDragSource, data: { id, style, text, type } } = this.props
 
     return connectDragSource(
-      <div type="text" className="text-toolbar" style={style} key={id} onClick={e => this.onTextToolbarClick(e, this.props.data)}>
+      <div
+        type="text"
+        className="text-toolbar"
+        style={style}
+        key={id}
+        onClick={e => this.onTextToolbarClick(e, this.props.data)}
+      >
         {text}
       </div>
     )

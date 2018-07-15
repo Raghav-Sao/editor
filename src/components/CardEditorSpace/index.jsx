@@ -34,7 +34,7 @@ class CardEditorSpace extends Component {
       left: position.startX - x,
       top: position.startY - y,
       position: 'absolute',
-      width: type === "text" ? 250 : 150 ,
+      width: type === 'text' ? 250 : 150,
     }
     this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ text, src, style, type }))
   }

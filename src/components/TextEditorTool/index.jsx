@@ -42,13 +42,12 @@ class TextEditorTool extends Component {
   onDownloadImage = () => {
     const canvas = document.createElement('canvas')
     const htmlElement = document.querySelector('#background__image__container')
-    const {offsetHeight: height, offsetWidth: width }  = htmlElement.querySelector('#card__image')
+    const { offsetHeight: height, offsetWidth: width } = htmlElement.querySelector('#card__image')
     canvas.height = height
     canvas.width = width
     const ctx = canvas.getContext('2d')
     const html = new XMLSerializer().serializeToString(htmlElement)
-    const data =
-      `<svg height="${height}" width="${width}" xmlns="http://www.w3.org/2000/svg" >' +
+    const data = `<svg height="${height}" width="${width}" xmlns="http://www.w3.org/2000/svg" >' +
       '<foreignObject height="100%" width="100%" >
       ${html}
       </foreignObject>
@@ -58,11 +57,11 @@ class TextEditorTool extends Component {
       ctx.drawImage(image, 0, 0)
       const outputDataURI = canvas.toDataURL()
       var link = document.createElement('a')
-      link.download = "name.png"
+      link.download = 'name.png'
       link.href = outputDataURI
-      document.body.appendChild(link);
+      document.body.appendChild(link)
       link.click()
-      document.body.removeChild(link);
+      document.body.removeChild(link)
     }
     image.src = 'data:image/svg+xml; charset=utf8, ' + data
   }
@@ -128,7 +127,10 @@ class TextEditorTool extends Component {
             </label>
           </div>
           <div className="relative inline-block" title="Image-Filter">
-            <label className="btn relative" onClick={() => this.setState({ showFilter: true })}>
+            <label
+              className="btn relative"
+              onClick={() => this.setState(prevState => ({ showFilter: !prevState.showFilter }))}
+            >
               <i className="fa fa-filter" aria-hidden="true" />
             </label>
             {this.state.showFilter && (
@@ -423,13 +425,12 @@ class TextEditorTool extends Component {
           </div>
         )}
         {activeType === 'text' && (
-        <div
-          className={'inline common__editor__tool'}
-        >
-          <label className="btn" onClick={this.deleteSticker}>
-            <i className="fa fa-trash" />
-          </label>
-        </div>)}
+          <div className={'inline common__editor__tool'}>
+            <label className="btn" onClick={this.deleteSticker}>
+              <i className="fa fa-trash" />
+            </label>
+          </div>
+        )}
       </div>
     )
   }

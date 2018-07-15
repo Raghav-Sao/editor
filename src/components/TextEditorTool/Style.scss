@@ -5,7 +5,7 @@
   transition: all 0.3s;
   right: 0;
   z-index: 1;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   &.active {
     transform: translateY(0);
   }
@@ -29,7 +29,7 @@
   .filter__container {
     position: absolute;
     top: 146%;
-    left: -20px;
+    right: -20px;
     width: auto;
     background: rgba(0, 0, 0, 0.6);
     &:before {
@@ -42,7 +42,7 @@
       position: absolute;
       top: -34px;
       display: inline-block;
-      left: 24px;
+      right: 20px;
     }
     & > div {
       padding: 10px;

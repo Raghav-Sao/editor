@@ -9,7 +9,12 @@ class ImageToolbar extends Component {
     const { connectDragSource, data, onClick } = this.props
     const content = () => {
       return (
-        <div className="img-toolbar" dangerouslySetInnerHTML={{__html: data.src }} key={data.id} style={data.style}/>
+        <div
+          className="img-toolbar"
+          dangerouslySetInnerHTML={{ __html: data.src }}
+          key={data.id}
+          style={data.style}
+        />
       )
     }
     return connectDragSource(
