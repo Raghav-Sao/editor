@@ -109,8 +109,8 @@ class Sticker extends Component {
         if(this.state.isRotating) return
         this.setState({isDragging: true})
         const newDx = e.pageX - startX,
-            newDy = e.pageY - startY;
-        sticker.dataset.lastTransform = JSON.stringify({lastOffsetX: newDx, lastOffsetY: newDy });
+            newDy = e.pageY - startY
+        sticker.dataset.lastTransform = JSON.stringify({lastOffsetX: newDx, lastOffsetY: newDy })
         console.log(sticker.dataset.lastTransform)
         return  { translateX: newDx, translateY: newDy}
       }
@@ -122,13 +122,13 @@ class Sticker extends Component {
   }
 
   onResizeOrRotate = (e, type) => { // Todo: make some name for other e
-    this.setState({isRotatedRecently: true});
+    this.setState({isRotatedRecently: true})
     const sticker = this.stickerRef.current
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
     const { dataset: { lastTransform = JSON.stringify({}) }} = sticker
     const { lastOffsetX = 0, lastOffsetY = 0 } = JSON.parse(lastTransform)
-    var startX = e.pageX - lastOffsetX, startY = e.pageY - lastOffsetY;
+    var startX = e.pageX - lastOffsetX, startY = e.pageY - lastOffsetY
     this.resizeOrRotate$ = merge(
       fromEvent(document, 'mousemove'),
       fromEvent(document, 'touchmove')
@@ -176,8 +176,8 @@ class Sticker extends Component {
           </div>
         )
       }
-      const imgStyle = { width: '100%' }
-      return <img ref={this.stickerRef} src={src} key={id} style={imgStyle} />
+      const imgStyle = { }
+        return <div  dangerouslySetInnerHTML={{__html: src }} ref={this.stickerRef}  key={id} style={imgStyle}/>
     }
     return (
       <div

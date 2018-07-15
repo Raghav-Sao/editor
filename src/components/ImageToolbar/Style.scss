@@ -1,5 +1,9 @@
 .img-toolbar {
-  display: block;
+  display: inline-block;
   text-align: center;
   margin: 10px;
+}
+.sidebar__image {
+  width: 50%;
+  display: inline-block;
 }

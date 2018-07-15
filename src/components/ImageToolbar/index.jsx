@@ -8,21 +8,12 @@ class ImageToolbar extends Component {
   render() {
     const { connectDragSource, data, onClick } = this.props
     const content = () => {
-      if (true) {
-        return (
-          <img
-            alt={data.type}
-            className="img-toolbar"
-            onClick={onClick}
-            key={data.id}
-            src={data.src}
-            style={data.style}
-          />
-        )
-      }
+      return (
+        <div className="img-toolbar" dangerouslySetInnerHTML={{__html: data.src }} key={data.id} style={data.style}/>
+      )
     }
     return connectDragSource(
-      <div className="text-center" type="img">
+      <div className="sidebar__image text-center" type="img">
         {content()}
       </div>
     )

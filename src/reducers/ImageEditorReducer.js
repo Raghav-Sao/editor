@@ -74,7 +74,7 @@ export default function reducer(state = initialState, action) {
 					...style,
 				},
 			}
-			state.activeSticker = sticker
+			// state.activeSticker = sticker
 			return {
 				...state,
 				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],
@@ -91,7 +91,7 @@ export default function reducer(state = initialState, action) {
 					...style,
 				},
 			}
-			state.activeSticker = sticker
+			// state.activeSticker = sticker
 			return {
 				...state,
 				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],
@@ -108,7 +108,7 @@ export default function reducer(state = initialState, action) {
 					transform,
 				},
 			}
-			state.activeSticker = sticker
+			// state.activeSticker = sticker
 			return {
 				...state,
 				stickers: [...state.stickers.slice(0, index), sticker, ...state.stickers.slice(index + 1)],

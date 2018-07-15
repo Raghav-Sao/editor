@@ -34,7 +34,7 @@ class CardEditorSpace extends Component {
       left: position.startX - x,
       top: position.startY - y,
       position: 'absolute',
-      width: 250,
+      width: type === "text" ? 250 : 150 ,
     }
     this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ text, src, style, type }))
   }
@@ -86,8 +86,6 @@ const dropSpecs = {
     const position = { startX, startY }
     if (type) {
       component.onAddSticker({ position, src, style, text, type })
-    } else {
-      component.onMoveSticker(id, position)
     }
     return { name: 'Content' }
   },
