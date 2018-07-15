@@ -14,6 +14,7 @@ class TextToolbar extends Component {
       top: 60,
       position: 'absolute',
       width: 250,
+      color: '#000',
     }
     this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ text, src, style, type }))
   }

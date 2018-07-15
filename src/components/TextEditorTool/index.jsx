@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getTramsfromStyle } from 'lib'
+import { SketchPicker } from 'react-color'
 
 import { actionCreator } from '../../store/actionCreator'
 import Style from './Style.css'
@@ -100,12 +101,20 @@ class TextEditorTool extends Component {
     e.nativeEvent.stopImmediatePropagation()
   }
 
+  handleChangeComplete = color => {
+    const style = {
+      color: color.hex,
+    }
+
+    this.props.dispatch(actionCreator.CHANGE_TEXT_STICKER_STYLE({ style }))
+  }
+
   render() {
     const {
       activeSticker: { style: activeStyle = {}, type: activeType },
       isBackgroundImageSelected,
     } = this.props
-
+    debugger
     const showEditorTool = typeof activeType !== 'undefined' || isBackgroundImageSelected
 
     return (
@@ -424,8 +433,27 @@ class TextEditorTool extends Component {
             </label>
           </div>
         )}
-        {activeType === 'text' && (
+        {(activeType === 'text' || activeType === 'image') && (
           <div className={'inline common__editor__tool'}>
+            <div className="relative inline-block">
+              {this.state.showColorPalette && (
+                <SketchPicker
+                  color={activeStyle.color}
+                  onChangeComplete={this.handleChangeComplete}
+                />
+              )}
+              <label
+                className="btn"
+                style={{ background: activeStyle.color }}
+                onClick={() =>
+                  this.setState(prevState => ({
+                    showColorPalette: !prevState.showColorPalette,
+                  }))
+                }
+              >
+                <i className="fa fa-paint-brush c-transparent" />
+              </label>
+            </div>
             <label className="btn" onClick={this.deleteSticker}>
               <i className="fa fa-trash" />
             </label>

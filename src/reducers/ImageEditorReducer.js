@@ -13,6 +13,7 @@ export default function reducer(state = initialState, action) {
       const textStyle = action.payload
       const id = Date.now()
       const sticker = { ...textStyle, id }
+      debugger
       state.activeSticker = sticker
       return {
         ...state,

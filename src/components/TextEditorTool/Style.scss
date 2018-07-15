@@ -63,6 +63,23 @@
   }
   .resetBlur {
   }
+  .sketch-picker {
+    position: absolute;
+    top: 146%;
+    right: -20px;
+    &:before {
+      // @extend %cap; Todo: // Make it workable
+      content: '';
+      border: none;
+      border: 17px;
+      border-color: transparent transparent #fff;
+      border-style: solid;
+      position: absolute;
+      top: -35px;
+      display: inline-block;
+      right: 20px;
+    }
+  }
 }
 .text__editor__tool {
   display: inline-block;

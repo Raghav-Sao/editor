@@ -18,7 +18,7 @@ class SideBar extends Component {
           width: '100px',
           height: 'auto',
         },
-        type: 'img',
+        type: 'image',
       }
       return <ImageToolbar data={data} key={index} />
     })
