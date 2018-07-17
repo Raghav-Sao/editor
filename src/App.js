@@ -23,10 +23,10 @@ class App extends Component {
     const { showAlert, dispatch } = this.props
     return (
       <div className="row h-100">
-        <Header className="col-12" />
-        <Sidebar className="col-3" />
-        <TextEditorTool className="text-editor-tool col-9" />
-        <div className="col-9 text-center m-t-60">
+        <Header />
+        <Sidebar />
+        <TextEditorTool className="text-editor-tool" />
+        <div className="text-center m-t-60 card__editor__space">
           <CardEditorSpace />
         </div>
       </div>

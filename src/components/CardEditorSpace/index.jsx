@@ -33,6 +33,7 @@ class CardEditorSpace extends Component {
       ...style,
       left: position.startX - x,
       top: position.startY - y,
+      textAlign: 'center',
       position: 'absolute',
       width: type === 'text' ? 250 : 150,
     }

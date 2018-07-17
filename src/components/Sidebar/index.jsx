@@ -6,9 +6,14 @@ import * as imageStickersData from 'components/ImageToolbar/images/svg/index.js'
 import './Style.css'
 
 class SideBar extends Component {
+  state = { showSidebar: false }
+
   render() {
+    const toggleSidebar = () => {
+      this.setState(prevState => ({ showSidebar: !prevState.showSidebar }))
+    }
     const textStickers = textStickerData.map((sticker, index) => (
-      <TextToolbar data={sticker} key={index} />
+      <TextToolbar data={sticker} key={index} onClick={toggleSidebar} />
     ))
     const imageStickers = Object.keys(imageStickersData).map((key, index) => {
       const data = {
@@ -24,10 +29,18 @@ class SideBar extends Component {
     })
 
     return (
-      <div className="col-3 sidebar">
-        {textStickers}
-        <div className="sidebar_image_container"> {imageStickers} </div>
-      </div>
+      <React.Fragment>
+        <div
+          className={`sidebar--toggle ${this.state.showSidebar ? 'active' : ''}`}
+          onClick={() => toggleSidebar()}
+        >
+          <i className="fa fa-chevron-right" />
+        </div>
+        <div className={`col-3 sidebar ${this.state.showSidebar ? 'active' : ''}`}>
+          {textStickers}
+          <div className="sidebar_image_container"> {imageStickers} </div>
+        </div>
+      </React.Fragment>
     )
   }
 }

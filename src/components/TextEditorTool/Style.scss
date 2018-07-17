@@ -6,6 +6,11 @@
   right: 0;
   z-index: 1;
   background: rgba(0, 0, 0, 0.5);
+  width: calc(100% - 300px);
+  padding: 5px;
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+  }
   &.active {
     transform: translateY(0);
   }
@@ -33,6 +38,18 @@
     width: auto;
     background: rgba(0, 0, 0, 0.6);
     &:before {
+      // @extend %cap; Todo: // Make it workable
+      content: '';
+      border: none;
+      border: 17px;
+      border-color: transparent transparent rgba(0, 0, 0, 0.6);
+      border-style: solid;
+      position: absolute;
+      top: -34px;
+      display: inline-block;
+      right: 20px;
+    }
+    &:after {
       // @extend %cap; Todo: // Make it workable
       content: '';
       border: none;
@@ -93,6 +110,45 @@
   transform: translateY(-100px);
   &.active {
     transform: translateY(0px);
+  }
+  .text__align__wrapper {
+    display: inline-block;
+    position: relative;
+    .text__align__container {
+      position: absolute;
+      display: inline-block;
+      left: calc(50% - 70px);
+      top: calc(100% + 19px);
+      width: 140px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #fff;
+      &:before {
+        content: '';
+        border: none;
+        border: 10px;
+        border-color: transparent transparent #fff;
+        border-style: solid;
+        position: absolute;
+        top: -20px;
+        display: inline-block;
+        left: calc(50% - 10px);
+        z-index: 2;
+      }
+      &:after {
+        // @extend %cap; Todo: // Make it workable
+
+        content: '';
+        border: 11px;
+        border-color: transparent transparent #cccccc;
+        border-style: solid;
+        position: absolute;
+        top: -23px;
+        display: inline-block;
+        right: 58px;
+      }
+    }
   }
 }
 .common__editor__tool {

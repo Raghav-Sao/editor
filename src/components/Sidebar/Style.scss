@@ -1,12 +1,50 @@
 .sidebar {
-  background: #555;
+  float: left;
+  width: 300px;
+  display: inline-block;
+  background: rgb(85, 85, 85);
   color: #fff;
   text-align: center;
   height: calc(100% - 50px);
-  overflow: hidden;
+  // overflow: hidden;
   position: sticky;
   top: 0;
   &:hover {
     overflow: auto;
+  }
+}
+.sidebar--toggle {
+  left: -50px;
+  top: -50px;
+  position: fixed;
+}
+
+@media only screen and (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    background: rgba(85, 85, 85, 0.8);
+    top: 50px;
+    z-index: 2;
+    transform: translateX(-350px);
+    transition: all 1s;
+  }
+  &.active {
+    transform: translateX(0);
+  }
+  & .sidebar--toggle {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 3;
+    height: 50px;
+    color: white;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    transition: all 0.4s;
+    &.active {
+      transform: rotate(180deg);
+    }
   }
 }

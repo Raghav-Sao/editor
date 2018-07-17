@@ -1,11 +1,19 @@
-#background__image__container {
-  position: relative;
+.card__editor__space {
+  float: left;
+  width: calc(100% - 300px);
   display: inline-block;
-  margin: auto;
-  float: none;
-  user-select: none;
-  & img#card__image {
+  & #background__image__container {
+    position: relative;
+    display: inline-block;
+    margin: auto;
+    float: none;
     user-select: none;
+    & img#card__image {
+      user-select: none;
+      width: 100%;
+    }
+  }
+  @media only screen and (max-width: 768px) {
     width: 100%;
   }
 }

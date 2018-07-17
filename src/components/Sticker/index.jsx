@@ -60,11 +60,12 @@ class Sticker extends Component {
   }
 
   resizeOrRotate = ({ mouseX, mouseY, type, e, startX, startY }) => {
+    e.stopPropagation()
+    // e.nativeEvent.stopImmediatePropagation()
     const sticker = this.stickerRef.current
     const { left, top, right, width, height } = sticker.getBoundingClientRect()
     const { offsetWidth } = sticker
     const { data: { style: { transform } } } = this.props
-
     switch (type) {
       case 'leftResize':
       case 'rightResize': {
@@ -81,7 +82,6 @@ class Sticker extends Component {
         diff = diff * Math.cos(slop - rad) * (mouseX > l ? 1 : -1)
         if (isNaN(diff)) {
           console.log(x, y)
-          debugger
           alert('check kr bhai')
           return { width, left, diff: 0, leftDiff: 0, topDiff: 0 }
         }
@@ -110,8 +110,10 @@ class Sticker extends Component {
       case 'drag': {
         if (this.state.isRotating) return
         this.setState({ isDragging: true })
-        const newDx = e.pageX - startX,
-          newDy = e.pageY - startY
+        const pageX = e.touches ? e.touches[0].pageX : e.pageX,
+          pageY = e.touches ? e.touches[0].pageY : e.pageY
+        const newDx = pageX - startX,
+          newDy = pageY - startY
         sticker.dataset.lastTransform = JSON.stringify({ lastOffsetX: newDx, lastOffsetY: newDy })
         console.log(sticker.dataset.lastTransform)
         return { translateX: newDx, translateY: newDy }
@@ -132,11 +134,13 @@ class Sticker extends Component {
     e.nativeEvent.stopImmediatePropagation()
     const { dataset: { lastTransform = JSON.stringify({}) } } = sticker
     const { lastOffsetX = 0, lastOffsetY = 0 } = JSON.parse(lastTransform)
-    var startX = e.pageX - lastOffsetX,
-      startY = e.pageY - lastOffsetY
+    const pageX = e.pageX || e.touches[0].pageX,
+      pageY = e.pageY || e.touches[0].pageY
+    var startX = pageX - lastOffsetX,
+      startY = pageY - lastOffsetY
     this.resizeOrRotate$ = merge(
-      fromEvent(document, 'mousemove'),
-      fromEvent(document, 'touchmove')
+      fromEvent(document, 'touchmove'),
+      fromEvent(document, 'mousemove')
     ).pipe(
       takeUntil(
         stopEvents$.pipe(
@@ -199,15 +203,28 @@ class Sticker extends Component {
         key={id}
         onClick={e => this.activeSticker(e, id)}
         onMouseDown={e => this.onResizeOrRotate(e, 'drag')} // Todo: use id from key and make better for isRotating true event
+        onTouchStart={e => this.onResizeOrRotate(e, 'drag')}
       >
         {sticker(1)}
-        <div className="h-l" onMouseDown={e => this.onResizeOrRotate(e, 'leftResize')}>
+        <div
+          className="h-l"
+          onMouseDown={e => this.onResizeOrRotate(e, 'leftResize')}
+          onTouchStart={e => this.onResizeOrRotate(e, 'leftResize')}
+        >
           <span id="handle-left" />
         </div>
-        <div className="h-r" onMouseDown={e => this.onResizeOrRotate(e, 'rightResize')}>
+        <div
+          className="h-r"
+          onMouseDown={e => this.onResizeOrRotate(e, 'rightResize')}
+          onTouchStart={e => this.onResizeOrRotate(e, 'rightResize')}
+        >
           <span id="handle-right" />
         </div>
-        <div className="handle rotate" onMouseDown={e => this.onResizeOrRotate(e, 'rotate')} />
+        <div
+          className="handle rotate"
+          onMouseDown={e => this.onResizeOrRotate(e, 'rotate')}
+          onTouchStart={e => this.onResizeOrRotate(e, 'rotate')}
+        />
       </div>
     )
   }
