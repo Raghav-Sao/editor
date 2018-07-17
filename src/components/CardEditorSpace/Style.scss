@@ -8,6 +8,7 @@
     margin: auto;
     float: none;
     user-select: none;
+    overflow: hidden;
     & img#card__image {
       user-select: none;
       width: 100%;
