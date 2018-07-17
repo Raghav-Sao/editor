@@ -25,7 +25,7 @@ class SideBar extends Component {
         },
         type: 'image',
       }
-      return <ImageToolbar data={data} key={index} />
+      return <ImageToolbar data={data} key={index} onClick={e => toggleSidebar()} />
     })
 
     return (

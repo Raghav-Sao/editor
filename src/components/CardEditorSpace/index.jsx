@@ -33,11 +33,10 @@ class CardEditorSpace extends Component {
       ...style,
       left: position.startX - x,
       top: position.startY - y,
-      textAlign: 'center',
       position: 'absolute',
       width: type === 'text' ? 250 : 150,
     }
-    style = type === 'text' ? { ...style, color: '#000' } : style
+    style = type === 'text' ? { ...style, color: '#000', textAlign: 'center', } : style
     this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ text, src, style, type }))
   }
   onMoveSticker = (id, position) => {
