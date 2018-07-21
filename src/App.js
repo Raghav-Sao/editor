@@ -5,12 +5,12 @@ import './App.css'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import CardEditorSpace from './components/CardEditorSpace'
+import Exp from './components/Exp'
 import TextEditorTool from 'components/TextEditorTool'
 import Style from './index.css'
 // import Alert from './components/Alert';
 // import { Button } from 'reactstrap';
 
-import { dismissAlert } from './actions/alertAction.js'
 
 const mapStateToProps = ({ imageEditor: { showAlert } }) => ({
   showAlert,
@@ -26,8 +26,12 @@ class App extends Component {
         <Header />
         <Sidebar />
         <TextEditorTool className="text-editor-tool" />
-        <div className="text-center m-t-60 card__editor__space">
-          <CardEditorSpace />
+        {/* <div className="text-center m-t-60 card__editor__space">
+              <CardEditorSpace />
+               <Exp />
+              </div>***/}
+        <div className="m-t-60 card__editor__space">
+          <Exp />
         </div>
       </div>
     )
