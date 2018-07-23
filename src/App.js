@@ -8,17 +8,13 @@ import CardEditorSpace from './components/CardEditorSpace'
 import Exp from './components/Exp'
 import TextEditorTool from 'components/TextEditorTool'
 import Style from './index.css'
-// import Alert from './components/Alert';
-// import { Button } from 'reactstrap';
-
+import Flex from './flex.css'
 
 const mapStateToProps = ({ imageEditor: { showAlert } }) => ({
   showAlert,
 })
+
 class App extends Component {
-  dismissAlert = () => {
-    this.props.dispatch(dismissAlert())
-  }
   render() {
     const { showAlert, dispatch } = this.props
     return (
@@ -26,12 +22,11 @@ class App extends Component {
         <Header />
         <Sidebar />
         <TextEditorTool className="text-editor-tool" />
-        {/* <div className="text-center m-t-60 card__editor__space">
-              <CardEditorSpace />
-               <Exp />
-              </div>***/}
+        <div className="text-center m-t-60 card__editor__space">
+          <CardEditorSpace />
+        </div>
         <div className="m-t-60 card__editor__space">
-          <Exp />
+          <CardEditorSpace />
         </div>
       </div>
     )

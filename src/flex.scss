@@ -1,0 +1,26 @@
+.flex__container {
+  display: flex;
+  flex-wrap: wrap;
+  @media only screen and (min-width: 768px) {
+    .t__50 {
+      flex: 0 0 50%;
+    }
+  }
+}
+.flex__container__column {
+  @extend .flex__container;
+  flex-direction: column;
+}
+.flex__100 {
+  flex: 0 0 100%;
+}
+.flex {
+  display: flex;
+}
+.align__self__center {
+  align-self: center center;
+}
+.justify__center {
+  justify-content: center;
+}
+

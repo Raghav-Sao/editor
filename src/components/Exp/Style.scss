@@ -1,4 +1,4 @@
-@import './fontello';
+@import './fontello.css';
 
 .row {
   display: flex;
@@ -13,34 +13,25 @@
     position: relative;
     .ratting {
       position: absolute;
-      left: 5px;
-      top: 5px;
+      left: 10px;
+      top: 10px;
       color: #fdc039;
-      background: rgba(0,0,0, 0.03);
+      background: rgba(0, 0, 0, 0.03);
     }
     .like {
       position: absolute;
-      right: 5px;
-      top: 5px;
+      right: 10px;
+      top: 10px;
       color: red;
-      background: rgba(0,0,0, 0.03);
+      background: rgba(0, 0, 0, 0.03);
     }
-    .card__image__mata div{
+    .card__image__mata div {
       padding: 5px;
     }
   }
   img {
     width: 100%;
   }
-  body {
-    margin: 0;
-    font-family: Arial;
-  }
-
-  .header {
-    padding: 32px;
-  }
-
 
   /* Create four equal columns that sits next to each other */
   .column {
@@ -54,20 +45,10 @@
   }
 
   /* Responsive layout - makes a two column-layout instead of four columns */
-  @media (max-width: 800px) {
-    .column {
-      flex: 50%;
-      max-width: 50%;
-    }
-  }
-
-  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .column {
       flex: 100%;
       max-width: 100%;
     }
   }
-
-
 }

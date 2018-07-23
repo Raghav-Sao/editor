@@ -1,0 +1,19 @@
+.card__details {
+  .image__thumnail_container {
+    flex: 0 0 100px;
+  }
+  .image__container {
+    flex: 0 0 40%;
+    height: 400px;
+    border: 1px solid #ccc;
+  }
+  .image__details {
+    flex: 0 0 auto;
+  }
+  .image__thumnail {
+    border: 1px solid #ccc;
+    width: 65px;
+    height: 65px;
+    margin: 5px;
+  }
+}

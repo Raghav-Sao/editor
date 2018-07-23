@@ -1,12 +1,12 @@
-import React, { Component,Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 import Style from './Style.css'
-import Image from 'components/Image.js'
+import Image from '../Gallery/ImageCard'
 
 class Exp extends Component {
   render() {
     return (
       <Fragment>
-        <div class="row gallary"> 
+        <div class="row gallary">
           <div class="column">
             <Image src="https://w3schools.com/w3images/wedding.jpg" />
             <Image src="https://w3schools.com/w3images/rocks.jpg" />
@@ -23,7 +23,7 @@ class Exp extends Component {
             <Image src="https://w3schools.com/w3images/mountainskies.jpg" />
             <Image src="https://w3schools.com/w3images/rocks.jpg" />
             <Image src="https://w3schools.com/w3images/underwater.jpg" />
-          </div>  
+          </div>
           <div class="column">
             <Image src="https://w3schools.com/w3images/wedding.jpg" />
             <Image src="https://w3schools.com/w3images/rocks.jpg" />
@@ -47,4 +47,4 @@ class Exp extends Component {
   }
 }
 
-export default Exp;
+export default Exp
