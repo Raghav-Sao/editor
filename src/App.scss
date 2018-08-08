@@ -69,6 +69,21 @@ select {
 
 /************************************************* button **************************************************/
 button {
+  min-height: 40px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  outline: none;
+  font-weight: bold;
+  font-size: 15px;
+  color: #fff;
+  &:active {
+    box-shadow: 1px 1px 1px transparent;
+    transform: translateX(1px) translateY(1px);
+  }
+  &:hover {
+  }
+}
+button.custom {
   margin: 5px; //remove later and generate m-*
   min-height: 30px;
   background: white;
@@ -91,4 +106,23 @@ button {
 /*********************************************** icon ********************************************************/
 [class*='icon-'] {
   font-size: 20px;
+}
+
+/*********************************************** h1 h2 h3 h4 h5 h6 ******************************************/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+/************************************************ Link ****************************************************/
+a {
+  text-decoration: none;
+  color: #2874f0;
+  &:hover {
+    text-decoration: underline;
+  }
 }
