@@ -31,7 +31,7 @@ class ImageCard extends Component {
             <img src={urls[0]} />
           </LazyLoad>
           <i className="like icon-heart-empty" />
-          <Ratting />
+          <Ratting ratting={3.5} />
         </div>
         <div className="card__footer card__image__mata">
           <div className="link">Green-Card #18c001</div>

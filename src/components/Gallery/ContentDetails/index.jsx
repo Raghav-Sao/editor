@@ -35,14 +35,14 @@ class Content extends Component {
       <Fragment>
         <Header />
         <div class="card__details flex__container">
-          <div className="flex__container__column image__thumnail_container justify__center">
+          <div className="flex__container--column image__thumnail_container justify__center">
             {thumnail.map((data, index) => (
               <div className="image__thumnail flex__container" onClick={() => selectImage(index)}>
                 <img src={data} className="align__self__center" />
               </div>
             ))}
           </div>
-          <div className="image__container flex__container__column">
+          <div className="image__container flex__container--column">
             <div>
               <img src={urls[this.state.selectedImage]} />
               <div className="flex__container">
@@ -54,7 +54,7 @@ class Content extends Component {
           <div className="image__details">
             <div className="image__details__header">
               <h1>{name}</h1>
-              <Ratting />
+              <Ratting ratting={4.5} />
             </div>
             <div className="price">
               <span>₹{price}</span>
@@ -66,7 +66,7 @@ class Content extends Component {
                 </div>
               ))}
             </div>
-            <div className="flex__container__column sellers__details">
+            <div className="flex__container--column sellers__details">
               <div className="seller__details">
                 Sold by:
                 <a href="facebook.com" target="__blank">

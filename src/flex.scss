@@ -1,13 +1,13 @@
 .flex__container {
   display: flex;
-  flex-wrap: wrap;
+  margin: 1px;
   @media only screen and (min-width: 768px) {
     .t__50 {
       flex: 0 0 50%;
     }
   }
 }
-.flex__container__column {
+.flex__container--column {
   @extend .flex__container;
   flex-direction: column;
 }
@@ -23,4 +23,25 @@
 .justify__center {
   justify-content: center;
 }
+.align__center {
+  align-items: center;
+}
+.flex__container--center {
+  @extend .flex__container;
+  @extend .justify__center;
+  @extend .align__center;
+}
 
+.flex__container--column--center {
+  @extend .flex__container--center;
+  flex-direction: column;
+}
+
+.flex__row {
+  @extend .flex__container;
+  padding: 5px;
+}
+.flex__row--column {
+  @extend .flex__row;
+  flex-direction: column;
+}

@@ -1,7 +1,6 @@
 .row {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 4px;
 }
 * {
   box-sizing: border-box;
@@ -9,36 +8,39 @@
 .column {
   flex: 25%;
   max-width: 25%;
-  padding: 0 4px;
 }
 
 .column img {
   vertical-align: middle;
 }
-img {
-  width: 100%;
-}
-.link {
-  color: #0060c0;
-  cursor: pointer;
-  &:hover {
-    color: #c45500;
+
+.gallery {
+  flex: 1;
+  img {
+    width: 100%;
   }
-}
-.example-enter {
-  opacity: 0.01;
-}
+  .link {
+    color: #0060c0;
+    cursor: pointer;
+    &:hover {
+      color: #c45500;
+    }
+  }
+  .example-enter {
+    opacity: 0.01;
+  }
 
-.example-enter.example-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
+  .example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
 
-.example-leave {
-  opacity: 1;
-}
+  .example-leave {
+    opacity: 1;
+  }
 
-.example-leave.example-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
+  .example-leave.example-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+  }
 }

@@ -1,3 +1,5 @@
+@import 'colors';
+
 * {
   box-sizing: border-box;
 }
@@ -8,8 +10,15 @@
   &::after {
     content: '';
     clear: both;
-    display: table;
   }
+}
+
+.border {
+  border: 1px solid #ccc;
+  margin: 5px 0;
+}
+.align-center {
+  align-items: center;
 }
 // [class*='col-'] {
 //   float: left;
@@ -90,16 +99,34 @@ button.custom {
   border: 1px solid #ccc;
   cursor: pointer;
   box-shadow: 2px 2px 2px #111;
-  outline: none;
   border-radius: 0 5px 0 5px;
-  font-weight: bold;
   &:active {
     border-radius: 5px 0px;
     box-shadow: 1px 1px 1px transparent;
+    font-weight: bold;
     transform: translateX(1px) translateY(1px);
+    outline: none;
   }
   &:hover {
     border-radius: 5px 0px;
+    outline: none;
+  }
+}
+
+button.textButton {
+  margin: 5px; //remove later and generate m-*
+  min-height: 30px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  color: $link;
+  font-weight: normal;
+  &:active,
+  &:hover,
+  &:focus {
+    color: $linkActive;
+    outline: none;
   }
 }
 
@@ -122,7 +149,13 @@ h6 {
 a {
   text-decoration: none;
   color: #2874f0;
+  cursor: pointer;
   &:hover {
     text-decoration: underline;
   }
+}
+
+/************************************************ Generic ****************************************************/
+.pointer {
+  cursor: pointer;
 }

@@ -6,6 +6,7 @@ import { DragDropContextProvider } from 'react-dnd'
 import App from './App'
 import Gallery from 'components/Gallery'
 import ContentDetails from 'components/Gallery/ContentDetails'
+import CardCreation from 'components/Admin/CardCreation'
 import './index.css'
 
 const Root = ({ store }) => (
@@ -16,6 +17,7 @@ const Root = ({ store }) => (
           <Route exact path="/" component={App} />
           <Route exact path="/gallery" component={Gallery} />
           <Route exact path="/gallery/details/:id" component={ContentDetails} />
+          <Route exact path="/admin/card-creation" component={CardCreation} />
         </Switch>
       </Router>
     </Provider>

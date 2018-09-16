@@ -11,7 +11,7 @@ const middleware = applyMiddleware(logger)
 
 export default createStore(
   reducer,
-  composeWithDevTools()
-  // applyMiddleware(logger),
+  composeWithDevTools(),
+  applyMiddleware(logger)
   // other store enhancers if any
 )
