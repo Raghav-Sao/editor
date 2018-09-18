@@ -1,7 +1,14 @@
-import { UPLOAD_IMAGE, UPDATE_PREVIEW_INDEX } from 'actions/AdminAction'
+import { UPLOAD_IMAGE, UPDATE_INPUT_DATA, UPDATE_PREVIEW_INDEX } from 'actions/AdminAction'
 const initialState = {
   previewIndex: 0,
   images: [],
+  formInput: {
+    name: null,
+    quantity: null,
+    price: null,
+    tags: null,
+    type: null,
+  },
 }
 const reducer = (state = initialState, action) => {
   console.log(action)
@@ -15,11 +22,20 @@ const reducer = (state = initialState, action) => {
       }
     }
     case UPDATE_PREVIEW_INDEX: {
-      debugger
       const { previewIndex } = payload
       return {
         ...state,
         previewIndex,
+      }
+    }
+    case UPDATE_INPUT_DATA: {
+      const { name, value } = payload
+      return {
+        ...state,
+        formInput: {
+          ...state.formInput,
+          [name]: value,
+        },
       }
     }
 

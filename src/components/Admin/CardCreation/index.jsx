@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { actionCreator } from 'store/actionCreator'
 import { connect } from 'react-redux'
 import { getCompressUrl } from 'lib/utils'
+import formData from './data'
 
 import ImagePreview from 'components/Admin/ImagePreview'
 
@@ -16,6 +17,10 @@ class CardCreation extends Component {
     // this.fileReader.removeEventListener('load', this.imageLoaded)
   }
 
+  handleInputChange = ({ target: { name, value } }) => {
+    console.log(name, value)
+    this.props.dispatch(actionCreator.UPDATE_INPUT_DATA({ name, value }))
+  }
   uploadImage = (event, imageUrl = null) => {
     const files = imageUrl ? imageUrl : event.target.files
     for (var i = 0; i < files.length; i++) {
@@ -35,8 +40,7 @@ class CardCreation extends Component {
   }
 
   updateImagePreview(isLeft) {
-    debugger
-    const { props: { images: { length }, previewIndex: index } } = this
+    const { props: { formInput, images: { length }, previewIndex: index } } = this
     const previewIndex = isLeft
       ? index === 0 ? index : index - 1
       : index === length - 1 ? index : index + 1
@@ -49,7 +53,7 @@ class CardCreation extends Component {
   }
 
   render() {
-    const { images, images: { length }, previewIndex } = this.props
+    const { formInput, images, images: { length }, previewIndex } = this.props
     return (
       <div className="flex__row admin__card__creation">
         <div className="flex__row--column upload__images__container">
@@ -87,18 +91,24 @@ class CardCreation extends Component {
           )}
         </div>
         <div className="flex__row--column card__details__from">
-          <input type="text" />
-          <input type="text" />
-          <input type="text" />
-          <input type="text" />
-          <input type="text" />
-          <input type="text" />
-          <input type="text" />
+          {formData.map(({ type, name }) => (
+            <input
+              type={type}
+              value={formInput[name]}
+              name={name}
+              placeholder={name}
+              onChange={this.handleInputChange}
+            />
+          ))}
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ adminReducer: { images, previewIndex } }) => ({ images, previewIndex })
+const mapStateToProps = ({ adminReducer: { formInput, images, previewIndex } }) => ({
+  formInput,
+  images,
+  previewIndex,
+})
 export default connect(mapStateToProps)(CardCreation)
