@@ -43,12 +43,10 @@ class Content extends Component {
             ))}
           </div>
           <div className="image__container flex__container--column">
-            <div>
-              <img src={urls[this.state.selectedImage]} />
-              <div className="flex__container">
-                <button className="buy__now">Buy Now</button>
-                <button className="add__to__cart">Add To Cart</button>
-              </div>
+            <img src={urls[this.state.selectedImage]} />
+            <div className="flex__container">
+              <button className="buy__now">Buy Now</button>
+              <button className="add__to__cart">Add To Cart</button>
             </div>
           </div>
           <div className="image__details">

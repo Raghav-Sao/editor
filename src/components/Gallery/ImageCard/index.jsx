@@ -4,6 +4,8 @@ import LazyLoad from 'react-lazyload'
 import { connect } from 'react-redux'
 import Loader from 'components/Loader'
 
+import './Style.css'
+
 import Ratting from 'components/ratting'
 
 class ImageCard extends Component {
@@ -11,6 +13,7 @@ class ImageCard extends Component {
     window.open('/gallery/details/1')
   }
   render() {
+    debugger
     const {
       data: {
         color,
@@ -25,13 +28,15 @@ class ImageCard extends Component {
       },
     } = this.props
     return (
-      <div className="card card__image__container" onClick={() => this.showDetails()}>
-        <div className="card__body pointer">
+      <div className="card card__image__container">
+        <div className="card__body">
           <LazyLoad height={400} placeholder={<Loader />}>
-            <img src={urls[0]} />
+            <img className="pointer" src={urls[0]} onClick={() => this.showDetails()} />
           </LazyLoad>
-          <i className="like icon-heart-empty" />
-          <Ratting ratting={3.5} />
+          <div className="flex__container like__start_container">
+            <Ratting ratting={3.5} />
+            <i className={`like ${isLiked ? 'icon-heart' : 'icon-heart-empty red'}`} />
+          </div>
         </div>
         <div className="card__footer card__image__mata">
           <div className="link">Green-Card #18c001</div>

@@ -7,8 +7,8 @@ import './Style.css'
 
 class TextToolbar extends Component {
   onTextToolbarClick = (e, { type, text, src, style }) => {
-    const left = this.props.stickers ? (this.props.stickers.length * 30) % 300 + 20 : 20
-    const top = this.props.stickers ? (this.props.stickers.length * 30) % 400 + 20 : 20
+    const left = this.props.stickers ? ((this.props.stickers.length * 30) % 300) + 20 : 20
+    const top = this.props.stickers ? ((this.props.stickers.length * 30) % 400) + 20 : 20
     style = {
       // Todo: make some logic
       ...style,
@@ -24,7 +24,10 @@ class TextToolbar extends Component {
     e.nativeEvent.stopImmediatePropagation()
   }
   render() {
-    const { connectDragSource, data: { id, style, text, type } } = this.props
+    const {
+      connectDragSource,
+      data: { id, style, text, type },
+    } = this.props
 
     return connectDragSource(
       <div
@@ -44,7 +47,13 @@ class TextToolbar extends Component {
 
 const dragType = 'TextToolbar'
 const dragSpec = {
-  beginDrag({ data: { id, type, text, style } }, monitor, component) {
+  beginDrag(
+    {
+      data: { id, type, text, style },
+    },
+    monitor,
+    component
+  ) {
     return { id, style, type, text }
   },
 }

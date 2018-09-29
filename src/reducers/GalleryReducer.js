@@ -1,25 +1,40 @@
-import { COLOR, LANGUAGE } from 'actions/galleryAction'
+import { COLOR, LANGUAGE, SORT_BY, TYPE } from 'actions/galleryAction'
 const initialState = {
-  test: 'test',
+  sortBy: 'popularity',
   color: {},
+  language: {},
+  type: {},
 }
-export default function reducer(state = initialState, action) {
-  console.log(action.type, COLOR)
-  switch (action.type) {
+export default function reducer(state = initialState, { type, payload }) {
+  switch (type) {
     case COLOR: {
-      const { color } = action.payload
+      const { color } = payload
       return {
         ...state,
         color: { ...state.color, ...color },
       }
     }
+
     case LANGUAGE: {
-      const { language } = action.payload
+      const { language } = payload
       return {
         ...state,
         language: { ...state.language, ...language },
       }
     }
+
+    case TYPE: {
+      const { type } = payload
+      return {
+        ...state,
+        type: { ...state.type, ...type },
+      }
+    }
+
+    case SORT_BY: {
+      const { sortBy } = payload
+    }
+
     default: {
       return state
     }

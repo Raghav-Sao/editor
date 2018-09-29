@@ -1,3 +1,15 @@
+.card__body {
+  .like__start_container {
+    flex: 1;
+    justify-content: space-between;
+    left: 10px;
+    position: absolute;
+    top: 10px;
+    .like {
+      color: red;
+    }
+  }
+}
 .description {
   color: #111;
 }

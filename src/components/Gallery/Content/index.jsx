@@ -14,14 +14,9 @@ class Content extends Component {
   }
   componentWillMount() {}
   render() {
-    const change = () => {
-      console.log(cards2)
-      console.log(cards)
-      this.setState({
-        a: cards2,
-        b: cards,
-      })
-    }
+    const length = Math.ceil(cards.length / 2)
+    const [data1, data2] = [cards.slice(0, length), cards.slice(length)]
+    debugger
     return (
       <div class="row">
         <SidebarFilter />
@@ -31,10 +26,10 @@ class Content extends Component {
           </div>
           <div class="row">
             <div class="column">
-              {this.state.a.map((cardData, index) => <ImageCard data={cardData} />)}
+              {data1.map((cardData, index) => <ImageCard data={cardData} />)}
             </div>
             <div class="column">
-              {this.state.b.map((cardData, index) => <ImageCard data={cardData} />)}
+              {data2.map((cardData, index) => <ImageCard data={cardData} />)}
             </div>
           </div>
         </div>

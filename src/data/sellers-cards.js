@@ -2,6 +2,7 @@ export default [
   {
     id: '5b542a8eafb991077b3d1162',
     is_active: false,
+    is_liked: true,
     price: '156.88',
     urls: ['https://w3schools.com/w3images/nature.jpg'],
     rating: '3.2',
@@ -25,6 +26,7 @@ export default [
   {
     id: '5b542a8eec00670d1144ab6e',
     is_active: true,
+    is_liked: true,
     price: '85.55',
     urls: ['https://w3schools.com/w3images/mist.jpg'],
     rating: '0.7',
@@ -48,6 +50,7 @@ export default [
   {
     id: '5b542a8e2af0e08de67116d2',
     is_active: false,
+    is_liked: true,
     price: '394.83',
     urls: ['https://w3schools.com/w3images/falls2.jpg'],
     rating: '0.8',
@@ -71,6 +74,7 @@ export default [
   {
     id: '5b542a8e5e0e200abc159f44',
     is_active: true,
+    is_liked: true,
     price: '304.85',
     urls: ['https://w3schools.com/w3images/rocks.jpg'],
     rating: '0.9',
@@ -94,6 +98,7 @@ export default [
   {
     id: '5b542a8e8cbd0fea8cd8f6d7',
     is_active: true,
+    is_liked: true,
     price: '211.75',
     urls: ['https://w3schools.com/w3images/paris.jpg'],
     rating: '3.2',
@@ -117,6 +122,7 @@ export default [
   {
     id: '5b542a8e102d05f3d1a403f5',
     is_active: true,
+    is_liked: true,
     price: '296.79',
     urls: ['https://w3schools.com/w3images/mist.jpg'],
     rating: '0.1',
@@ -140,6 +146,7 @@ export default [
   {
     id: '5b542a8eda068b580b31f8bb',
     is_active: false,
+    is_liked: true,
     price: '212.09',
     urls: ['https://w3schools.com/w3images/nature.jpg'],
     rating: '0.2',
@@ -163,6 +170,7 @@ export default [
   {
     id: '5b542a8e14cf8075a013e56a',
     is_active: false,
+    is_liked: true,
     price: '217.59',
     urls: ['https://w3schools.com/w3images/paris.jpg'],
     rating: '0.4',
@@ -186,6 +194,7 @@ export default [
   {
     id: '5b542a8ed764d52e00bd7014',
     is_active: true,
+    is_liked: true,
     price: '362.99',
     urls: ['https://w3schools.com/w3images/rocks.jpg'],
     rating: 4,
@@ -209,6 +218,7 @@ export default [
   {
     id: '5b542a8e0be317a0ad381e5c',
     is_active: true,
+    is_liked: true,
     price: '134.01',
     urls: ['https://w3schools.com/w3images/paris.jpg'],
     rating: '1.8',
@@ -232,6 +242,7 @@ export default [
   {
     id: '5b542a8e6b6ad6ea412e8875',
     is_active: false,
+    is_liked: true,
     price: '321.88',
     urls: ['https://w3schools.com/w3images/mist.jpg'],
     rating: 3,

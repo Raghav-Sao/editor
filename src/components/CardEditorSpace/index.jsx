@@ -1,32 +1,24 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { actionCreator } from '../../store/actionCreator'
 import { findDOMNode } from 'react-dom'
 import { connect } from 'react-redux'
-import { DropTarget } from 'react-dnd'
+
+import Card from './Card'
 import Style from './Style.css'
 import Sticker from '../Sticker'
 
 class CardEditorSpace extends Component {
-  componentDidMount() {
-    document.addEventListener('click', this.deactiveBackgroundImage)
-  }
-
-  deactiveBackgroundImage = () => {
+  aciveBackgroundImage = (e, cardIndex) => {
     this.props.dispatch(
-      actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: false })
+      actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: true, cardIndex })
     )
-  }
-
-  aciveBackgroundImage = e => {
-    this.props.dispatch(
-      actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: true })
-    )
-    this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id: null }))
+    // this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id: null })) not required
 
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
   }
-  onAddSticker = ({ position, src, style, text, type }) => {
+
+  onAddSticker = ({ position, src, style, text, type, cardIndex }) => {
     const rootRef = findDOMNode(this)
     const { x, y } = rootRef.getBoundingClientRect()
     style = {
@@ -36,8 +28,10 @@ class CardEditorSpace extends Component {
       position: 'absolute',
       width: type === 'text' ? 250 : 150,
     }
-    style = type === 'text' ? { ...style, color: '#000', textAlign: 'center', } : style
-    this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ text, src, style, type }))
+    style = type === 'text' ? { ...style, color: '#000', textAlign: 'center' } : style
+    this.props.dispatch(
+      actionCreator.ADD_TEXT_STICKER({ style: { text, src, style, type }, cardIndex })
+    )
   }
   onMoveSticker = (id, position) => {
     const rootRef = findDOMNode(this)
@@ -46,66 +40,44 @@ class CardEditorSpace extends Component {
     this.props.dispatch(actionCreator.MOVE_STICKER({ id, style }))
   }
   render() {
-    const {
-      backgroundImage,
-      backgroundImageStyle,
-      connectDropTarget,
-      isBackgroundImageSelected,
-      stickers,
-    } = this.props
-    const addedSticker = stickers.map((sticker, index) => {
-      return <Sticker data={sticker} key={index} onClick={e => this.onTextToolbarClick(e)} />
-    })
-
-    return connectDropTarget(
-      <div id="background__image__container" className="col-10 drop-target">
-        <img
-          id="card__image"
-          className={`${isBackgroundImageSelected ? 'active' : ''}`}
-          alt="img"
-          src={backgroundImage}
-          onClick={e => this.aciveBackgroundImage(e)}
-          style={backgroundImageStyle}
-          draggable="false"
-          width="100%"
+    const { card, connectDropTarget } = this.props
+    debugger
+    const getStickers = ({ stickers, cardIndex }) =>
+      stickers.map((sticker, index) => (
+        <Sticker
+          data={sticker}
+          key={index}
+          onClick={e => this.onTextToolbarClick(e)}
+          cardIndex={cardIndex}
         />
-        {addedSticker}
+      ))
+
+    return (
+      <div id="background__image__container" className="col-10 drop-target">
+        {card.map(
+          (
+            { backgroundImage, backgroundImageStyle, isBackgroundImageSelected, stickers },
+            index
+          ) => (
+            <Card
+              index={index}
+              isBackgroundImageSelected={isBackgroundImageSelected}
+              backgroundImageStyle={backgroundImageStyle}
+              stickers={getStickers({ stickers, cardIndex: index })}
+              aciveBackgroundImage={this.aciveBackgroundImage}
+              connectDropTarget={connectDropTarget}
+              backgroundImage={backgroundImage}
+              onAddSticker={this.onAddSticker}
+              dispatch={this.props.dispatch}
+            />
+          )
+        )}
       </div>
     )
   }
 }
 
-const dropSpecs = {
-  drop(props, monitor, component) {
-    const { id, src, style, text, type } = monitor.getItem()
-    const { x: clientX, y: clientY } = monitor.getClientOffset()
-    const { x: sourceX, y: sourceY } = monitor.getInitialSourceClientOffset()
-    const { x: initialClientX, y: initialClientY } = monitor.getInitialClientOffset()
-    console.log(sourceX, initialClientX, clientX)
-    const startX = clientX - initialClientX + sourceX
-    const startY = clientY - initialClientY + sourceY
-    const position = { startX, startY }
-    if (type) {
-      component.onAddSticker({ position, src, style, text, type })
-    }
-    return { name: 'Content' }
-  },
-}
-const dropTypes = ['TextToolbar', 'ImageToolbar']
-const dropCollect = (connect, monitor) => ({
-  connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver(),
-  canDrop: monitor.canDrop(),
+const mapStateToProps = ({ imageEditor: { card } }) => ({
+  card,
 })
-
-const mapStateToProps = ({
-  imageEditor: { stickers, backgroundImage, isBackgroundImageSelected, backgroundImageStyle },
-}) => ({
-  stickers,
-  backgroundImage,
-  isBackgroundImageSelected,
-  backgroundImageStyle,
-})
-export default connect(mapStateToProps)(
-  DropTarget(dropTypes, dropSpecs, dropCollect)(CardEditorSpace)
-)
+export default connect(mapStateToProps)(CardEditorSpace)

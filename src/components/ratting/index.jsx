@@ -4,9 +4,8 @@ class Ratting extends Component {
   render() {
     const { ratting } = this.props
     const absRatting = parseInt(ratting)
-
     const isHalfRatting = ratting - absRatting
-    debugger
+
     return (
       <div className="ratting">
         {[...Array(absRatting)].map((x, i) => {
