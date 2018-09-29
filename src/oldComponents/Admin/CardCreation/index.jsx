@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getCompressUrl } from 'lib/utils'
 import formData from './data'
 
-import ImagePreview from 'components/Admin/ImagePreview'
+import ImagePreview from 'oldComponents/Admin/ImagePreview'
 
 import './Style.css'
 
@@ -40,10 +40,20 @@ class CardCreation extends Component {
   }
 
   updateImagePreview(isLeft) {
-    const { props: { formInput, images: { length }, previewIndex: index } } = this
+    const {
+      props: {
+        formInput,
+        images: { length },
+        previewIndex: index,
+      },
+    } = this
     const previewIndex = isLeft
-      ? index === 0 ? index : index - 1
-      : index === length - 1 ? index : index + 1
+      ? index === 0
+        ? index
+        : index - 1
+      : index === length - 1
+        ? index
+        : index + 1
     this.updateImageIndex(previewIndex)
   }
 
@@ -53,7 +63,12 @@ class CardCreation extends Component {
   }
 
   render() {
-    const { formInput, images, images: { length }, previewIndex } = this.props
+    const {
+      formInput,
+      images,
+      images: { length },
+      previewIndex,
+    } = this.props
     return (
       <div className="flex__row admin__card__creation">
         <div className="flex__row--column upload__images__container">

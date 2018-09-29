@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { push } from 'react-router-redux'
 import LazyLoad from 'react-lazyload'
 import { connect } from 'react-redux'
-import Loader from 'components/Loader'
+import Loader from 'oldComponents/Loader'
 
 import './Style.css'
 
-import Ratting from 'components/ratting'
+import Ratting from 'oldComponents/ratting'
 
 class ImageCard extends Component {
   showDetails = () => {
@@ -44,7 +44,10 @@ class ImageCard extends Component {
             <a className="link">
               {price} from {name}
             </a>
-            <a className="link bold">&nbsp;({other_seller_info.count} other offers)</a>
+            <a className="link bold">
+              &nbsp;(
+              {other_seller_info.count} other offers)
+            </a>
           </div>
           <div className="description clear">{color} Marriage Card</div>
         </div>

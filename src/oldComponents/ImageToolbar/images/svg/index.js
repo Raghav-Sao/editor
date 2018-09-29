@@ -1,0 +1,8 @@
+export { binocularsSvg } from 'oldComponents/ImageToolbar/images/svg/001-binoculars'
+export { diagramSvg } from 'oldComponents/ImageToolbar/images/svg/002-diagram'
+export { rocketSvg } from 'oldComponents/ImageToolbar/images/svg/003-rocket'
+export { horseSvg } from 'oldComponents/ImageToolbar/images/svg/004-horse'
+export { storeSvg } from 'oldComponents/ImageToolbar/images/svg/005-store'
+export { calendarSvg } from 'oldComponents/ImageToolbar/images/svg/006-calendar'
+export { laptopSvg } from 'oldComponents/ImageToolbar/images/svg/007-laptop'
+// export  {deliverTrolleySvg} from 'oldComponents/ImageToolbar/images/svg/008-delivery-packages-on-a-trolley'

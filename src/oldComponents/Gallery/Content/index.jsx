@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ImageCard from '../ImageCard/index'
-import SortBy from 'components/Filter/SortBy'
-import SidebarFilter from 'components/SidebarFilter'
+import SortBy from 'oldComponents/Filter/SortBy'
+import SidebarFilter from 'oldComponents/SidebarFilter'
 import Style from './Style.css'
 import 'assests/fontello/css/fontello.scss'
 import cards from 'data/sellers-cards'
@@ -26,10 +26,14 @@ class Content extends Component {
           </div>
           <div class="row">
             <div class="column">
-              {data1.map((cardData, index) => <ImageCard data={cardData} />)}
+              {data1.map((cardData, index) => (
+                <ImageCard data={cardData} />
+              ))}
             </div>
             <div class="column">
-              {data2.map((cardData, index) => <ImageCard data={cardData} />)}
+              {data2.map((cardData, index) => (
+                <ImageCard data={cardData} />
+              ))}
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ImageToolbar from '../ImageToolbar'
 import TextToolbar from '../TextToolbar'
 import { textStickerData } from './data'
-import * as imageStickersData from 'components/ImageToolbar/images/svg/index.js'
+import * as imageStickersData from 'oldComponents/ImageToolbar/images/svg/index.js'
 import './Style.css'
 
 class SideBar extends Component {

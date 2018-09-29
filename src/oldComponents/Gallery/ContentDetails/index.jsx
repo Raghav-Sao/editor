@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import ImageCard from '../ImageCard/index'
 import Style from './Style.css'
 import 'assests/fontello/css/fontello.css'
-import Header from 'components/Header'
-import Ratting from 'components/ratting'
+import Header from 'oldComponents/Header'
+import Ratting from 'oldComponents/ratting'
 import cardDetails from 'data/cardDetails'
 
 class Content extends Component {
@@ -68,7 +68,8 @@ class Content extends Component {
               <div className="seller__details">
                 Sold by:
                 <a href="facebook.com" target="__blank">
-                  {storeName} {storeRatting}/5
+                  {storeName} {storeRatting}
+                  /5
                 </a>
               </div>
               <div className="other__seller__details f__13">
