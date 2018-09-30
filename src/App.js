@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { Button } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
+import './Style.css'
 
 const mapStateToProps = ({ imageEditor: { showAlert } }) => ({
   showAlert,

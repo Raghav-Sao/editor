@@ -1,4 +1,3 @@
-import * as type from 'store/imageEditor/actions'
 const initialState = {
   activeSticker: {},
   card: [
@@ -87,7 +86,7 @@ export default function reducer(state = initialState, { payload, type }) {
     }
 
     case 'RESIZE_STICKER': {
-      const { id, left, diff, isLeftResize, leftDiff, topDiff, cardIndex } = payload
+      const { id, diff, leftDiff, topDiff, cardIndex } = payload
       const index = state.card[cardIndex].stickers.findIndex(s => s.id === id)
       const st = state.card[cardIndex].stickers[index].style
       console.log('width:', st.width, 'diff:', diff)

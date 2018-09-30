@@ -33,6 +33,10 @@ export default function reducer(state = initialState, { type, payload }) {
 
     case SORT_BY: {
       const { sortBy } = payload
+      return {
+        ...state,
+        sortBy,
+      }
     }
 
     default: {

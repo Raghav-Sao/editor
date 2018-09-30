@@ -7,8 +7,6 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import reducer from './reducers'
 
-const middleware = applyMiddleware(logger)
-
 export default createStore(
   reducer,
   composeWithDevTools(),
