@@ -1,6 +1,12 @@
 .sidebar {
+  display: inline-block;
   height: 100%;
   width: 345px;
+  @media only screen and (max-width: 768px) {
+    position: absolute;
+    transform: translateX(-350px);
+    transition: all 1s;
+  }
   .sidebar--toggle {
     display: none;
     position: absolute;
