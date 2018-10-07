@@ -1,9 +1,9 @@
 .sidebar {
-  display: inline-block;
+  position: absolute;
   height: 100%;
   width: 345px;
+  z-index: 1;
   @media only screen and (max-width: 768px) {
-    position: absolute;
     transform: translateX(-350px);
     transition: all 1s;
   }

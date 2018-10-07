@@ -5,7 +5,7 @@ import { fromEvent, merge } from 'rxjs'
 import { distinctUntilChanged, map, takeUntil, tap, throttleTime } from 'rxjs/operators'
 import { Image } from 'semantic-ui-react'
 import SVG from 'react-inlinesvg'
-import { actionCreator } from '../../store/actionCreator'
+import { actionCreator } from 'store/actionCreator'
 
 import Style from './Style.css'
 
@@ -50,14 +50,14 @@ class Sticker extends Component {
       const trans = transform ? transform.split('translate(')[1].split(')')[0] : 0
       const transX = trans ? parseFloat(trans.split('px')[0]) : 0
       const transY = trans ? parseFloat(trans.split('px, ')[1].split('px')[0]) : 0
-      const { rads } = calculatedStyle
-      const transformRes = `translate(${transX}px, ${transY}px) rotate(${-rads}rad) `
-      this.props.dispatch(actionCreator.ROTATE_STICKER({ id, transform: transformRes, cardIndex }))
+      const { rotation } = calculatedStyle
+      // const transformRes = `translate(${transX}px, ${transY}px) rotate(${-rads}rad) `
+      this.props.dispatch(actionCreator.ROTATE_STICKER({ id, rotation, cardIndex }))
     } else if (type === 'drag') {
       const { translateX, translateY } = calculatedStyle
       const rad = transform ? parseFloat(transform.split('rotate(')[1].split('rad')[0]) : 0
-      const style = { transform: `translate(${translateX}px, ${translateY}px) rotate(${rad}rad)` }
-      this.props.dispatch(actionCreator.MOVE_STICKER({ id, style, cardIndex }))
+      const translate = { translateX, translateY }
+      this.props.dispatch(actionCreator.MOVE_STICKER({ id, translate, cardIndex }))
     } else {
       const { diff, leftDiff, offsetWidth, topDiff } = calculatedStyle
       if (diff < 0 && offsetWidth <= 2) return
@@ -68,7 +68,9 @@ class Sticker extends Component {
   resizeOrRotate = ({ mouseX, mouseY, type, e, startX, startY }) => {
     e.stopPropagation()
     // e.nativeEvent.stopImmediatePropagation()
+    console.log(this.stickerRef)
     const sticker = this.stickerRef.current
+    if (this.stickerRef === null) return
     const { left, top, right, width, height } = sticker.getBoundingClientRect()
     const { offsetWidth } = sticker
     const {
@@ -112,7 +114,7 @@ class Sticker extends Component {
         const centerY = top + height / 2
         const base = mouseX - centerX
         const hypotenuse = mouseY - centerY
-        return { rads: Math.atan2(base, hypotenuse) }
+        return { rotation: -Math.atan2(base, hypotenuse) }
       }
 
       case 'drag': {
@@ -134,6 +136,8 @@ class Sticker extends Component {
   }
 
   onResizeOrRotate = (e, type, cardIndex) => {
+    if (this.stickerRef === null) return
+
     // Todo: make some name for other e
     this.setState({ isRotatedRecently: true })
     const sticker = this.stickerRef.current
@@ -175,50 +179,91 @@ class Sticker extends Component {
       this.resizeOrRotateSticker(this.props.data.id, calculatedStyle, type, cardIndex)
     )
   }
+  getTransformData = ({ translate: { translateX, translateY }, rotation: { unit, rotation } }) => {
+    const data = `translate(${translateX}px, ${translateY}px) rotate(${rotation}${unit})`
+    return data
+  }
 
+  getStyle = ({
+    color,
+    fontSize,
+    fontWeight,
+    position: { left, top },
+    width,
+    height,
+    textAlign = 'center',
+    fontStyle,
+    translate,
+    rotation,
+  }) => ({
+    textAlign,
+    fontStyle,
+    color,
+    fontSize,
+    fontWeight,
+    height,
+    left,
+    position: 'absolute',
+    top,
+    width,
+    transform: this.getTransformData({ translate, rotation }),
+  })
+
+  test = event => {
+    const {
+      target: { innerText },
+    } = event
+    this.props.dispatch(actionCreator.ON_INPUT_TEXT_CHANGE({ innerText }))
+  }
   render() {
     const {
       connectDragSource,
-      sticker: { id, style, text, src },
+      data: { id, resource, style, type },
       activeSticker,
       cardIndex,
+      key,
     } = this.props
     const isStickerActive = activeSticker.id == id
     const isEditable =
       isStickerActive && !this.state.isRotating && !this.state.isDragging && !this.state.isResizing
-    const sticker = i => {
-      if (!src) {
+    const sticker = () => {
+      if (type === 'text') {
         return (
           <div
-            key={id}
+            key={key}
             className={`sticker__text ${isEditable ? 'editable' : ''}`}
             ref={this.stickerRef}
             contentEditable={isEditable}
             suppressContentEditableWarning
+            onInput={this.test}
           >
-            {text}
+            {resource}
           </div>
         )
       }
-      const imgStyle = {}
+      const imgStyle = { fill: '#fff' }
       return (
-        <SVG src={src} key={id} ref={this.stickerRef}>
-          style=
-          {imgStyle}
-          <Image src={src} />
-        </SVG>
+        <div
+          key={id}
+          className={`sticker__image ${isEditable ? 'editable' : ''}`}
+          ref={this.stickerRef}
+        >
+          <SVG src={resource} key={id} ref={this.stickerRef} style={imgStyle}>
+            <Image src={resource} style={imgStyle} />
+          </SVG>
+        </div>
       )
     }
     return (
       <div
-        className={`sticker text-toolbar ${activeSticker.id === id ? 'active' : ''}`}
-        style={style}
+        className={`sticker ${activeSticker.id === id ? 'active' : ''}`}
+        style={this.getStyle(style)}
         key={id}
         onClick={e => this.activeSticker(e, id, cardIndex)}
         onMouseDown={e => this.onResizeOrRotate(e, 'drag', cardIndex)} // Todo: use id from key and make better for isRotating true event
         onTouchStart={e => this.onResizeOrRotate(e, 'drag', cardIndex)}
       >
-        {sticker(1)}
+        {sticker()}
         <div
           className="h-l"
           onMouseDown={e => this.onResizeOrRotate(e, 'leftResize', cardIndex)}
@@ -260,8 +305,7 @@ const dragCollect = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 })
 
-const mapStateToProps = ({ imageEditor: { stickers, activeSticker } }) => ({
-  stickers,
+const mapStateToProps = ({ editorSpace: { activeSticker } }) => ({
   activeSticker,
 })
 export default connect(mapStateToProps)(DragSource(dragType, dragSpec, dragCollect)(Sticker))

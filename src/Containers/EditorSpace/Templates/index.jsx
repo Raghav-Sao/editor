@@ -8,7 +8,7 @@ import Template from './Template'
 import './Style.css'
 
 class Templates extends Component {
-  aciveBackgroundImage = (e, cardIndex) => {
+  acivedBackgroundImage = (e, cardIndex) => {
     this.props.dispatch(
       actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: true, cardIndex })
     )
@@ -19,45 +19,33 @@ class Templates extends Component {
   }
 
   getStickers = ({ stickers, cardIndex }) =>
-    stickers.map((sticker, index) => (
-      <Sticker
-        sticker={sticker}
-        key={index}
-        onClick={e => this.onTextToolbarClick(e)}
-        cardIndex={cardIndex}
-      />
-    ))
+    stickers.map((sticker, index) => <Sticker data={sticker} key={index} cardIndex={cardIndex} />)
 
   render() {
-    const { card, connectDropTarget, dispatch } = this.props
+    const { cards, activeSticker, connectDropTarget, dispatch } = this.props
 
     return (
       <div className="templates__container">
         <div id="background__image__container" className="col-10 drop-target">
-          {card.map(
-            (
-              { backgroundImage, backgroundImageStyle, isBackgroundImageSelected, stickers },
-              index
-            ) => (
-              <Template
-                index={index}
-                isBackgroundImageSelected={isBackgroundImageSelected}
-                backgroundImageStyle={backgroundImageStyle}
-                stickers={this.getStickers({ stickers, cardIndex: index })}
-                aciveBackgroundImage={this.aciveBackgroundImage}
-                backgroundImage={backgroundImage}
-                onAddSticker={this.onAddSticker}
-                dispatch={dispatch}
-              />
-            )
-          )}
+          {cards.map((card, index) => (
+            <Template
+              acivedBackgroundImage={this.acivedBackgroundImage}
+              cardIndex={index}
+              dispatch={this.props.dispatch}
+              getStickers={this.getStickers}
+              card={card}
+              key={index}
+              activeSticker={activeSticker}
+            />
+          ))}
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ imageEditor: { card } }) => ({
-  card,
+const mapStateToProps = ({ editorSpace: { cards, activeSticker } }) => ({
+  cards,
+  activeSticker,
 })
 export default connect(mapStateToProps)(Templates)

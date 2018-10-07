@@ -1,3 +1,16 @@
 .editor__space__container {
   height: 100%;
+  background: #ececec;
+  .editor__toolbar {
+    position: absolute;
+    top: 14px;
+    left: 359px;
+    background: rgba(0, 0, 0, 0.4);
+  }
+  .sidebar__container {
+    position: absolute;
+  }
+  .templates__container {
+    margin-top: 50px;
+  }
 }

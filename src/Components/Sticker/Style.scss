@@ -63,13 +63,18 @@
       }
     }
   }
-  .sticker__text {
-    padding: 10px;
+  .sticker__image {
+    svg {
+      max-width: 100%;
+      height: auto;
+      padding: 10px;
+      g path {
+        fill: white;
+      }
+    }
   }
-  svg {
-    max-width: 100%;
-    height: auto;
-    padding: 10px;
+  .sticker__text {
+    margin: 20px;
   }
 }
 

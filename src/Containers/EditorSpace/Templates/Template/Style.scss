@@ -1,3 +1,10 @@
 .template_container {
   position: relative;
+  .align__top__guide,
+  .align__center__guide,
+  .align__bottom__guide {
+    width: 100%;
+    border-bottom: 1px dashed #ccc;
+    position: absolute;
+  }
 }

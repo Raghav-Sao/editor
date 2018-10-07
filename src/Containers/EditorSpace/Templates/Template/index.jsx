@@ -18,17 +18,32 @@ class Template extends Component {
   onAddSticker = ({ position, src, style, text, type, cardIndex }) => {
     const rootRef = findDOMNode(this)
     const { x, y } = rootRef.getBoundingClientRect()
-    style = {
-      ...style,
-      left: position.startX - x,
-      top: position.startY - y,
-      position: 'absolute',
-      width: type === 'text' ? 250 : 150,
+    const sticker = {
+      type,
+      resource: 'Sample Big-Text',
+      style: {
+        position: {
+          left: position.startX - x - 20,
+          top: position.startY - y - 20,
+        },
+        scale: 1,
+        rotation: {
+          unit: 'rad',
+          rotation: 0,
+        },
+        translate: {
+          translateX: 0,
+          translateY: 0,
+        },
+        color: '#FFF',
+        fontSize: 25,
+        width: type === 'text' ? 250 : 150,
+        height: 'auto',
+        textAlign: 'center',
+      },
     }
-    style = type === 'text' ? { ...style, color: '#000', textAlign: 'center' } : style
-    this.props.dispatch(
-      actionCreator.ADD_TEXT_STICKER({ style: { text, src, style, type }, cardIndex })
-    )
+    // style = type === 'text' ? { ...style, color: '#000', textAlign: 'center' } : style
+    this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ sticker, cardIndex }))
   }
   onMoveSticker = (id, position) => {
     const rootRef = findDOMNode(this)
@@ -40,31 +55,40 @@ class Template extends Component {
   render() {
     const {
       props: {
+        acivedBackgroundImage,
         connectDropTarget,
-        index,
-        isBackgroundImageSelected,
-        backgroundImageStyle,
-        stickers,
-        aciveBackgroundImage,
-        backgroundImage,
+        cardIndex,
+        getStickers,
+        isBackgroundImageSelected = false,
+        card: {
+          background: { style, value: src, type },
+          stickers,
+          placeholder,
+        },
+        activeSticker: {
+          style: {
+            position: { left: activeLeft, top: activeTop } = {},
+            translate: { translateX, translateY } = {},
+          } = {},
+        },
       },
     } = this
 
     return (
       <Fragment>
         {connectDropTarget(
-          <div className="template_container">
+          <div className="template_container" key="cardIndex">
             <img
               id="card__image"
               className={`${isBackgroundImageSelected ? 'active' : ''}`}
               alt="img"
-              src={backgroundImage}
-              onClick={e => aciveBackgroundImage(e, index)}
-              style={backgroundImageStyle}
+              src={src}
+              onClick={e => acivedBackgroundImage(e, cardIndex)}
+              style={style}
               draggable="false"
               width="100%"
             />
-            {stickers}
+            {getStickers({ stickers, cardIndex })}
           </div>
         )}
       </Fragment>
@@ -82,7 +106,7 @@ const dropSpecs = {
     const startY = clientY - initialClientY + sourceY
     const position = { startX, startY }
     if (type) {
-      component.onAddSticker({ position, src, style, text, type, cardIndex: props.index })
+      component.onAddSticker({ position, src, style, text, type, cardIndex: props.cardIndex })
     }
     return { name: 'Content' }
   },

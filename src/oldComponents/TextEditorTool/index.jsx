@@ -341,7 +341,7 @@ class TextEditorTool extends Component {
             </Fragment>
           )}
         </div>
-        {activeType === 'text' && (
+        {'text' === 'text' && (
           <div className={`text__editor__tool ${activeType === 'text' ? 'active' : ''}`}>
             <select name="fontSize" onChange={this.onTextStyleChange} value={activeStyle.fontSize}>
               <option>Select</option>

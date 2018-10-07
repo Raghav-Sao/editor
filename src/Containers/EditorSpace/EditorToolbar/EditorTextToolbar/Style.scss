@@ -1,0 +1,16 @@
+.editor__text__toolbar__container {
+  input[type='checkbox']:checked + label {
+    background: #babbbc;
+  }
+  .ui.selection.dropdown {
+    min-width: 100px;
+  }
+}
+
+/* dont put inside other coz it on outer layer*/
+.text__align__container {
+  input[type='checkbox']:checked + label,
+  input[type='radio']:checked + label {
+    background: #babbbc;
+  }
+}
