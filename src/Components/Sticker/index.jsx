@@ -40,6 +40,47 @@ class Sticker extends Component {
     this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id: null }))
   }
 
+  checkForReadjust = (newTranslateX, newTranslateY) => {
+    if (!this.props.activeSticker.id) return [newTranslateX, newTranslateY]
+    let restranslateY = newTranslateY,
+      restranslateX = newTranslateX
+    const {
+      props: {
+        activeSticker: {
+          id: activeId,
+          style: {
+            position: { top: activeTop, left: activeLeft } = {},
+            translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
+          } = {},
+        },
+      },
+    } = this
+    const { cardRef: { current: { height = 0 } = {} } = {} } = this
+
+    this.props.card.stickers.forEach(
+      (
+        {
+          id,
+          style: {
+            position: { left, top },
+            translate: { translateX, translateY },
+          },
+        },
+        index
+      ) => {
+        const vDiff = Math.abs(parseInt(top + translateY - activeTop - newTranslateY))
+        const hDiff = Math.abs(parseInt(left + translateX - activeLeft - newTranslateX))
+        if (id !== activeId && vDiff <= 5) {
+          restranslateY = top + translateY - activeTop
+        }
+        if (id !== activeId && hDiff <= 5) {
+          restranslateX = left + translateX - activeLeft
+        }
+      }
+    )
+    return [restranslateX, restranslateY]
+  }
+
   resizeOrRotateSticker = (id, calculatedStyle, type, cardIndex) => {
     const {
       data: {
@@ -65,17 +106,18 @@ class Sticker extends Component {
     }
   }
 
-  resizeOrRotate = ({ mouseX, mouseY, type, e, startX, startY }) => {
+  resizeOrRotate = ({ mouseX, mouseY, type, e, startX, startY, lastOffsetX, lastOffsetY }) => {
     e.stopPropagation()
     // e.nativeEvent.stopImmediatePropagation()
-    console.log(this.stickerRef)
     const sticker = this.stickerRef.current
     if (this.stickerRef === null) return
     const { left, top, right, width, height } = sticker.getBoundingClientRect()
     const { offsetWidth } = sticker
     const {
       data: {
-        style: { transform },
+        style: {
+          rotation: { rotation },
+        },
       },
     } = this.props
     switch (type) {
@@ -86,7 +128,7 @@ class Sticker extends Component {
           type === 'rightResize'
             ? document.querySelector('.sticker.active #handle-right').getBoundingClientRect()
             : document.querySelector('.sticker.active #handle-left').getBoundingClientRect()
-        const rad = transform ? parseFloat(transform.split('rotate(')[1].split('rad')[0]) : 0
+        const rad = rotation ? rotation : 0
         let y = (mouseY - t) * (mouseY - t)
         let x = (mouseX - l) * (mouseX - l)
         let slop = Math.atan((mouseY - t) / (mouseX - l))
@@ -124,8 +166,9 @@ class Sticker extends Component {
           pageY = e.touches ? e.touches[0].pageY : e.pageY
         const newDx = pageX - startX,
           newDy = pageY - startY
-        sticker.dataset.lastTransform = JSON.stringify({ lastOffsetX: newDx, lastOffsetY: newDy })
-        return { translateX: newDx, translateY: newDy }
+        const [transX, transY] = this.checkForReadjust(newDx, newDy)
+        sticker.dataset.lastTransform = JSON.stringify({ lastOffsetX: transX, lastOffsetY: transY })
+        return { translateX: transX, translateY: transY }
       }
     }
   }
@@ -171,6 +214,8 @@ class Sticker extends Component {
         e,
         startX,
         startY,
+        lastOffsetX,
+        lastOffsetY,
       })),
       map(this.resizeOrRotate),
       distinctUntilChanged()
@@ -305,7 +350,8 @@ const dragCollect = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 })
 
-const mapStateToProps = ({ editorSpace: { activeSticker } }) => ({
+const mapStateToProps = ({ editorSpace: { activeSticker, cards } }) => ({
   activeSticker,
+  cards,
 })
 export default connect(mapStateToProps)(DragSource(dragType, dragSpec, dragCollect)(Sticker))

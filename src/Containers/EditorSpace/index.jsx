@@ -15,7 +15,7 @@ class EditorSpace extends Component {
             <Grid.Column width={4} className="sidebar__container">
               <Sidebar />
             </Grid.Column>
-            <Grid.Column width={12} className="templates__container">
+            <Grid.Column width={12}>
               <Templates />
             </Grid.Column>
           </Grid.Row>

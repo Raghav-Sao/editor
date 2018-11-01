@@ -10,7 +10,6 @@ class Card extends Component {
   }
 
   deactiveBackgroundImage = cardIndex => {
-    debugger
     this.props.dispatch(
       actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: false, cardIndex })
     )
@@ -61,7 +60,6 @@ const dropSpecs = {
     const startY = clientY - initialClientY + sourceY
     const position = { startX, startY }
     if (type) {
-      debugger
       props.onAddSticker({ position, src, style, text, type, cardIndex: props.index })
     }
     return { name: 'Content' }

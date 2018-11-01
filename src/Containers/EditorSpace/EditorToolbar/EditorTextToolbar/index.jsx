@@ -67,122 +67,129 @@ class EditorTextToolbar extends Component {
 
     return (
       <Fragment>
-        {activeType === 'text' && (
-          <div className="editor__text__toolbar__container">
+        <div className="editor__text__toolbar__container">
+          {activeType === 'text' && (
             <Fragment>
-              <Popup
-                trigger={
-                  <label className="ui button icon active" style={{ color: activeStyle.color }}>
-                    <Icon name="paint brush" />
-                  </label>
-                }
-                position="bottom center"
-                on={['hover', 'click']}
-                flowing
-                hoverable
-              >
-                <SketchPicker
-                  color={activeStyle.color}
-                  onChangeComplete={this.handleColorChanges}
-                />
-              </Popup>
-            </Fragment>
-            <Fragment>
-              <input
-                id="text__bold"
-                checked={activeStyle.fontWeight === 'bold'}
-                className="hidden"
-                type="checkbox"
-                name="fontWeight"
-                value={activeStyle.fontWeight === 'bold' ? 'normal' : 'bold'}
-                onChange={e => this.onTextStyleChange(e)}
-              />
-              <label htmlFor="text__bold" className="ui button icon">
-                <Icon name="bold" />
-              </label>
-            </Fragment>
-            <Fragment>
-              <input
-                id="text__italic"
-                checked={activeStyle.fontStyle === 'italic'}
-                className="hidden"
-                type="checkbox"
-                name="fontStyle"
-                value={activeStyle.fontStyle === 'italic' ? 'normal' : 'italic'}
-                onChange={e => this.onTextStyleChange(e)}
-              />
-              <label htmlFor="text__italic" className="ui button icon">
-                <Icon name="italic" />
-              </label>
-            </Fragment>
-            <Fragment>
-              <Popup
-                className="text__align__container"
-                trigger={
-                  <label htmlFor="text__align__container" className="ui button icon active">
-                    <Icon name={`align ${activeStyle.textAlign}`} />
-                  </label>
-                }
-                position="bottom center"
-                on={['hover', 'click']}
-                flowing
-                hoverable
-              >
+              <Fragment>
+                <Popup
+                  trigger={
+                    <label className="ui button icon active" style={{ color: activeStyle.color }}>
+                      <Icon name="paint brush" />
+                    </label>
+                  }
+                  position="bottom center"
+                  on={['hover', 'click']}
+                  flowing
+                  hoverable
+                >
+                  <SketchPicker
+                    color={activeStyle.color}
+                    onChangeComplete={this.handleColorChanges}
+                  />
+                </Popup>
+              </Fragment>
+              <Fragment>
                 <input
-                  id="text__left"
-                  checked={activeStyle.textAlign === 'left'}
+                  id="text__bold"
+                  checked={activeStyle.fontWeight === 'bold'}
                   className="hidden"
-                  type="radio"
-                  name="textAlign"
-                  value="left"
-                  onChange={e => {
-                    this.onTextStyleChange(e), this.toggleTextAlignFilter()
-                  }}
+                  type="checkbox"
+                  name="fontWeight"
+                  value={activeStyle.fontWeight === 'bold' ? 'normal' : 'bold'}
+                  onChange={e => this.onTextStyleChange(e)}
                 />
-                <label className="ui button icon" htmlFor="text__left">
-                  <Icon name="align left" />
+                <label htmlFor="text__bold" className="ui button icon">
+                  <Icon name="bold" />
                 </label>
+              </Fragment>
+              <Fragment>
                 <input
-                  id="text__middle"
-                  checked={activeStyle.textAlign === 'center'}
+                  id="text__italic"
+                  checked={activeStyle.fontStyle === 'italic'}
                   className="hidden"
-                  type="radio"
-                  name="textAlign"
-                  value="center"
-                  onChange={e => {
-                    this.onTextStyleChange(e), this.toggleTextAlignFilter()
-                  }}
+                  type="checkbox"
+                  name="fontStyle"
+                  value={activeStyle.fontStyle === 'italic' ? 'normal' : 'italic'}
+                  onChange={e => this.onTextStyleChange(e)}
                 />
-                <label className="ui button icon" htmlFor="text__middle">
-                  <Icon name="align center" />
+                <label htmlFor="text__italic" className="ui button icon">
+                  <Icon name="italic" />
                 </label>
+              </Fragment>
+              <Fragment>
+                <Popup
+                  className="text__align__container"
+                  trigger={
+                    <label htmlFor="text__align__container" className="ui button icon active">
+                      <Icon name={`align ${activeStyle.textAlign}`} />
+                    </label>
+                  }
+                  position="bottom center"
+                  on={['hover', 'click']}
+                  flowing
+                  hoverable
+                >
+                  <input
+                    id="text__left"
+                    checked={activeStyle.textAlign === 'left'}
+                    className="hidden"
+                    type="radio"
+                    name="textAlign"
+                    value="left"
+                    onChange={e => {
+                      this.onTextStyleChange(e), this.toggleTextAlignFilter()
+                    }}
+                  />
+                  <label className="ui button icon" htmlFor="text__left">
+                    <Icon name="align left" />
+                  </label>
+                  <input
+                    id="text__middle"
+                    checked={activeStyle.textAlign === 'center'}
+                    className="hidden"
+                    type="radio"
+                    name="textAlign"
+                    value="center"
+                    onChange={e => {
+                      this.onTextStyleChange(e), this.toggleTextAlignFilter()
+                    }}
+                  />
+                  <label className="ui button icon" htmlFor="text__middle">
+                    <Icon name="align center" />
+                  </label>
 
-                <input
-                  id="text__right"
-                  checked={activeStyle.textAlign === 'right'}
-                  className="hidden"
-                  type="radio"
-                  name="textAlign"
-                  value="right"
-                  onChange={e => {
-                    this.onTextStyleChange(e), this.toggleTextAlignFilter()
-                  }}
+                  <input
+                    id="text__right"
+                    checked={activeStyle.textAlign === 'right'}
+                    className="hidden"
+                    type="radio"
+                    name="textAlign"
+                    value="right"
+                    onChange={e => {
+                      this.onTextStyleChange(e), this.toggleTextAlignFilter()
+                    }}
+                  />
+                  <label className="ui button icon" htmlFor="text__right">
+                    <Icon name="align right" />
+                  </label>
+                </Popup>
+              </Fragment>
+              <Fragment>
+                <Dropdown
+                  options={this.getFontSizeOptions()}
+                  selection
+                  text={activeStyle.fontSize}
+                  style={{ margin: '0 .25em 0 0' }}
                 />
-                <label className="ui button icon" htmlFor="text__right">
-                  <Icon name="align right" />
-                </label>
-              </Popup>
+              </Fragment>
             </Fragment>
-            <Fragment>
-              <label className="ui button icon" onClick={this.deleteSticker}>
-                <Icon name="trash alternate" />
-              </label>
-            </Fragment>
-            <Fragment>
-              <Dropdown options={this.getFontSizeOptions()} selection text={activeStyle.fontSize} />
-            </Fragment>
-          </div>
-        )}
+          )}
+          <Fragment>
+            <label className="ui button icon" onClick={this.deleteSticker}>
+              <Icon name="trash alternate" />
+            </label>
+          </Fragment>
+        </div>
       </Fragment>
     )
   }

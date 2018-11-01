@@ -1,12 +1,21 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment, createRef } from 'react'
 import { actionCreator } from 'store/actionCreator'
 import { findDOMNode } from 'react-dom'
 import { DropTarget } from 'react-dnd'
 import './Style.css'
 
 class Template extends Component {
+  cardRef = React.createRef()
   componentDidMount() {
     document.addEventListener('click', () => this.deactiveBackgroundImage(this.props.index))
+    const {
+      props: { cardIndex, dispatch },
+      cardRef: {
+        current: { height },
+      },
+    } = this
+
+    dispatch(actionCreator.SET_BACKGROUND_IMAGE_STYLE({ cardIndex, height }))
   }
 
   deactiveBackgroundImage = cardIndex => {
@@ -45,11 +54,51 @@ class Template extends Component {
     // style = type === 'text' ? { ...style, color: '#000', textAlign: 'center' } : style
     this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ sticker, cardIndex }))
   }
+
   onMoveSticker = (id, position) => {
     const rootRef = findDOMNode(this)
     const { x, y } = rootRef.getBoundingClientRect()
     const style = { left: position.startX - x, top: position.startY - y }
     this.props.dispatch(actionCreator.MOVE_STICKER({ id, style }))
+  }
+
+  setActiveMiddel = () => {
+    if (!this.props.activeSticker.id) return [false, false]
+    let showMiddleGuide = false,
+      showLeftGuide = false
+    const {
+      props: {
+        activeSticker: {
+          id: activeId,
+          style: {
+            position: { left: activeLeft, top: activeTop } = {},
+            translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
+          } = {},
+        },
+      },
+    } = this
+    const { cardRef: { current: { height = 0 } = {} } = {} } = this
+
+    this.props.card.stickers.forEach(
+      (
+        {
+          id,
+          style: {
+            position: { left, top },
+            translate: { translateX, translateY },
+          },
+        },
+        index
+      ) => {
+        if (id !== activeId && top + translateY === activeTop + activeTraslateY) {
+          showMiddleGuide = true
+        }
+        if (id !== activeId && left + translateX === activeLeft + activeTraslateX) {
+          showLeftGuide = true
+        }
+      }
+    )
+    return [showLeftGuide, showMiddleGuide]
   }
 
   render() {
@@ -74,6 +123,8 @@ class Template extends Component {
       },
     } = this
 
+    const [showLeftGuide, showMiddleGuide] = this.setActiveMiddel()
+
     return (
       <Fragment>
         {connectDropTarget(
@@ -87,8 +138,48 @@ class Template extends Component {
               style={style}
               draggable="false"
               width="100%"
+              ref={this.cardRef}
             />
-            {getStickers({ stickers, cardIndex })}
+            {getStickers({ stickers, cardIndex, card: this.props.card })}
+            <Fragment>
+              {showLeftGuide && (
+                <div
+                  className="align__left__guide"
+                  style={{
+                    left: activeLeft,
+                    transform: `translate(${translateX}px, 0px)`,
+                  }}
+                />
+              )}
+              {showMiddleGuide && (
+                <div
+                  className="align__top__guide"
+                  style={{
+                    top: activeTop,
+                    transform: `translate(0px, ${translateY}px)`,
+                  }}
+                />
+              )}
+              {false && (
+                <div
+                  className="align__center__guide"
+                  style={{
+                    top: activeTop + 30,
+                    transform: `translate(0px, ${translateY}px)`,
+                  }}
+                />
+              )}
+              {false &
+                (
+                  <div
+                    className="align__bottom__guide"
+                    style={{
+                      top: activeTop + 60,
+                      transform: `translate(0px, ${translateY}px)`,
+                    }}
+                  />
+                )}
+            </Fragment>
           </div>
         )}
       </Fragment>

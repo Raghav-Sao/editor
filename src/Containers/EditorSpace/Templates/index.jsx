@@ -18,8 +18,10 @@ class Templates extends Component {
     e.nativeEvent.stopImmediatePropagation()
   }
 
-  getStickers = ({ stickers, cardIndex }) =>
-    stickers.map((sticker, index) => <Sticker data={sticker} key={index} cardIndex={cardIndex} />)
+  getStickers = ({ stickers, cardIndex, card }) =>
+    stickers.map((sticker, index) => (
+      <Sticker data={sticker} key={index} cardIndex={cardIndex} card={card} />
+    ))
 
   render() {
     const { cards, activeSticker, connectDropTarget, dispatch } = this.props

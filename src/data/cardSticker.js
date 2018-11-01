@@ -1,4 +1,5 @@
 import imageStickers from 'assests/images/marriage-icons'
+import cardImg from 'assests/images/card-bg.jpg'
 export const cards = [
   {
     stickers: [
@@ -21,8 +22,8 @@ export const cards = [
             translateY: 0,
           },
           color: '#FFF',
-          fontSize: 25,
-          width: 250,
+          fontSize: 35,
+          width: 120,
           height: 'auto',
           fontWeight: 'bold',
           textAlign: 'center',
@@ -32,6 +33,7 @@ export const cards = [
         name: 'sample text',
       },
       {
+        id: 123124,
         type: 'svg',
         resource: imageStickers[0].src,
         style: {
@@ -90,8 +92,8 @@ export const cards = [
     ],
     background: {
       type: 'image',
-      value: 'https://images-na.ssl-images-amazon.com/images/I/A1zCDGS7n-L._SY879_.jpg',
-      style: {},
+      value: cardImg,
+      style: { height: 'auto' },
     },
   },
 ]

@@ -53,6 +53,7 @@
   &.active {
     border: 1px dashed #bbb;
     cursor: text;
+    z-index: 1;
     & .h-r {
       @extend %handle;
       right: -8px;
@@ -74,7 +75,7 @@
     }
   }
   .sticker__text {
-    margin: 20px;
+    margin: 10px;
   }
 }
 
@@ -119,4 +120,8 @@ div.editable {
   position: absolute;
   top: -17px;
   display: inline-block;
+}
+
+svg {
+  pointer-events: none;
 }

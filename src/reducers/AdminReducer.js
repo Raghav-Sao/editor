@@ -11,7 +11,6 @@ const initialState = {
   },
 }
 const reducer = (state = initialState, action) => {
-  console.log(action)
   const { payload, type } = action
   switch (type) {
     case UPLOAD_IMAGE: {

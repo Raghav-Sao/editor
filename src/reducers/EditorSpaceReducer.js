@@ -56,9 +56,12 @@ const EditorSpace = (state = initialState, { payload, type }) => {
       }
     }
 
-    case 'DELETE_STICKER': {
-      const { id, cardIndex } = payload
-      const stickers = state.cards[cardIndex].stickers
+    case types.DELETE_STICKER: {
+      const {
+        cards,
+        activeSticker: { id, cardIndex },
+      } = state
+      const stickers = cards[cardIndex].stickers
       const index = stickers.findIndex(({ id: stickerId }) => stickerId === state.activeSticker.id)
       const updatedTemplate = {
         ...state.cards[cardIndex],
@@ -90,7 +93,6 @@ const EditorSpace = (state = initialState, { payload, type }) => {
         ...state.cards[cardIndex],
         stickers: [...stickers.slice(0, index), sticker, ...stickers.slice(index + 1)],
       }
-      console.log(updatedTemplate)
       return {
         ...state,
         activeSticker: { ...sticker, cardIndex },
@@ -205,12 +207,11 @@ const EditorSpace = (state = initialState, { payload, type }) => {
           activeSticker: {},
         }
       }
-      // const index = state.card[cardIndex].stickers.findIndex(s => s.id === id)
-      // console.log(index)
-      // return {
-      //   ...state,
-      //   activeSticker: state.card[cardIndex].stickers[index],
-      // }
+      const index = state.cards[cardIndex].stickers.findIndex(s => s.id === id)
+      return {
+        ...state,
+        activeSticker: { ...state.cards[cardIndex].stickers[index], cardIndex },
+      }
       return state
     }
 
@@ -220,6 +221,29 @@ const EditorSpace = (state = initialState, { payload, type }) => {
     //     activeSticker: {},
     //   }
     // }
+    case 'SET_BACKGROUND_IMAGE_STYLE': {
+      const { cardIndex, height } = payload
+      if (height === 0) return state
+      const background = state.cards[cardIndex].background
+      const updatedTemplate = {
+        ...state.cards[cardIndex],
+        background: {
+          ...background,
+          style: {
+            ...background.style,
+            height,
+          },
+        },
+      }
+      return {
+        ...state,
+        cards: [
+          ...state.cards.slice(0, cardIndex),
+          updatedTemplate,
+          ...state.cards.slice(cardIndex + 1),
+        ],
+      }
+    }
 
     default:
       return state
