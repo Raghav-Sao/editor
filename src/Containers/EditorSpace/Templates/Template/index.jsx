@@ -121,10 +121,15 @@ class Template extends Component {
           style: {
             position: { left: activeLeft, top: activeTop } = {},
             translate: { translateX, translateY } = {},
+            boundingRect: { top = 0 } = {},
           } = {},
         },
       },
     } = this
+
+    const alignTop = this.cardRef.current
+      ? top - this.cardRef.current.getBoundingClientRect().top - window.scrollY
+      : 0
 
     const [showLeftGuide, showTopGuide] = this.setActiveMiddel()
 
@@ -158,8 +163,7 @@ class Template extends Component {
                 <div
                   className="align__top__guide"
                   style={{
-                    top: activeTop,
-                    transform: `translate(0px, ${translateY}px)`,
+                    top: alignTop,
                   }}
                 />
               )}
