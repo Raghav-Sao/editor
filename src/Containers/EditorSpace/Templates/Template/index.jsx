@@ -37,7 +37,7 @@ class Template extends Component {
         },
         scale: 1,
         rotation: {
-          unit: 'rad',
+          unit: 'deg',
           rotation: 0,
         },
         translate: {

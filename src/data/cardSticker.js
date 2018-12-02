@@ -14,7 +14,7 @@ export const cards = [
           },
           scale: 1,
           rotation: {
-            unit: 'rad',
+            unit: 'deg',
             rotation: 0,
           },
           translate: {
@@ -46,7 +46,7 @@ export const cards = [
           },
           scale: 1,
           rotation: {
-            unit: 'rad',
+            unit: 'deg',
             rotation: 0,
           },
           translate: {
@@ -81,7 +81,7 @@ export const cards = [
           },
           scale: 1,
           rotation: {
-            unit: 'rad',
+            unit: 'deg',
             rotation: 0,
           },
           color: '#FFF',

@@ -178,7 +178,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
         style = {
           ...sticker.style,
           rotation: {
-            unit: 'rad',
+            unit: 'deg',
             rotation,
           },
           boundingRect,

@@ -40,7 +40,8 @@ class Sticker extends Component {
     this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id: null }))
   }
 
-  checkForReadjust = (newTranslateX, newTranslateY) => {
+  checkForReadjust = ({ newTranslateX, newTranslateY, activeTop }) => {
+    console.log(newTranslateY)
     if (!this.props.activeSticker.id) return [newTranslateX, newTranslateY]
     let restranslateY = newTranslateY,
       restranslateX = newTranslateX
@@ -49,12 +50,15 @@ class Sticker extends Component {
         activeSticker: {
           id: activeId,
           style: {
-            position: { top: activeTop, left: activeLeft } = {},
+            position: { left: activeAbsLeft, top: activeAbsTop },
+            // boundingRect: { top: activeTop, left: activeLeft } = {},
             translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
           } = {},
         },
       },
     } = this
+    // const { top: activeTop, left: activeLeft } = this.stickerRef.current.getBoundingClientRect()
+
     const { cardRef: { current: { height = 0 } = {} } = {} } = this
 
     this.props.card.stickers.forEach(
@@ -62,56 +66,90 @@ class Sticker extends Component {
         {
           id,
           style: {
-            position: { left, top },
+            position: { left: absLeft, top: absTop },
             translate: { translateX, translateY },
+            boundingRect: { top, left },
           },
         },
         index
       ) => {
-        const vDiff = Math.abs(parseInt(top + translateY - activeTop - newTranslateY))
-        const hDiff = Math.abs(parseInt(left + translateX - activeLeft - newTranslateX))
+        // const vDiff = Math.abs(parseInt(top + translateY - activeTop - newTranslateY))
+        // const hDiff = Math.abs(parseInt(left + translateX - activeLeft - newTranslateX))
+        const vDiff = Math.abs(parseInt(top - activeTop))
+        // console.log(vDiff, 'vDiff', top, window.scrollY, activeTop, newTranslateY)
+        // const hDiff = Math.abs(parseInt(left - activeLeft))
+        // console.log(top + window.scrollY, '-----?', activeTop, this.stickerRef.current)
         if (id !== activeId && vDiff <= 5) {
-          restranslateY = top + translateY - activeTop
+          if (id !== activeId) console.log('hi')
+          // console.log(top + window.scrollY, activeTop, absTop + translateY - activeAbsTop, 'jjjj')
+          // console.log(vDiff, 'vdiff')
+          console.log(vDiff, newTranslateY, activeTraslateY, '-------------------------->')
+          // restranslateY = absTop + translateY - activeAbsTop
+          restranslateY = newTranslateY + top - activeTop
+          // console.log(restranslateY, 'y')
         }
-        if (id !== activeId && hDiff <= 5) {
-          restranslateX = left + translateX - activeLeft
-        }
+        // if (id !== activeId && hDiff <= 10) {
+        //   restranslateX = left + translateX - activeLeft
+        // }
       }
     )
+    // console.log('------------------------')
     return [restranslateX, restranslateY]
   }
 
   resizeOrRotateSticker = (id, calculatedStyle, type, cardIndex) => {
-    const {
-      data: {
-        style: { transform },
-      },
-    } = this.props
+    // const {
+    //   activeSticker: { style: { rotation: { rotation: rad = 0 } = {} } = {} },
+    // } = this.props
+    const { bottom, top, right, left } = calculatedStyle
     if (type === 'rotate') {
-      const trans = transform ? transform.split('translate(')[1].split(')')[0] : 0
-      const transX = trans ? parseFloat(trans.split('px')[0]) : 0
-      const transY = trans ? parseFloat(trans.split('px, ')[1].split('px')[0]) : 0
+      // const trans = transform ? transform.split('translate(')[1].split(')')[0] : 0
+      // const transX = trans ? parseFloat(trans.split('px')[0]) : 0
+      // const transY = trans ? parseFloat(trans.split('px, ')[1].split('px')[0]) : 0
       const { rotation } = calculatedStyle
       // const transformRes = `translate(${transX}px, ${transY}px) rotate(${-rads}rad) `
-      this.props.dispatch(actionCreator.ROTATE_STICKER({ id, rotation, cardIndex }))
+      this.props.dispatch(
+        actionCreator.ROTATE_STICKER({
+          id,
+          rotation,
+          cardIndex,
+          boundingRect: { bottom, top: top, right, left },
+        })
+      )
     } else if (type === 'drag') {
       const { translateX, translateY } = calculatedStyle
-      const rad = transform ? parseFloat(transform.split('rotate(')[1].split('rad')[0]) : 0
+      // const rad = transform ? parseFloat(transform.split('rotate(')[1].split('rad')[0]) : 0
       const translate = { translateX, translateY }
-      this.props.dispatch(actionCreator.MOVE_STICKER({ id, translate, cardIndex }))
+      console.log(translateY, window.scrollY, top, this.stickerRef.current.getBoundingClientRect())
+      this.props.dispatch(
+        actionCreator.MOVE_STICKER({
+          id,
+          translate,
+          cardIndex,
+          boundingRect: { bottom, top: top, right, left, ltra: translateY },
+        })
+      )
     } else {
       const { diff, leftDiff, offsetWidth, topDiff } = calculatedStyle
       if (diff < 0 && offsetWidth <= 2) return
-      this.props.dispatch(actionCreator.RESIZE_STICKER({ id, diff, leftDiff, topDiff, cardIndex }))
+      this.props.dispatch(
+        actionCreator.RESIZE_STICKER({
+          id,
+          diff,
+          leftDiff,
+          topDiff,
+          cardIndex,
+          boundingRect: { bottom, top: top + window.scrollY, right, left },
+        })
+      )
     }
   }
 
   resizeOrRotate = ({ mouseX, mouseY, type, e, startX, startY, lastOffsetX, lastOffsetY }) => {
     e.stopPropagation()
-    // e.nativeEvent.stopImmediatePropagation()
     const sticker = this.stickerRef.current
     if (this.stickerRef === null) return
-    const { left, top, right, width, height } = sticker.getBoundingClientRect()
+    const { bottom, left, top, right, width, height } = sticker.getBoundingClientRect()
     const { offsetWidth } = sticker
     const {
       data: {
@@ -119,7 +157,13 @@ class Sticker extends Component {
           rotation: { rotation },
         },
       },
+      activeSticker: {
+        style: {
+          translate: { translateX: lastTraslateX = 0, translateY: lastTraslateY = 0 } = {},
+        } = {},
+      },
     } = this.props
+
     switch (type) {
       case 'leftResize':
       case 'rightResize': {
@@ -147,16 +191,35 @@ class Sticker extends Component {
         const extraTopDiff = type === 'leftResize' ? diff * Math.sin(rad) : 0
         const leftDiff = diff / 2 - (Math.cos(rad) * diff) / 2 + extraLeftDiff
         const topDiff = (Math.sin(rad) * diff) / 2 - extraTopDiff
-        return { diff, leftDiff, offsetWidth, topDiff }
+        return { diff, leftDiff, offsetWidth, topDiff, bottom, top, right }
       }
 
       case 'rotate': {
         this.setState({ isRotating: true })
-        const centerX = left + width / 2
-        const centerY = top + height / 2
-        const base = mouseX - centerX
-        const hypotenuse = mouseY - centerY
-        return { rotation: -Math.atan2(base, hypotenuse) }
+        const centerX = left + width / 2,
+          centerY = top + height / 2,
+          base = mouseX - centerX,
+          hypotenuse = mouseY - centerY,
+          deg = -Math.round((Math.atan2(base, hypotenuse) * 180) / Math.PI),
+          rotation = Math.abs(deg) < 3 ? 0 : deg,
+          transform = this.stickerRef.current.style.transform,
+          beforeData = transform.split('rotate(')[0],
+          afterData = transform.split('deg)')[1]
+
+        this.stickerRef.current.style.transform = `${beforeData} rotate(${deg}deg) ${afterData}`
+        console.log(
+          `${beforeData} rotate(${deg}deg) ${afterData}......`,
+          this.stickerRef.current.getBoundingClientRect()
+        )
+        // alert('ji')
+        console.log(this.stickerRef.current.getBoundingClientRect(), deg)
+        return {
+          rotation,
+          bottom,
+          top: this.stickerRef.current.getBoundingClientRect().top + window.scrollY,
+          right,
+          left,
+        }
       }
 
       case 'drag': {
@@ -166,9 +229,20 @@ class Sticker extends Component {
           pageY = e.touches ? e.touches[0].pageY : e.pageY
         const newDx = pageX - startX,
           newDy = pageY - startY
-        const [transX, transY] = this.checkForReadjust(newDx, newDy)
+        const [transX, transY] = this.checkForReadjust({
+          newTranslateX: newDx,
+          newTranslateY: newDy,
+          activeTop: top + window.scrollY + newDy - lastTraslateY,
+        })
         sticker.dataset.lastTransform = JSON.stringify({ lastOffsetX: transX, lastOffsetY: transY })
-        return { translateX: transX, translateY: transY }
+        return {
+          translateX: transX,
+          translateY: transY,
+          bottom,
+          top: top + window.scrollY + transY - lastTraslateY,
+          right,
+          left,
+        }
       }
     }
   }
@@ -225,6 +299,7 @@ class Sticker extends Component {
     )
   }
   getTransformData = ({ translate: { translateX, translateY }, rotation: { unit, rotation } }) => {
+    console.log(unit)
     const data = `translate(${translateX}px, ${translateY}px) rotate(${rotation}${unit})`
     return data
   }
@@ -277,7 +352,6 @@ class Sticker extends Component {
           <div
             key={key}
             className={`sticker__text ${isEditable ? 'editable' : ''}`}
-            ref={this.stickerRef}
             contentEditable={isEditable}
             suppressContentEditableWarning
             onInput={this.test}
@@ -288,12 +362,8 @@ class Sticker extends Component {
       }
       const imgStyle = { fill: '#fff' }
       return (
-        <div
-          key={id}
-          className={`sticker__image ${isEditable ? 'editable' : ''}`}
-          ref={this.stickerRef}
-        >
-          <SVG src={resource} key={id} ref={this.stickerRef} style={imgStyle}>
+        <div key={id} className={`sticker__image ${isEditable ? 'editable' : ''}`}>
+          <SVG src={resource} key={id} style={imgStyle}>
             <Image src={resource} style={imgStyle} />
           </SVG>
         </div>
@@ -307,6 +377,7 @@ class Sticker extends Component {
         onClick={e => this.activeSticker(e, id, cardIndex)}
         onMouseDown={e => this.onResizeOrRotate(e, 'drag', cardIndex)} // Todo: use id from key and make better for isRotating true event
         onTouchStart={e => this.onResizeOrRotate(e, 'drag', cardIndex)}
+        ref={this.stickerRef}
       >
         {sticker()}
         <div
