@@ -41,7 +41,6 @@ class Sticker extends Component {
   }
 
   checkForReadjust = ({ newTranslateX, newTranslateY, activeTop }) => {
-    console.log(newTranslateY)
     if (!this.props.activeSticker.id) return [newTranslateX, newTranslateY]
     let restranslateY = newTranslateY,
       restranslateX = newTranslateX
@@ -51,7 +50,7 @@ class Sticker extends Component {
           id: activeId,
           style: {
             position: { left: activeAbsLeft, top: activeAbsTop },
-            // boundingRect: { top: activeTop, left: activeLeft } = {},
+            // boundingRect: { top: activeTop, left: activeLeft } = {}, //coz it will update soon
             translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
           } = {},
         },
@@ -73,20 +72,12 @@ class Sticker extends Component {
         },
         index
       ) => {
-        // const vDiff = Math.abs(parseInt(top + translateY - activeTop - newTranslateY))
-        // const hDiff = Math.abs(parseInt(left + translateX - activeLeft - newTranslateX))
         const vDiff = Math.abs(parseInt(top - activeTop))
-        // console.log(vDiff, 'vDiff', top, window.scrollY, activeTop, newTranslateY)
         // const hDiff = Math.abs(parseInt(left - activeLeft))
-        // console.log(top + window.scrollY, '-----?', activeTop, this.stickerRef.current)
         if (id !== activeId && vDiff <= 5) {
           if (id !== activeId) console.log('hi')
-          // console.log(top + window.scrollY, activeTop, absTop + translateY - activeAbsTop, 'jjjj')
-          // console.log(vDiff, 'vdiff')
-          console.log(vDiff, newTranslateY, activeTraslateY, '-------------------------->')
           // restranslateY = absTop + translateY - activeAbsTop
           restranslateY = newTranslateY + top - activeTop
-          // console.log(restranslateY, 'y')
         }
         // if (id !== activeId && hDiff <= 10) {
         //   restranslateX = left + translateX - activeLeft
@@ -98,16 +89,9 @@ class Sticker extends Component {
   }
 
   resizeOrRotateSticker = (id, calculatedStyle, type, cardIndex) => {
-    // const {
-    //   activeSticker: { style: { rotation: { rotation: rad = 0 } = {} } = {} },
-    // } = this.props
     const { bottom, top, right, left } = calculatedStyle
     if (type === 'rotate') {
-      // const trans = transform ? transform.split('translate(')[1].split(')')[0] : 0
-      // const transX = trans ? parseFloat(trans.split('px')[0]) : 0
-      // const transY = trans ? parseFloat(trans.split('px, ')[1].split('px')[0]) : 0
       const { rotation } = calculatedStyle
-      // const transformRes = `translate(${transX}px, ${transY}px) rotate(${-rads}rad) `
       this.props.dispatch(
         actionCreator.ROTATE_STICKER({
           id,
@@ -118,7 +102,6 @@ class Sticker extends Component {
       )
     } else if (type === 'drag') {
       const { translateX, translateY } = calculatedStyle
-      // const rad = transform ? parseFloat(transform.split('rotate(')[1].split('rad')[0]) : 0
       const translate = { translateX, translateY }
       console.log(translateY, window.scrollY, top, this.stickerRef.current.getBoundingClientRect())
       this.props.dispatch(
@@ -206,12 +189,7 @@ class Sticker extends Component {
           beforeData = transform.split('rotate(')[0],
           afterData = transform.split('deg)')[1]
 
-        this.stickerRef.current.style.transform = `${beforeData} rotate(${deg}deg) ${afterData}`
-        console.log(
-          `${beforeData} rotate(${deg}deg) ${afterData}......`,
-          this.stickerRef.current.getBoundingClientRect()
-        )
-        // alert('ji')
+        this.stickerRef.current.style.transform = `${beforeData} rotate(${deg}deg) ${afterData}` //to get top after rotation before render
         console.log(this.stickerRef.current.getBoundingClientRect(), deg)
         return {
           rotation,
