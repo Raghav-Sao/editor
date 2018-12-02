@@ -79,7 +79,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
     }
 
     case 'MOVE_STICKER': {
-      const { id, translate, cardIndex } = payload
+      const { id, translate, cardIndex, boundingRect } = payload
       const stickers = state.cards[cardIndex].stickers
       const index = stickers.findIndex(({ id: stickerId }) => stickerId === id)
       const sticker = {
@@ -87,6 +87,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
         style: {
           ...stickers[index].style,
           translate,
+          boundingRect,
         },
       }
       const updatedTemplate = {
@@ -129,7 +130,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
     }
 
     case 'RESIZE_STICKER': {
-      const { id, diff, leftDiff, topDiff, cardIndex } = payload,
+      const { id, diff, leftDiff, topDiff, cardIndex, boundingRect } = payload,
         card = state.cards[cardIndex],
         { stickers } = card,
         index = stickers.findIndex(({ id: stickerId }) => stickerId === id),
@@ -147,6 +148,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
             left: left - leftDiff,
             top: top + topDiff,
           },
+          boundingRect,
         },
         activeSticker = {
           ...sticker,
@@ -168,7 +170,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
     }
 
     case 'ROTATE_STICKER': {
-      const { id, rotation, cardIndex } = payload,
+      const { id, rotation, cardIndex, boundingRect } = payload,
         card = state.cards[cardIndex],
         { stickers } = card,
         index = stickers.findIndex(({ id: stickerId }) => stickerId === id),
@@ -179,6 +181,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
             unit: 'rad',
             rotation,
           },
+          boundingRect,
         },
         activeSticker = {
           ...sticker,

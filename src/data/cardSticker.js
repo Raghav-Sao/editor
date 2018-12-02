@@ -28,6 +28,9 @@ export const cards = [
           fontWeight: 'bold',
           textAlign: 'center',
           fontStyle: 'normal',
+          boundingRect: {
+            top: 110,
+          },
         },
         labels: ['Sample text'],
         name: 'sample text',
@@ -54,6 +57,7 @@ export const cards = [
           width: 150,
           height: 'auto',
           fontWeight: 'bold',
+          boundingRect: { top: 250 },
         },
         labels: ['God Svg'],
         name: 'Lord-Ganesh7',

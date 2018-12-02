@@ -29,7 +29,7 @@ class Template extends Component {
     const { x, y } = rootRef.getBoundingClientRect()
     const sticker = {
       type,
-      resource: 'Sample Big-Text',
+      resource: src || text,
       style: {
         position: {
           left: position.startX - x - 20,
@@ -49,6 +49,9 @@ class Template extends Component {
         width: type === 'text' ? 250 : 150,
         height: 'auto',
         textAlign: 'center',
+        boundingRect: {
+          top: window.scrollY + position.startY - 20,
+        },
       },
     }
     // style = type === 'text' ? { ...style, color: '#000', textAlign: 'center' } : style
@@ -64,14 +67,14 @@ class Template extends Component {
 
   setActiveMiddel = () => {
     if (!this.props.activeSticker.id) return [false, false]
-    let showMiddleGuide = false,
+    let showTopGuide = false,
       showLeftGuide = false
     const {
       props: {
         activeSticker: {
           id: activeId,
           style: {
-            position: { left: activeLeft, top: activeTop } = {},
+            boundingRect: { left: activeLeft, top: activeTop } = {},
             translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
           } = {},
         },
@@ -84,21 +87,21 @@ class Template extends Component {
         {
           id,
           style: {
-            position: { left, top },
+            boundingRect: { top, left },
             translate: { translateX, translateY },
           },
         },
         index
       ) => {
-        if (id !== activeId && top + translateY === activeTop + activeTraslateY) {
-          showMiddleGuide = true
+        if (id !== activeId && top === activeTop) {
+          showTopGuide = true
         }
         if (id !== activeId && left + translateX === activeLeft + activeTraslateX) {
           showLeftGuide = true
         }
       }
     )
-    return [showLeftGuide, showMiddleGuide]
+    return [showLeftGuide, showTopGuide]
   }
 
   render() {
@@ -123,7 +126,7 @@ class Template extends Component {
       },
     } = this
 
-    const [showLeftGuide, showMiddleGuide] = this.setActiveMiddel()
+    const [showLeftGuide, showTopGuide] = this.setActiveMiddel()
 
     return (
       <Fragment>
@@ -151,7 +154,7 @@ class Template extends Component {
                   }}
                 />
               )}
-              {showMiddleGuide && (
+              {showTopGuide && (
                 <div
                   className="align__top__guide"
                   style={{

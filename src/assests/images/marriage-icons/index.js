@@ -6,21 +6,21 @@ export default [
   {
     id: 1,
     src: allah1,
-    type: 'image',
+    type: 'svg',
   },
   {
     id: 2,
     src: ganesh7,
-    type: 'image',
+    type: 'svg',
   },
   {
     id: 3,
     src: sikh1,
-    type: 'image',
+    type: 'svg',
   },
   {
     id: 4,
     src: ring,
-    type: 'image',
+    type: 'svg',
   },
 ]
