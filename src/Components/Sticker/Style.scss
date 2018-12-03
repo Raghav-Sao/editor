@@ -76,6 +76,8 @@
   }
   .sticker__text {
     margin: 10px;
+    word-wrap: break-word;
+    line-height: 30px;
   }
 }
 

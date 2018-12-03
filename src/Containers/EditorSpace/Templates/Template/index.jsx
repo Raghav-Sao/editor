@@ -9,13 +9,11 @@ class Template extends Component {
   componentDidMount() {
     document.addEventListener('click', () => this.deactiveBackgroundImage(this.props.index))
     const {
-      props: { cardIndex, dispatch },
-      cardRef: {
-        current: { height },
-      },
-    } = this
-
-    dispatch(actionCreator.SET_BACKGROUND_IMAGE_STYLE({ cardIndex, height }))
+        props: { cardIndex, dispatch },
+        cardRef: { current },
+      } = this,
+      { height, width, left, top } = current.getBoundingClientRect()
+    dispatch(actionCreator.SET_BACKGROUND_IMAGE_STYLE({ cardIndex, height, width, left, top }))
   }
 
   deactiveBackgroundImage = cardIndex => {
@@ -68,26 +66,35 @@ class Template extends Component {
   setActiveMiddel = () => {
     if (!this.props.activeSticker.id) return [false, false]
     let showTopGuide = false,
-      showLeftGuide = false
+      showLeftGuide = false,
+      showCardMiddleGuide = false
     const {
-      props: {
-        activeSticker: {
-          id: activeId,
-          style: {
-            boundingRect: { left: activeLeft, top: activeTop } = {},
-            translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
-          } = {},
+        props: {
+          activeSticker: {
+            id: activeId,
+            style: {
+              boundingRect: { left: activeLeft, top: activeTop, width: activeWidth } = {},
+              translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
+            } = {},
+          },
         },
-      },
-    } = this
-    const { cardRef: { current: { height = 0 } = {} } = {} } = this
+      } = this,
+      {
+        left: cardLeft = 0,
+        height = 0,
+        width: cardWidth = 0,
+      } = this.cardRef.current.getBoundingClientRect()
+    if (activeLeft + activeWidth / 2 === cardLeft + window.scrollX + cardWidth / 2) {
+      //add scrollX while saving only
+      showCardMiddleGuide = true
+    }
 
     this.props.card.stickers.forEach(
       (
         {
           id,
           style: {
-            boundingRect: { top, left },
+            boundingRect: { top, left, width },
             translate: { translateX, translateY },
           },
         },
@@ -96,42 +103,41 @@ class Template extends Component {
         if (id !== activeId && top === activeTop) {
           showTopGuide = true
         }
-        if (id !== activeId && left + translateX === activeLeft + activeTraslateX) {
+        if (id !== activeId && left === activeLeft) {
           showLeftGuide = true
         }
       }
     )
-    return [showLeftGuide, showTopGuide]
+    return [showLeftGuide, showTopGuide, showCardMiddleGuide]
   }
 
   render() {
     const {
-      props: {
-        acivedBackgroundImage,
-        connectDropTarget,
-        cardIndex,
-        getStickers,
-        isBackgroundImageSelected = false,
-        card: {
-          background: { style, value: src, type },
-          stickers,
-          placeholder,
+        props: {
+          acivedBackgroundImage,
+          connectDropTarget,
+          cardIndex,
+          getStickers,
+          isBackgroundImageSelected = false,
+          card: {
+            background: { style, value: src, type },
+            stickers,
+            placeholder,
+          },
+          activeSticker: {
+            style: {
+              position: { left: activeLeft, top: activeTop } = {},
+              translate: { translateX, translateY } = {},
+              boundingRect: { top = 0, left = 0, width = 0 } = {},
+            } = {},
+          },
         },
-        activeSticker: {
-          style: {
-            position: { left: activeLeft, top: activeTop } = {},
-            translate: { translateX, translateY } = {},
-            boundingRect: { top = 0 } = {},
-          } = {},
-        },
-      },
-    } = this
-
-    const alignTop = this.cardRef.current
-      ? top - this.cardRef.current.getBoundingClientRect().top - window.scrollY
-      : 0
-
-    const [showLeftGuide, showTopGuide] = this.setActiveMiddel()
+      } = this,
+      [showLeftGuide, showTopGuide, showCardMiddleGuide] = this.setActiveMiddel(),
+      cardRect = this.cardRef.current ? this.cardRef.current.getBoundingClientRect() : {},
+      alignTop = showTopGuide && this.cardRef.current ? top - cardRect.top - window.scrollY : 0,
+      alignLeft = showLeftGuide && this.cardRef.current ? left - cardRect.left - window.scrollX : 0,
+      cardWidth = this.cardRef.current ? cardRect.width : 0
 
     return (
       <Fragment>
@@ -154,8 +160,7 @@ class Template extends Component {
                 <div
                   className="align__left__guide"
                   style={{
-                    left: activeLeft,
-                    transform: `translate(${translateX}px, 0px)`,
+                    left: alignLeft,
                   }}
                 />
               )}
@@ -186,6 +191,14 @@ class Template extends Component {
                     }}
                   />
                 )}
+              {showCardMiddleGuide && (
+                <div
+                  className="align__card__center__guide"
+                  style={{
+                    left: cardWidth / 2,
+                  }}
+                />
+              )}
             </Fragment>
           </div>
         )}
