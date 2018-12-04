@@ -178,7 +178,7 @@ class EditorTextToolbar extends Component {
                 <Dropdown
                   options={this.getFontSizeOptions()}
                   selection
-                  text={activeStyle.fontSize}
+                  text={`${activeStyle.fontSize}`}
                   style={{ margin: '0 .25em 0 0' }}
                 />
               </Fragment>

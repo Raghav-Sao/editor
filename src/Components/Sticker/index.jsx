@@ -202,10 +202,10 @@ class Sticker extends Component {
           // coz rotated getBoundingClientRect may be differ
           diff = 2 - offsetWidth
         }
-        const extraLeftDiff = type === 'leftResize' ? diff * Math.cos(rad) : 0
-        const extraTopDiff = type === 'leftResize' ? diff * Math.sin(rad) : 0
-        const leftDiff = diff / 2 - (Math.cos(rad) * diff) / 2 + extraLeftDiff
-        const topDiff = (Math.sin(rad) * diff) / 2 - extraTopDiff
+        const extraLeftDiff = type === 'leftResize' ? diff * Math.cos((rad * Math.PI) / 180) : 0
+        const extraTopDiff = type === 'leftResize' ? diff * Math.sin((rad * Math.PI) / 180) : 0
+        const leftDiff = diff / 2 - (Math.cos((rad * Math.PI) / 180) * diff) / 2 + extraLeftDiff
+        const topDiff = (Math.sin((rad * Math.PI) / 180) * diff) / 2 - extraTopDiff
         return { diff, leftDiff, offsetWidth, topDiff, bottom, top, right, width }
       }
 

@@ -7,7 +7,7 @@ import './Style.css'
 class Template extends Component {
   cardRef = React.createRef()
   componentDidMount() {
-    document.addEventListener('click', () => this.deactiveBackgroundImage(this.props.index))
+    // document.addEventListener('click', () => this.deactiveBackgroundImage(this.props.index)) //add new fn for both deactivation sticker and card
     const {
         props: { cardIndex, dispatch },
         cardRef: { current },
@@ -16,11 +16,11 @@ class Template extends Component {
     dispatch(actionCreator.SET_BACKGROUND_IMAGE_STYLE({ cardIndex, height, width, left, top }))
   }
 
-  deactiveBackgroundImage = cardIndex => {
-    this.props.dispatch(
-      actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: false, cardIndex })
-    )
-  }
+  // deactiveBackgroundImage = cardIndex => {
+  //   this.props.dispatch(
+  //     actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: false, cardIndex })
+  //   )
+  // }
 
   onAddSticker = ({ position, src, style, text, type, cardIndex }) => {
     const rootRef = findDOMNode(this)

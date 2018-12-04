@@ -8,6 +8,26 @@ import Template from './Template'
 import './Style.css'
 
 class Templates extends Component {
+  componentDidMount() {
+    document.addEventListener('keyup', this.deleteActiveSticker)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keyup', this.deleteActiveSticker)
+  }
+
+  deleteActiveSticker = e => {
+    if (e.keyCode === 46 || e.keyCode === 8) {
+      const {
+        props: {
+          dispatch,
+          activeSticker: { id },
+        },
+      } = this
+      if (id) dispatch(actionCreator.DELETE_STICKER({ id }))
+    }
+  }
+
   acivedBackgroundImage = (e, cardIndex) => {
     this.props.dispatch(
       actionCreator.UPDATE_BACKGROUND_IMAGE_STATUS({ isBackgroundImageSelected: true, cardIndex })

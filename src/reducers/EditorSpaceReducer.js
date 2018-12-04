@@ -218,12 +218,23 @@ const EditorSpace = (state = initialState, { payload, type }) => {
       return state
     }
 
-    // case 'UPDATE_BACKGROUND_IMAGE_STATUS': {
-    //   return {
-    //     ...state,
-    //     activeSticker: {},
-    //   }
-    // }
+    case 'UPDATE_BACKGROUND_IMAGE_STATUS': {
+      const { isBackgroundImageSelected = false, cardIndex } = payload
+      const updatedTemplate = {
+        ...state.cards[cardIndex],
+        isBackgroundImageSelected,
+      }
+      return {
+        ...state,
+        card: [
+          ...state.cards.slice(0, cardIndex),
+          updatedTemplate,
+          ...state.cards.slice(cardIndex + 1),
+        ],
+        activeSticker: {},
+      }
+    }
+
     case 'SET_BACKGROUND_IMAGE_STYLE': {
       const { cardIndex, height, left, right, width } = payload
       // if (height === 0) return state
