@@ -226,7 +226,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
       }
       return {
         ...state,
-        card: [
+        cards: [
           ...state.cards.slice(0, cardIndex),
           updatedTemplate,
           ...state.cards.slice(cardIndex + 1),
