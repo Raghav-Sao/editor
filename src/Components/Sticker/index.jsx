@@ -192,7 +192,7 @@ class Sticker extends Component {
         let x = (mouseX - l) * (mouseX - l)
         let slop = Math.atan((mouseY - t) / (mouseX - l))
         let diff = x + y > 0 ? Math.sqrt(x + y) : -1 * Math.sqrt(-1 * (x + y))
-        diff = diff * Math.cos(slop - rad) * (mouseX > l ? 1 : -1)
+        diff = diff * Math.cos(slop - (rad * Math.PI) / 180) * (mouseX > l ? 1 : -1)
         if (isNaN(diff)) {
           alert('check kr bhai')
           return { width, left, diff: 0, leftDiff: 0, topDiff: 0 }
