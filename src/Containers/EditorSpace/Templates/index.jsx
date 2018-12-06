@@ -21,10 +21,10 @@ class Templates extends Component {
       const {
         props: {
           dispatch,
-          activeSticker: { id },
+          activeSticker: { id, type },
         },
       } = this
-      if (id) dispatch(actionCreator.DELETE_STICKER({ id }))
+      if (id && type === 'text') dispatch(actionCreator.DELETE_STICKER({ id }))
     }
   }
 

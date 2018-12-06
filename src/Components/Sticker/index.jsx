@@ -94,7 +94,7 @@ class Sticker extends Component {
         const vDiff = Math.abs(parseInt(top - nextTop))
         const hDiff = Math.abs(parseInt(left - nextLeft))
         if (id !== activeId && vDiff <= 5) {
-          if (id !== activeId) console.log('hi')
+          // if (id !== activeId) console.log('hi')
           // restranslateY = absTop + translateY - activeAbsTop
           restranslateY = newTranslateY + top - nextTop
         }
@@ -123,7 +123,7 @@ class Sticker extends Component {
     } else if (type === 'drag') {
       const { translateX, translateY } = calculatedStyle
       const translate = { translateX, translateY }
-      console.log(translateY, window.scrollY, top, this.stickerRef.current.getBoundingClientRect())
+      // console.log(translateY, window.scrollY, top, this.stickerRef.current.getBoundingClientRect())
       this.props.dispatch(
         actionCreator.MOVE_STICKER({
           id,
@@ -198,14 +198,30 @@ class Sticker extends Component {
           return { width, left, diff: 0, leftDiff: 0, topDiff: 0 }
         }
         diff = type === 'leftResize' ? -diff : diff
+        // console.log(diff, offsetWidth, '------>')
         if (diff + offsetWidth < 2) {
           // coz rotated getBoundingClientRect may be differ
-          diff = 2 - offsetWidth
+          diff = 20 - offsetWidth
         }
         const extraLeftDiff = type === 'leftResize' ? diff * Math.cos((rad * Math.PI) / 180) : 0
         const extraTopDiff = type === 'leftResize' ? diff * Math.sin((rad * Math.PI) / 180) : 0
-        const leftDiff = diff / 2 - (Math.cos((rad * Math.PI) / 180) * diff) / 2 + extraLeftDiff
-        const topDiff = (Math.sin((rad * Math.PI) / 180) * diff) / 2 - extraTopDiff
+        let leftDiff = diff / 2 - (Math.cos((rad * Math.PI) / 180) * diff) / 2 + extraLeftDiff
+        let topDiff = (Math.sin((rad * Math.PI) / 180) * diff) / 2 - extraTopDiff
+        // console.log(this.stickerRef.current.offsetHeight, 'before')
+
+        const beforeHeight = this.stickerRef.current.offsetHeight
+        this.stickerRef.current.style.width = this.stickerRef.current.offsetWidth + diff + 'px'
+        this.stickerRef.current.style.left = this.stickerRef.current.offsetLeft - leftDiff
+        this.stickerRef.current.style.top = this.stickerRef.current.offsetTop + topDiff
+        const afterHeight = this.stickerRef.current.offsetHeight
+        const heightDiff = afterHeight - beforeHeight
+        if (heightDiff !== 0) {
+          const extratDiff = (heightDiff / 2) * Math.cos((rad * Math.PI) / 180) - heightDiff / 2
+          const extralDiff = (heightDiff / 2) * Math.sin((rad * Math.PI) / 180)
+          leftDiff += extralDiff
+          console.log(extratDiff, 'extratDiff', extralDiff)
+          topDiff += extratDiff
+        }
         return { diff, leftDiff, offsetWidth, topDiff, bottom, top, right, width }
       }
 
@@ -222,7 +238,7 @@ class Sticker extends Component {
           afterData = transform.split('deg)')[1]
 
         this.stickerRef.current.style.transform = `${beforeData} rotate(${deg}deg) ${afterData}` //to get top after rotation before render
-        console.log(this.stickerRef.current.getBoundingClientRect(), deg)
+        // console.log(this.stickerRef.current.getBoundingClientRect(), deg)
         return {
           rotation,
           bottom,
@@ -312,7 +328,7 @@ class Sticker extends Component {
     )
   }
   getTransformData = ({ translate: { translateX, translateY }, rotation: { unit, rotation } }) => {
-    console.log(unit)
+    // console.log(unit)
     const data = `translate(${translateX}px, ${translateY}px) rotate(${rotation}${unit})`
     return data
   }
@@ -343,11 +359,21 @@ class Sticker extends Component {
   })
 
   onInputChange = event => {
+    console.log(event)
+    // debugger
+    // event.stopPropagation()
+    // event.nativeEvent.stopImmediatePropagation()
+    // event.preventDefault()
+    // event.nativeEvent.preventDefault()
+    // event.returnValue = false
+    // event.cancelBubble = true
+    // alert('ji')
     const {
       target: { innerText },
     } = event
     this.setState({ text: innerText }, this.placeCaretAtEnd.bind(null, event.target)) //think about this
     this.props.dispatch(actionCreator.ON_INPUT_TEXT_CHANGE({ innerText }))
+    return false
   }
   placeCaretAtEnd = el => {
     if (!el) return
