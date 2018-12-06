@@ -24,7 +24,7 @@ class Templates extends Component {
           activeSticker: { id, type },
         },
       } = this
-      if (id && type === 'text') dispatch(actionCreator.DELETE_STICKER({ id }))
+      if (id && type !== 'text') dispatch(actionCreator.DELETE_STICKER({ id }))
     }
   }
 
