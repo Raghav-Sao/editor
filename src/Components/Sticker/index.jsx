@@ -14,14 +14,12 @@ const stopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, '
 class Sticker extends Component {
   constructor(props) {
     super(props)
-
     this.stickerRef = createRef()
     this.state = {
       // Todo: make it in state if make sence
       isRotating: false,
       isDragging: false,
       isResizing: false,
-      text: 'fff',
     }
   }
   componentDidMount() {
@@ -276,12 +274,23 @@ class Sticker extends Component {
     }
   }
 
-  stopEvents = type => {
+  stopEvents = state => {
     // Todo: Make it better
-    this.setState({ isResizing: false, isRotating: false, isDragging: false })
+    const {
+      state: { isDragging, isResizing, isRotating },
+    } = this
+    if (isDragging || isResizing || isRotating) this.saveChanges(state)
+    this.setState({ isDragging: false, isResizing: false, isRotating: false })
   }
 
-  onResizeOrRotate = (e, type, cardIndex) => {
+  saveChanges = state => {
+    const savedUndoData = JSON.parse(window.localStorage.getItem('savedUndoData') || '[]'),
+      { activeSticker, cards } = state,
+      newUndoState = [...savedUndoData, { activeSticker, cards }]
+    window.localStorage.setItem('savedUndoData', JSON.stringify(newUndoState))
+  }
+
+  onResizeOrRotate = (e, type, cardIndex, style = {}, state) => {
     if (this.stickerRef === null) return
 
     // Todo: make some name for other e
@@ -292,7 +301,8 @@ class Sticker extends Component {
     const {
       dataset: { lastTransform = JSON.stringify({}) },
     } = sticker
-    const { lastOffsetX = 0, lastOffsetY = 0 } = JSON.parse(lastTransform)
+    // const { lastOffsetX = 0, lastOffsetY = 0 } = JSON.parse(lastTransform)
+    const { translate: { translateX: lastOffsetX, translateY: lastOffsetY } = {} } = style
     const pageX = e.pageX || e.touches[0].pageX,
       pageY = e.pageY || e.touches[0].pageY
     var startX = pageX - lastOffsetX,
@@ -305,7 +315,7 @@ class Sticker extends Component {
         stopEvents$.pipe(
           tap(() => {
             this.m = NaN
-            this.stopEvents(type)
+            this.stopEvents(state)
           })
         )
       ),
@@ -400,8 +410,8 @@ class Sticker extends Component {
       activeSticker,
       cardIndex,
       key,
+      cards,
     } = this.props
-
     const isStickerActive = activeSticker.id == id
     const isEditable =
       isStickerActive && !this.state.isRotating && !this.state.isDragging && !this.state.isResizing
@@ -436,29 +446,45 @@ class Sticker extends Component {
         style={this.getStyle(style)}
         key={id}
         onClick={e => this.activeSticker(e, id, cardIndex)}
-        onMouseDown={e => this.onResizeOrRotate(e, 'drag', cardIndex)} // Todo: use id from key and make better for isRotating true event
-        onTouchStart={e => this.onResizeOrRotate(e, 'drag', cardIndex)}
+        onMouseDown={e =>
+          this.onResizeOrRotate(e, 'drag', cardIndex, style, { activeSticker, cards })
+        } // Todo: use id from key and make better for isRotating true event
+        onTouchStart={e =>
+          this.onResizeOrRotate(e, 'drag', cardIndex, style, { activeSticker, cards })
+        }
         ref={this.stickerRef}
       >
         {sticker()}
         <div
           className="h-l"
-          onMouseDown={e => this.onResizeOrRotate(e, 'leftResize', cardIndex)}
-          onTouchStart={e => this.onResizeOrRotate(e, 'leftResize', cardIndex)}
+          onMouseDown={e =>
+            this.onResizeOrRotate(e, 'leftResize', cardIndex, style, { activeSticker, cards })
+          }
+          onTouchStart={e =>
+            this.onResizeOrRotate(e, 'leftResize', cardIndex, style, { activeSticker, cards })
+          }
         >
           <span id="handle-left" />
         </div>
         <div
           className="h-r"
-          onMouseDown={e => this.onResizeOrRotate(e, 'rightResize', cardIndex)}
-          onTouchStart={e => this.onResizeOrRotate(e, 'rightResize', cardIndex)}
+          onMouseDown={e =>
+            this.onResizeOrRotate(e, 'rightResize', cardIndex, style, { activeSticker, cards })
+          }
+          onTouchStart={e =>
+            this.onResizeOrRotate(e, 'rightResize', cardIndex, style, { activeSticker, cards })
+          }
         >
           <span id="handle-right" />
         </div>
         <div
           className="handle rotate"
-          onMouseDown={e => this.onResizeOrRotate(e, 'rotate', cardIndex)}
-          onTouchStart={e => this.onResizeOrRotate(e, 'rotate', cardIndex)}
+          onMouseDown={e =>
+            this.onResizeOrRotate(e, 'rotate', cardIndex, style, { activeSticker, cards })
+          }
+          onTouchStart={e =>
+            this.onResizeOrRotate(e, 'rotate', cardIndex, style, { activeSticker, cards })
+          }
         />
       </div>
     )

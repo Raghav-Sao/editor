@@ -263,6 +263,15 @@ const EditorSpace = (state = initialState, { payload, type }) => {
       }
     }
 
+    case types.UNDO_CHANGES:
+    case types.REDO_CHANGES: {
+      const { newState } = payload
+      return {
+        ...state,
+        ...newState,
+      }
+    }
+
     default:
       return state
   }

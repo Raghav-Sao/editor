@@ -9,7 +9,18 @@ import './Style.css'
 
 class Templates extends Component {
   componentDidMount() {
+    window.localStorage.removeItem('savedUndoData')
+    window.localStorage.removeItem('savedRedoData')
     document.addEventListener('keyup', this.deleteActiveSticker)
+  }
+
+  saveChanges = () => {
+    const savedUndoData = JSON.parse(window.localStorage.getItem('savedUndoData') || '[]'),
+      {
+        props: { activeSticker, cards },
+      } = this,
+      newUndoState = [...savedUndoData, { activeSticker, cards }]
+    window.localStorage.setItem('savedUndoData', JSON.stringify(newUndoState))
   }
 
   componentWillUnmount() {
@@ -25,6 +36,39 @@ class Templates extends Component {
         },
       } = this
       if (id && type !== 'text') dispatch(actionCreator.DELETE_STICKER({ id }))
+    } else if (e.keyCode == 90 && e.ctrlKey) {
+      const savedUndoData = JSON.parse(window.localStorage.getItem('savedUndoData' || '[]')),
+        savedUndoDataLength = savedUndoData.length
+
+      if (!savedUndoDataLength) return
+
+      const savedRedoData = JSON.parse(window.localStorage.getItem('savedRedoData') || '[]'),
+        {
+          props: { activeSticker, cards },
+        } = this,
+        [newUndoData, newState] = [
+          savedUndoData.slice(0, savedUndoDataLength - 1),
+          savedUndoData.slice(savedUndoDataLength - 1)[0],
+        ],
+        newRedoData = [{ activeSticker, cards }, ...savedRedoData]
+      window.localStorage.setItem('savedUndoData', JSON.stringify(newUndoData))
+      window.localStorage.setItem('savedRedoData', JSON.stringify(newRedoData))
+      this.props.dispatch(actionCreator.UNDO_CHANGES({ newState }))
+    } else if (e.keyCode == 89 && e.ctrlKey) {
+      const savedRedoData = JSON.parse(window.localStorage.getItem('savedRedoData') || '[]'),
+        savedRedoDataLength = savedRedoData.length
+
+      if (!savedRedoDataLength) return
+
+      const savedUndoData = JSON.parse(window.localStorage.getItem('savedUndoData' || '[]')),
+        {
+          props: { activeSticker, cards },
+        } = this,
+        [newState, ...newRedoData] = savedRedoData,
+        newUndoData = [...savedUndoData, { activeSticker, cards }]
+      window.localStorage.setItem('savedUndoData', JSON.stringify(newUndoData))
+      window.localStorage.setItem('savedRedoData', JSON.stringify(newRedoData))
+      this.props.dispatch(actionCreator.UNDO_CHANGES({ newState }))
     }
   }
 
