@@ -195,16 +195,15 @@ class Template extends Component {
                   }}
                 />
               )}
-              {false &
-                (
-                  <div
-                    className="align__bottom__guide"
-                    style={{
-                      top: activeTop + 60,
-                      transform: `translate(0px, ${translateY}px)`,
-                    }}
-                  />
-                )}
+              {false && (
+                <div
+                  className="align__bottom__guide"
+                  style={{
+                    top: activeTop + 60,
+                    transform: `translate(0px, ${translateY}px)`,
+                  }}
+                />
+              )}
               {showCardMiddleGuide && (
                 <div
                   className="align__card__center__guide"
