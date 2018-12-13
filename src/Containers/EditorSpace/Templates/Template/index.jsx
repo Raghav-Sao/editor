@@ -65,7 +65,8 @@ class Template extends Component {
 
   setActiveMiddel = () => {
     if (!this.props.activeSticker.id) return [false, false]
-    let showTopGuide = false,
+    let showBorderGuid = false,
+      showTopGuide = false,
       showLeftGuide = false,
       showCardMiddleGuide = false
     const {
@@ -73,7 +74,12 @@ class Template extends Component {
           activeSticker: {
             id: activeId,
             style: {
-              boundingRect: { left: activeLeft, top: activeTop, width: activeWidth } = {},
+              boundingRect: {
+                left: activeLeft,
+                top: activeTop,
+                width: activeWidth,
+                right: activeRight,
+              } = {},
               translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
             } = {},
           },
@@ -81,12 +87,18 @@ class Template extends Component {
       } = this,
       {
         left: cardLeft = 0,
+        right: cardRight = 0,
         height = 0,
         width: cardWidth = 0,
       } = this.cardRef.current.getBoundingClientRect()
     if (activeLeft + activeWidth / 2 === cardLeft + window.scrollX + cardWidth / 2) {
       //add scrollX while saving only
       showCardMiddleGuide = true
+    }
+    const leftBorderDiff = Math.abs(cardLeft + 10 - activeLeft).toFixed(1)
+    const rightBorderDiff = Math.abs(cardRight - 10 - activeLeft - activeWidth).toFixed(1)
+    if (leftBorderDiff <= 1 || rightBorderDiff <= 1) {
+      showBorderGuid = true
     }
 
     this.props.card.stickers.forEach(
@@ -96,6 +108,7 @@ class Template extends Component {
           style: {
             boundingRect: { top, left, width },
             translate: { translateX, translateY },
+            position: { left: absLeft },
           },
         },
         index
@@ -108,7 +121,7 @@ class Template extends Component {
         }
       }
     )
-    return [showLeftGuide, showTopGuide, showCardMiddleGuide]
+    return [showBorderGuid, showLeftGuide, showTopGuide, showCardMiddleGuide]
   }
 
   render() {
@@ -133,7 +146,7 @@ class Template extends Component {
           },
         },
       } = this,
-      [showLeftGuide, showTopGuide, showCardMiddleGuide] = this.setActiveMiddel(),
+      [showBorderGuid, showLeftGuide, showTopGuide, showCardMiddleGuide] = this.setActiveMiddel(),
       cardRect = this.cardRef.current ? this.cardRef.current.getBoundingClientRect() : {},
       alignTop = showTopGuide && this.cardRef.current ? top - cardRect.top - window.scrollY : 0,
       alignLeft = showLeftGuide && this.cardRef.current ? left - cardRect.left - window.scrollX : 0,
@@ -154,6 +167,7 @@ class Template extends Component {
               width="100%"
               ref={this.cardRef}
             />
+            {showBorderGuid && <div className="card__border" />}
             {getStickers({ stickers, cardIndex, card: this.props.card })}
             <Fragment>
               {showLeftGuide && (

@@ -54,25 +54,35 @@ class Sticker extends Component {
           cardIndex,
           style: {
             position: { left: activeAbsLeft, top: activeAbsTop },
-            boundingRect: { width: activeWidth } = {}, //not taking left right from here coz it will update soon
+            boundingRect: { width: activeWidth, left: boundingLeft } = {}, //not taking left right from here coz it will update soon
             translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
           } = {},
         },
         cards: {
           [cardIndex]: {
             background: {
-              style: { width: cardWidth, left },
+              style: { width: cardWidth, left: cardLeft, right: cardRight },
             },
           },
         },
       },
     } = this
 
-    const midDiff = left + cardWidth / 2 + window.scrollX - nextLeft - activeWidth / 2
+    const midDiff = cardLeft + cardWidth / 2 + window.scrollX - nextLeft - activeWidth / 2
     if (Math.abs(midDiff) < 5) {
       restranslateX += midDiff
     }
 
+    const leftDiff = Math.abs(nextLeft - cardLeft - 10)
+    const rightDiff = Math.abs(cardLeft + cardWidth - 10 - nextLeft - activeWidth)
+    if (leftDiff <= 5) {
+      restranslateX = restranslateX + Math.round(cardLeft + 10 - nextLeft)
+      return [restranslateX, restranslateY]
+    }
+    if (rightDiff <= 5) {
+      restranslateX = restranslateX + Math.round(cardLeft + cardWidth - 10 - nextLeft - activeWidth)
+      return [restranslateX, restranslateY]
+    }
     // const { top: activeTop, left: activeLeft } = this.stickerRef.current.getBoundingClientRect()
 
     const { cardRef: { current: { height = 0 } = {} } = {} } = this

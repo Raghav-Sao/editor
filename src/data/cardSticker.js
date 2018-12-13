@@ -23,7 +23,6 @@ export const cards = [
           },
           color: '#FFF',
           fontSize: 35,
-          width: 120,
           height: 'auto',
           fontWeight: 'bold',
           textAlign: 'center',
