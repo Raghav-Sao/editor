@@ -58,6 +58,10 @@ class EditorTextToolbar extends Component {
     }))
   }
 
+  preventPropagation = e => {
+    e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation()
+  }
   render() {
     const {
       props: {
@@ -67,27 +71,24 @@ class EditorTextToolbar extends Component {
 
     return (
       <Fragment>
-        <div className="editor__text__toolbar__container">
+        <div className="editor__text__toolbar__container" onClick={e => this.preventPropagation(e)}>
+          <Fragment>
+            <Popup
+              trigger={
+                <label className="ui button icon active" style={{ color: activeStyle.color }}>
+                  <Icon name="paint brush" />
+                </label>
+              }
+              position="bottom center"
+              on={['hover']}
+              flowing
+              hoverable
+            >
+              <SketchPicker color={activeStyle.color} onChangeComplete={this.handleColorChanges} />
+            </Popup>
+          </Fragment>
           {activeType === 'text' && (
             <Fragment>
-              <Fragment>
-                <Popup
-                  trigger={
-                    <label className="ui button icon active" style={{ color: activeStyle.color }}>
-                      <Icon name="paint brush" />
-                    </label>
-                  }
-                  position="bottom center"
-                  on={['hover', 'click']}
-                  flowing
-                  hoverable
-                >
-                  <SketchPicker
-                    color={activeStyle.color}
-                    onChangeComplete={this.handleColorChanges}
-                  />
-                </Popup>
-              </Fragment>
               <Fragment>
                 <input
                   id="text__bold"
@@ -184,6 +185,7 @@ class EditorTextToolbar extends Component {
               </Fragment>
             </Fragment>
           )}
+
           <Fragment>
             <label className="ui button icon" onClick={this.deleteSticker}>
               <Icon name="trash alternate" />

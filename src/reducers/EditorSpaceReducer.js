@@ -7,6 +7,7 @@ const initialState = {
   textStickers,
   imageStickers,
   cards,
+  activeCardIndex: 0,
 }
 
 const EditorSpace = (state = initialState, { payload, type }) => {
@@ -20,12 +21,13 @@ const EditorSpace = (state = initialState, { payload, type }) => {
       }
       return {
         ...state,
-        activeSticker: { ...sticker, cardIndex },
+        activeSticker: { ...sticker, cardIndex, id },
         cards: [
           ...state.cards.slice(0, cardIndex),
           updatedTemplate,
           ...state.cards.slice(cardIndex + 1),
         ],
+        activeCardIndex: cardIndex,
       }
     }
 
@@ -53,6 +55,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
           updatedTemplate,
           ...state.cards.slice(cardIndex + 1),
         ],
+        activeCardIndex: cardIndex,
       }
     }
 
@@ -75,6 +78,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
           updatedTemplate,
           ...state.cards.slice(cardIndex + 1),
         ],
+        activeCardIndex: cardIndex,
       }
     }
 
@@ -102,6 +106,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
           updatedTemplate,
           ...state.cards.slice(cardIndex + 1),
         ],
+        activeCardIndex: cardIndex,
       }
     }
 

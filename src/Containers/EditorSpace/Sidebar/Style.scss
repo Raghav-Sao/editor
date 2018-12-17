@@ -7,6 +7,9 @@
     transform: translateX(-350px);
     transition: all 1s;
   }
+  a.item.active {
+    background: rgb(45, 46, 47) !important;
+  }
   .sidebar--toggle {
     display: none;
     position: absolute;

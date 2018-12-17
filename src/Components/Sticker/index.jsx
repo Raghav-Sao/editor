@@ -331,8 +331,8 @@ class Sticker extends Component {
       ),
       throttleTime(100),
       map(e => ({
-        mouseX: e.touches ? e.touches[0].pageX : e.pageX,
-        mouseY: e.touches ? e.touches[0].pageY : e.pageY,
+        mouseX: e.touches ? e.touches[0].pageX : e.clientX,
+        mouseY: e.touches ? e.touches[0].pageY : e.clientY,
         type,
         e,
         startX,
@@ -376,6 +376,7 @@ class Sticker extends Component {
     top,
     width,
     transform: this.getTransformData({ translate, rotation }),
+    fill: color,
   })
 
   onInputChange = event => {
@@ -441,18 +442,18 @@ class Sticker extends Component {
           </div>
         )
       }
-      const imgStyle = { fill: '#fff' }
+
       return (
         <div key={id} className={`sticker__image ${isEditable ? 'editable' : ''}`}>
-          <SVG src={resource} key={id} style={imgStyle}>
-            <Image src={resource} style={imgStyle} />
+          <SVG src={resource} key={id}>
+            <Image src={resource} />
           </SVG>
         </div>
       )
     }
     return (
       <div
-        className={`sticker ${activeSticker.id === id ? 'active' : ''}`}
+        className={`sticker ${isStickerActive ? 'active' : ''}`}
         style={this.getStyle(style)}
         key={id}
         onClick={e => this.activeSticker(e, id, cardIndex)}

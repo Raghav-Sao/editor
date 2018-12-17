@@ -5,10 +5,12 @@ import Toolbar from 'Components/Toolbar'
 
 import './Style.css'
 
-export default class SidebarComponent extends Component {
-  state = { visible: true, type: 'NOTHING' }
+const { TEXT, IMAGE } = general[language]
 
-  handleButtonClick = () => this.setState({ visible: !this.state.visible })
+export default class SidebarComponent extends Component {
+  state = { visible: true, type: IMAGE }
+
+  slectType = type => this.setState({ visible: !this.state.visible })
 
   handleSidebarHide = () => this.setState({ visible: false })
 
@@ -20,23 +22,30 @@ export default class SidebarComponent extends Component {
 
   render() {
     const { visible, type } = this.state
-    const { TEXT, IMAGE } = general[language]
 
     return (
       <div className="sidebar">
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation="overlay" icon="labeled" inverted vertical visible={visible}>
-            <Menu.Item as="a" onClick={() => this.showSibarContent(TEXT)}>
+            <Menu.Item
+              as="a"
+              className={type === TEXT ? 'active' : ''}
+              onClick={() => this.showSibarContent(TEXT)}
+            >
               <Icon name="text height" />
               {TEXT}
             </Menu.Item>
-            <Menu.Item as="a" onClick={() => this.showSibarContent(IMAGE)}>
+            <Menu.Item
+              as="a"
+              className={type === IMAGE ? 'active' : ''}
+              onClick={() => this.showSibarContent(IMAGE)}
+            >
               <Icon name="image" />
               {IMAGE}
             </Menu.Item>
             <Menu.Item as="a">
-              <Icon name="camera" />
-              Channels
+              <Icon name="layout" />
+              Layout
             </Menu.Item>
           </Sidebar>
 

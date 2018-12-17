@@ -52,7 +52,7 @@ export const cards = [
             translateX: 0,
             translateY: 0,
           },
-          fill: '#FFF',
+          color: '#FFF',
           width: 150,
           height: 'auto',
           fontWeight: 'bold',
