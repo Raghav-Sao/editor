@@ -445,9 +445,7 @@ class Sticker extends Component {
 
       return (
         <div key={id} className={`sticker__image ${isEditable ? 'editable' : ''}`}>
-          <SVG src={resource} key={id}>
-            <Image src={resource} />
-          </SVG>
+          <Image src={resource} />
         </div>
       )
     }
