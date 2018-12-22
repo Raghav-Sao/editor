@@ -11,12 +11,14 @@ class SidebarFilter extends Component {
       payload: {
         [key.toLowerCase()]: {
           [event.target.name]: event.target.checked,
+          Green: true,
         },
       },
     })
   }
 
   render() {
+    console.log(this.props.galleryReducer.color.Red)
     return (
       <div className="row container__sidebar__filter">
         {Object.keys(filterData).map(key => (
@@ -28,7 +30,7 @@ class SidebarFilter extends Component {
                   id={index}
                   type="checkbox"
                   name={filter}
-                  value={filter}
+                  checked={this.props.galleryReducer[key.toLowerCase()][filter]}
                   onClick={event => this.change(event, key)}
                 />
                 <span>{filter}</span>
@@ -42,5 +44,5 @@ class SidebarFilter extends Component {
   }
 }
 
-const mapStateToProps = ({ galleryReducer }) => galleryReducer
+const mapStateToProps = ({ galleryReducer }) => ({ galleryReducer })
 export default connect(mapStateToProps)(SidebarFilter)

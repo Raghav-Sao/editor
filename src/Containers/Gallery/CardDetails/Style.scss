@@ -1,0 +1,37 @@
+.card__details__container {
+  border: 1px solid #ccc;
+  .image__thumbnail {
+    margin: 10px;
+    width: 80px;
+    .ui.image.thumbnail {
+      border: 1px solid #ccc;
+      width: 70px;
+      padding: 5px;
+    }
+  }
+  .card__image {
+    display: flex !important;
+    align-items: center;
+    flex: 1;
+  }
+  .image__details {
+    padding: 10px;
+    .tag {
+      margin: 10px;
+      font-size: 15px;
+      i {
+        color: #777;
+      }
+    }
+    .price__info {
+      font-size: 30px;
+      padding: 10px 0;
+    }
+  }
+  i.icon.eye__view {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+  }
+}

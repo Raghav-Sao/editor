@@ -3,11 +3,11 @@ import { combineReducers } from 'redux'
 import adminReducer from './AdminReducer'
 import imageEditor from './ImageEditorReducer'
 import editorSpace from './EditorSpaceReducer'
-import gallery from './GalleryReducer'
+import galleryReducer from './GalleryReducer'
 
 export default combineReducers({
   adminReducer,
   editorSpace,
-  gallery,
+  galleryReducer,
   imageEditor,
 })

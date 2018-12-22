@@ -1,0 +1,20 @@
+.sortby__filter__container {
+  display: flex;
+  justify-content: flex-end;
+  position: sticky !important;
+  top: 0;
+  z-index: 1;
+  background: rgba(256, 256, 256, 0.9);
+  .sortby__filter {
+    margin: 10px;
+  }
+  input + label {
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+  }
+  input[type='checkbox']:checked + label {
+    border-bottom: 2px solid #3333ff;
+    // transition: all 0.3s;
+    font-weight: bold;
+  }
+}

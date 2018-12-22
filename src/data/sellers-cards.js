@@ -4,8 +4,11 @@ export default [
     is_active: false,
     is_liked: true,
     price: '156.88',
-    urls: ['https://w3schools.com/w3images/nature.jpg'],
-    rating: '3.2',
+    urls: [
+      'https://i.pinimg.com/originals/43/16/c6/4316c6ade495819a4d6dced998b483cc.jpg',
+      'https://i.pinimg.com/originals/ce/93/04/ce93045e2801a7544da8ef92867f2081.jpg',
+    ],
+    ratting: '3.2',
     color: 'brown',
     language: 'malyalam',
     type: 'isai',
@@ -15,7 +18,7 @@ export default [
     seller: {
       id: '5b542a8e967a01462153b2ff',
       name: 'Snyder Enterpise',
-      rating: '4.9',
+      ratting: '4.9',
     },
     other_seller_info: {
       count: 10,
@@ -28,8 +31,8 @@ export default [
     is_active: true,
     is_liked: true,
     price: '85.55',
-    urls: ['https://w3schools.com/w3images/mist.jpg'],
-    rating: '0.7',
+    urls: ['https://i.pinimg.com/originals/ce/93/04/ce93045e2801a7544da8ef92867f2081.jpg'],
+    ratting: '0.7',
     color: 'blue',
     language: 'english',
     type: 'isai',
@@ -39,7 +42,7 @@ export default [
     seller: {
       id: '5b542a8eb7ecda96b2e071c8',
       name: 'Fanny Enterpise',
-      rating: '3.1',
+      ratting: '3.1',
     },
     other_seller_info: {
       count: 9,
@@ -52,8 +55,8 @@ export default [
     is_active: false,
     is_liked: true,
     price: '394.83',
-    urls: ['https://w3schools.com/w3images/falls2.jpg'],
-    rating: '0.8',
+    urls: ['https://hitchedforever.com/images/large/wedding-cards-JIM2143_LRG.jpg'],
+    ratting: '0.8',
     color: 'green',
     language: 'tamil',
     type: 'isai',
@@ -63,7 +66,7 @@ export default [
     seller: {
       id: '5b542a8e6cc0401329385b4a',
       name: 'Audrey Enterpise',
-      rating: '1.4',
+      ratting: '1.4',
     },
     other_seller_info: {
       count: 1,
@@ -76,8 +79,8 @@ export default [
     is_active: true,
     is_liked: true,
     price: '304.85',
-    urls: ['https://w3schools.com/w3images/rocks.jpg'],
-    rating: '0.9',
+    urls: ['https://4.imimg.com/data4/TG/NV/NSDMERP-31046670/marriagecard-500x500.png'],
+    ratting: '0.9',
     color: 'brown',
     language: 'hindi',
     type: 'shikkh',
@@ -87,7 +90,7 @@ export default [
     seller: {
       id: '5b542a8e7c77c1eeb950ee78',
       name: 'Gilliam Enterpise',
-      rating: '0.4',
+      ratting: '0.4',
     },
     other_seller_info: {
       count: 7,
@@ -100,8 +103,10 @@ export default [
     is_active: true,
     is_liked: true,
     price: '211.75',
-    urls: ['https://w3schools.com/w3images/paris.jpg'],
-    rating: '3.2',
+    urls: [
+      'http://www.print4all.in/wp-content/uploads/photo-gallery/93340112626174c48b17724e93030b60-min.jpg',
+    ],
+    ratting: '3.2',
     color: 'blue',
     language: 'odia',
     type: 'hindu',
@@ -111,7 +116,7 @@ export default [
     seller: {
       id: '5b542a8ebacb42c548b86fb7',
       name: 'Janell Enterpise',
-      rating: 2,
+      ratting: 2,
     },
     other_seller_info: {
       count: 4,
@@ -124,8 +129,8 @@ export default [
     is_active: true,
     is_liked: true,
     price: '296.79',
-    urls: ['https://w3schools.com/w3images/mist.jpg'],
-    rating: '0.1',
+    urls: ['https://image.freepik.com/free-vector/golden-wedding-card_23-2147674581.jpg'],
+    ratting: '0.1',
     color: 'brown',
     language: 'english',
     type: 'hindu',
@@ -135,7 +140,7 @@ export default [
     seller: {
       id: '5b542a8e317fe3343f641294',
       name: 'Hebert Enterpise',
-      rating: '2.8',
+      ratting: '2.8',
     },
     other_seller_info: {
       count: 1,
@@ -148,8 +153,8 @@ export default [
     is_active: false,
     is_liked: true,
     price: '212.09',
-    urls: ['https://w3schools.com/w3images/nature.jpg'],
-    rating: '0.2',
+    urls: ['http://www.shadicards.com/images/ABC414_H1.jpg'],
+    ratting: '0.2',
     color: 'brown',
     language: 'marathi',
     type: 'muslime',
@@ -159,7 +164,7 @@ export default [
     seller: {
       id: '5b542a8e20d46f74c3bdcb3e',
       name: 'Rosalinda Enterpise',
-      rating: 0,
+      ratting: 0,
     },
     other_seller_info: {
       count: 7,
@@ -172,8 +177,10 @@ export default [
     is_active: false,
     is_liked: true,
     price: '217.59',
-    urls: ['https://w3schools.com/w3images/paris.jpg'],
-    rating: '0.4',
+    urls: [
+      'http://huntingleases.us/wp-content/uploads/2018/01/wedding-invitation-templates-with-ganesh-inspirational-hindu-wedding-invitations-gangcraft-net-of-wedding-invitation-templates-with-ganesh.jpg',
+    ],
+    ratting: '0.4',
     color: 'brown',
     language: 'urdu',
     type: 'hindu',
@@ -183,7 +190,7 @@ export default [
     seller: {
       id: '5b542a8e8739f0976fcd1fc9',
       name: 'Compton Enterpise',
-      rating: '0.8',
+      ratting: '0.8',
     },
     other_seller_info: {
       count: 3,
@@ -196,8 +203,8 @@ export default [
     is_active: true,
     is_liked: true,
     price: '362.99',
-    urls: ['https://w3schools.com/w3images/rocks.jpg'],
-    rating: 4,
+    urls: ['https://3.imimg.com/data3/IT/AH/MY-18928737/indian-wedding-card-500x500.jpg'],
+    ratting: 4,
     color: 'blue',
     language: 'marathi',
     type: 'isai',
@@ -207,7 +214,7 @@ export default [
     seller: {
       id: '5b542a8e4b73f8541a27a1bb',
       name: 'Alisa Enterpise',
-      rating: 3,
+      ratting: 3,
     },
     other_seller_info: {
       count: 4,
@@ -220,8 +227,8 @@ export default [
     is_active: true,
     is_liked: true,
     price: '134.01',
-    urls: ['https://w3schools.com/w3images/paris.jpg'],
-    rating: '1.8',
+    urls: ['http://www.bahaghara.co.in/images/wedding-invitations.jpg'],
+    ratting: '1.8',
     color: 'blue',
     language: 'marathi',
     type: 'muslime',
@@ -231,7 +238,7 @@ export default [
     seller: {
       id: '5b542a8e50512d0e1398da16',
       name: 'Alfreda Enterpise',
-      rating: 4,
+      ratting: 4,
     },
     other_seller_info: {
       count: 5,
@@ -244,8 +251,8 @@ export default [
     is_active: false,
     is_liked: true,
     price: '321.88',
-    urls: ['https://w3schools.com/w3images/mist.jpg'],
-    rating: 3,
+    urls: ['http://www.ezwed.in/images/estoreuser/galleryimage/D-7148.jpg'],
+    ratting: 3,
     color: 'blue',
     language: 'kannada',
     type: 'isai',
@@ -255,7 +262,7 @@ export default [
     seller: {
       id: '5b542a8e5ce2de43e6ccd7ef',
       name: 'Cantrell Enterpise',
-      rating: '3.2',
+      ratting: '3.2',
     },
     other_seller_info: {
       count: 7,

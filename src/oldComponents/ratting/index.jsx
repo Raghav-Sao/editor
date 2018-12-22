@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
 
-class Ratting extends Component {
+class Rating extends Component {
   render() {
-    const { ratting } = this.props
-    const absRatting = parseInt(ratting)
-    const isHalfRatting = ratting - absRatting
+    const { rating = 5 } = this.props
+    const absRating = parseInt(rating)
+    const isHalfRating = rating - absRating
 
     return (
-      <div className="ratting">
-        {[...Array(absRatting)].map((x, i) => {
+      <div className="rating">
+        {[...Array(absRating)].map((x, i) => {
           return <i className="icon-star" />
         })}
-        {isHalfRatting === 0.5 && <i className="icon-star-half-alt" />}
+        {isHalfRating === 0.5 && <i className="icon-star-half-alt" />}
       </div>
     )
   }
 }
 
-export default Ratting
+export default Rating

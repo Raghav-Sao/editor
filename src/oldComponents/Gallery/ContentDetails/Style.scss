@@ -1,7 +1,7 @@
 .card__details {
-  .image__thumnail_container {
+  .image__thumbnail_container {
     flex: 0 0 100px;
-    .image__thumnail {
+    .image__thumbnail {
       border: 1px solid #ccc;
       width: 65px;
       height: 65px;
@@ -53,11 +53,11 @@
 @media only screen and (max-width: 768px) {
   .card__details {
     flex-direction: column;
-    .image__thumnail_container {
+    .image__thumbnail_container {
       flex: 1;
       flex-direction: row;
       order: 2;
-      .image__thumnail {
+      .image__thumbnail {
         width: 32px;
         height: 32px;
       }

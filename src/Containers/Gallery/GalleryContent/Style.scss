@@ -1,0 +1,8 @@
+.gallery__container {
+  width: calc(100% - 250px);
+  margin-left: 250px !important;
+  .row {
+    max-height: 100vh;
+    overflow: auto;
+  }
+}

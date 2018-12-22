@@ -3,6 +3,7 @@ const initialState = {
   sortBy: 'popularity',
   color: {},
   language: {},
+  style: {},
   type: {},
 }
 export default function reducer(state = initialState, { type, payload }) {

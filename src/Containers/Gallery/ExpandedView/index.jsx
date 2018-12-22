@@ -1,16 +1,12 @@
-import React, { Component, Fragment } from 'react'
-import ImageCard from '../ImageCard/index'
-import Style from './Style.css'
-import 'assests/fontello/css/fontello.css'
-import Header from 'oldComponents/Header'
-import Ratting from 'oldComponents/ratting'
-import cardDetails from 'data/cardDetails'
+import React, { Component } from 'react'
+import { Button, Grid, Header, Icon, Image, Modal, Rating } from 'semantic-ui-react'
+
 import { fromEvent, merge } from 'rxjs'
 import { distinctUntilChanged, map, takeUntil, tap, throttleTime } from 'rxjs/operators'
-
+import './Style.css'
 const stopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, 'mouseup'))
 
-class Content extends Component {
+class ExpandedViewModel extends Component {
   state = {
     selectedImage: 0,
     style: {},
@@ -57,13 +53,13 @@ class Content extends Component {
     const { mouseX } = data,
       { x, width } = this.refs.front.getBoundingClientRect()
     // const s = Math.min(width, mouseX)
-    // console.log(s)
+    console.log(width)
     // const diff = 90 / 400
     // let calcTransY = 360 - diff * (x + width - mouseX)
 
     // calcTransY = calcTransY > 360 ? 360 : calcTransY
     // calcTransY = calcTransY < 360 ? 90 : calcTransY
-    let dist = Math.min(904, 904 - mouseX)
+    let dist = Math.min(821, 821 - mouseX)
     dist = Math.max(0, dist)
     const calcTransY = 360 - (90 / 400) * dist
     console.log(calcTransY)
@@ -85,48 +81,32 @@ class Content extends Component {
     })
   }
   render() {
-    const selectImage = index => {
-      this.setState({
-        selectedImage: index,
-      })
-    }
-    const {
-      seller: { stock, price, name: storeName, ratting: storeRatting = 4 },
-      other_seller: { count: otherSellerCount, min_price: minPrice = 10 },
-      thumbnail,
-      id,
-      rating,
-      color,
-      language,
-      type,
-      created_at: createdAt,
-      updated_at: updatedAt,
-      urls,
-      tags,
-      name = 'Yellow Marriage Card',
-    } = cardDetails
     return (
-      <Fragment>
-        <Header />
-        aa
-        <div class="card__details flex__container">
-          <div className="flex__container--column image__thumbnail_container justify__center">
-            {thumbnail.map((data, index) => (
-              <div className="image__thumbnail flex__container" onClick={() => selectImage(index)}>
-                <img src={data} className="align__self__center" />
-              </div>
-            ))}
-          </div>
+      <Modal
+        open={this.props.open}
+        className="expanded_view__model"
+        closeOnEscape={true}
+        onClose={this.props.toggleExpandedModal}
+        closeOnDimmerClick={true}
+      >
+        <Modal.Header>Profile Picture</Modal.Header>
+        <Modal.Content image>
           <div
             className="image__container flex__container--column"
-            style={{ perspective: '5000px' }}
+            style={{
+              perspective: '2000px',
+              minHeight: '500px',
+              backfaceVisibility: 'hidden',
+              minHeight: '283px',
+              width: '100%',
+            }}
           >
             <img
-              src={urls[this.state.selectedImage]}
+              src="https://i.pinimg.com/originals/ce/93/04/ce93045e2801a7544da8ef92867f2081.jpg"
               onMouseDown={e => this.star3d(e)}
               draggable="false"
               style={{
-                position: 'relative',
+                position: 'absolute',
                 left: '400px',
                 transformOrigin: '0% 50% 0px',
                 width: '400px',
@@ -136,7 +116,7 @@ class Content extends Component {
               ref="front"
             />
             <img
-              src="https://www.w3schools.com/w3images/nature.jpg"
+              src="https://i.pinimg.com/originals/ce/93/04/ce93045e2801a7544da8ef92867f2081.jpg"
               onMouseDown={e => this.star3d(e)}
               draggable="false"
               style={{
@@ -144,6 +124,7 @@ class Content extends Component {
                 left: '400px',
                 transformOrigin: '0% 50% 0px',
                 width: '400px',
+                border: '1px solid green',
               }}
             />
             <img
@@ -155,50 +136,21 @@ class Content extends Component {
                 left: '400px',
                 transformOrigin: '0% 50% 0px',
                 width: '400px',
+                border: '2px solid blue',
+
                 ...this.state.style1,
               }}
             />
-
-            <div className="flex__container">
-              <button className="buy__now">Buy Now</button>
-              <button className="add__to__cart">Add To Cart</button>
-            </div>
           </div>
-        </div>
-        <div className="image__details">
-          <div className="image__details__header">
-            <h1>{name}</h1>
-            <Ratting ratting={4.5} />
-          </div>
-          <div className="price">
-            <span>₹{price}</span>
-          </div>
-          <div className="tag__container">
-            {tags.map((data, index) => (
-              <div className="tag flex__container">
-                <span className="icon-right-open align__self__center">{data}</span>
-              </div>
-            ))}
-          </div>
-          <div className="flex__container--column sellers__details">
-            <div className="seller__details">
-              Sold by:
-              <a href="facebook.com" target="__blank">
-                {storeName} {storeRatting}
-                /5
-              </a>
-            </div>
-            <div className="other__seller__details f__13">
-              <a href="facebook.com" target="__blank">
-                {otherSellerCount} Other offers
-              </a>
-              <span> starting from ₹{minPrice}</span>
-            </div>
-          </div>
-        </div>
-      </Fragment>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button primary>
+            Proceed <Icon name="chevron right" />
+          </Button>
+        </Modal.Actions>
+      </Modal>
     )
   }
 }
 
-export default Content
+export default ExpandedViewModel

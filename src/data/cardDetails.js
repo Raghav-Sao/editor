@@ -8,7 +8,7 @@ export default {
     count: 10,
     minPrice: 50,
   },
-  thumnail: [
+  thumbnail: [
     'http://placehold.it/32x32',
     'http://placehold.it/32x32',
     'https://w3schools.com/w3images/nature.jpg',
@@ -27,10 +27,14 @@ export default {
   created_at: 'Wednesday, July 23, 2014 11:34 AM',
   updated_at: null,
   tags: [
-    'Yellow Ganesh card',
-    'English',
-    'Print Available',
-    'Width x Height: 74 cm x 129 cm (2 ft 5 in x 4 ft 2 in)     dfasd sadfas sfdasf asdfas ',
-    'in',
+    { name: 'Yellow Ganesh card', icon: 'info' },
+    { name: 'English', icon: '' },
+    { name: 'Print Available', icon: 'print' },
+    {
+      name:
+        'Width x Height: 74 cm x 129 cm (2 ft 5 in x 4 ft 2 in)     dfasd sadfas sfdasf asdfas ',
+      icon: 'resize horizontal',
+    },
+    { name: 'in', icon: '' },
   ],
 }
