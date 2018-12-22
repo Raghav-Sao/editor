@@ -62,6 +62,34 @@ class EditorTextToolbar extends Component {
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
   }
+
+  onDownloadImage = () => {
+    const canvas = document.createElement('canvas')
+    const htmlElement = document.querySelector('#iii')
+    const { offsetHeight: height, offsetWidth: width } = htmlElement.querySelector('#card__image')
+    canvas.height = height
+    canvas.width = width
+    const ctx = canvas.getContext('2d')
+    const html = new XMLSerializer().serializeToString(htmlElement)
+    const data = `<svg height="${height}" width="${width}" xmlns="http://www.w3.org/2000/svg" >' +
+      '<foreignObject height="100%" width="100%" >
+      ${html}
+      </foreignObject>
+      </svg>`
+    const image = document.createElement('img')
+    image.src = 'data:image/svg+xml; charset=utf8, ' + data
+    image.onload = () => {
+      ctx.drawImage(image, 0, 0)
+      const outputDataURI = canvas.toDataURL()
+      var link = document.createElement('a')
+      link.download = 'name.png'
+      link.href = outputDataURI
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
+  }
+
   render() {
     const {
       props: {
@@ -72,6 +100,7 @@ class EditorTextToolbar extends Component {
     return (
       <Fragment>
         <div className="editor__text__toolbar__container" onClick={e => this.preventPropagation(e)}>
+          <Button onClick={this.onDownloadImage}>Download</Button>
           <Fragment>
             <Popup
               trigger={

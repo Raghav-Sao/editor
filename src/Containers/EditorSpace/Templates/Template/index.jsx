@@ -8,12 +8,6 @@ class Template extends Component {
   cardRef = React.createRef()
   componentDidMount() {
     // document.addEventListener('click', () => this.deactiveBackgroundImage(this.props.index)) //add new fn for both deactivation sticker and card
-    const {
-        props: { cardIndex, dispatch },
-        cardRef: { current },
-      } = this,
-      { height, width, left, top } = current.getBoundingClientRect()
-    dispatch(actionCreator.SET_BACKGROUND_IMAGE_STYLE({ cardIndex, height, width, left, top }))
   }
 
   // deactiveBackgroundImage = cardIndex => {
@@ -124,6 +118,17 @@ class Template extends Component {
     return [showBorderGuid, showLeftGuide, showTopGuide, showCardMiddleGuide]
   }
 
+  handleImageLoad = () => {
+    const {
+        props: { cardIndex, dispatch },
+        cardRef: { current },
+      } = this,
+      { height, width, left, top } = current.getBoundingClientRect()
+    dispatch(actionCreator.SET_BACKGROUND_IMAGE_STYLE({ cardIndex, height, width, left, top }))
+  }
+
+  getImageStyle = ({ height, width }) => ({ height, width })
+
   render() {
     const {
         props: {
@@ -155,17 +160,18 @@ class Template extends Component {
     return (
       <Fragment>
         {connectDropTarget(
-          <div className="template_container" key="cardIndex">
+          <div className="template_container" key="cardIndex" id="iii">
             <img
               id="card__image"
               className={`${isBackgroundImageSelected ? 'active' : ''}`}
               alt="img"
               src={src}
               onClick={e => acivedBackgroundImage(e, cardIndex)}
-              style={style}
+              style={this.getImageStyle(style)}
               draggable="false"
               width="100%"
               ref={this.cardRef}
+              onLoad={this.handleImageLoad}
             />
             {showBorderGuid && <div className="card__border" />}
             {getStickers({ stickers, cardIndex, card: this.props.card })}
