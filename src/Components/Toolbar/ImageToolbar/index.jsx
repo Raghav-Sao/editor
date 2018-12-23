@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { DragSource } from 'react-dnd'
 import { Image } from 'semantic-ui-react'
-import SVG from 'react-inlinesvg'
 
 import './Style.css'
 
@@ -18,9 +17,7 @@ class ImageToolbar extends Component {
 
     return connectDragSource(
       <div className="image__toolbar">
-        <SVG src={src}>
-          <Image src={src} />
-        </SVG>
+        <div dangerouslySetInnerHTML={{ __html: src }} key={id} />
       </div>
     )
   }

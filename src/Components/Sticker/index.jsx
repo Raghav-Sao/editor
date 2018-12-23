@@ -4,7 +4,6 @@ import { DragSource } from 'react-dnd'
 import { fromEvent, merge } from 'rxjs'
 import { distinctUntilChanged, map, takeUntil, tap, throttleTime } from 'rxjs/operators'
 import { Image } from 'semantic-ui-react'
-import SVG from 'react-inlinesvg'
 import { actionCreator } from 'store/actionCreator'
 
 import Style from './Style.css'
@@ -445,9 +444,7 @@ class Sticker extends Component {
 
       return (
         <div key={id} className={`sticker__image ${isEditable ? 'editable' : ''}`}>
-          <SVG src={resource} key={id}>
-            <Image src={resource} />
-          </SVG>
+          <div dangerouslySetInnerHTML={{ __html: resource }} key={id} />
         </div>
       )
     }
