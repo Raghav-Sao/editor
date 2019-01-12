@@ -1,15 +1,16 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Grid } from 'semantic-ui-react'
-
 import TextToolbar from './TextToolbar'
 import ImageToolbar from './ImageToolbar'
+import TemplateToolbar from './TemplateToolbar'
 import { general, language } from 'Constants'
+
 import './Style.css'
 
 class Toolbar extends Component {
   getToolbar = type => {
-    const { TEXT, IMAGE } = general[language]
+    const { TEXT, IMAGE, TEMPLATES } = general[language]
     switch (type) {
       case TEXT: {
         return (
@@ -37,6 +38,10 @@ class Toolbar extends Component {
           </div>
         )
         break
+      }
+
+      case TEMPLATES: {
+        return <TemplateToolbar />
       }
       default:
         return <div />

@@ -3,11 +3,13 @@ export const general = {
     HOME: 'HOME',
     IMAGE: 'IMAGE',
     TEXT: 'TEXT',
+    TEMPLATES: 'TEMPLATES',
   },
   hindi: {
     HOME: 'HOME',
     IMAGE: 'IMAGE',
     TEXT: 'TEXT',
+    TEMPLATES: 'TEMPLATES',
   },
 }
 
