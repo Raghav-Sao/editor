@@ -76,18 +76,22 @@ class EditorTextToolbar extends Component {
       ${html}
       </foreignObject>
       </svg>`
-    const image = document.createElement('img')
-    image.src = 'data:image/svg+xml; charset=utf8, ' + data
-    image.onload = () => {
-      ctx.drawImage(image, 0, 0)
-      const outputDataURI = canvas.toDataURL()
-      var link = document.createElement('a')
-      link.download = 'name.png'
-      link.href = outputDataURI
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    }
+    const image = document.createElement('img');
+    console.log(html);
+    image.src = 'data:image/svg+xml; charset=utf8, ' + data;
+    setTimeout(()=> {
+      //image.onload = () => {
+        ctx.drawImage(image, 0, 0)
+        const outputDataURI = canvas.toDataURL()
+        var link = document.createElement('a')
+        link.download = 'name.png'
+        link.href = outputDataURI
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      //}
+    }, 1000);
+    
   }
 
   render() {

@@ -1,5 +1,5 @@
 import React, { createRef, Component, Fragment } from 'react'
-import SortBy from 'Components/Filters/SortBy/SortBy'
+// import SortBy from 'Components/Filters/SortBy/SortBy'
 import { findDOMNode } from 'react-dom'
 import Style from './Style.css'
 import GalleryCard from '../GalleryCard'
@@ -55,7 +55,7 @@ class Content extends Component {
       <Fragment>
         <div>
           {this.state.loading}
-          <SortBy />
+          {/* <SortBy /> */}
           <div className="ui doubling two column grid gallery__container">
             <div ref="stickerRef" className="row">
               <Grid.Column>

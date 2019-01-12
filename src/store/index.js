@@ -7,13 +7,15 @@ import { rootEpic } from './Epics'
 import reducer from 'reducers'
 
 const epicMiddleware = createEpicMiddleware()
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducer,
-  compose(
-    applyMiddleware(logger, epicMiddleware),
-    composeWithDevTools()
+  composeEnhancer(
+    applyMiddleware(epicMiddleware)
   )
 )
 epicMiddleware.run(rootEpic)
-
+store.subscribe(()=> {
+  console.log(store.getState());
+})
 export default store
