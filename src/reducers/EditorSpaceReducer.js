@@ -241,7 +241,7 @@ const EditorSpace = (state = initialState, { payload, type }) => {
     }
 
     case 'SET_BACKGROUND_IMAGE_STYLE': {
-      const { cardIndex, height, left, right, width } = payload
+      const { cardIndex, height, left, right, width, top, bottom } = payload
       // if (height === 0) return state
       const background = state.cards[cardIndex].background
       const updatedTemplate = {
@@ -251,9 +251,11 @@ const EditorSpace = (state = initialState, { payload, type }) => {
           style: {
             ...background.style,
             height: height ? height : 'auto',
-            left,
-            right,
+            left: left + window.scrollX,
+            right: right + window.scrollX,
             width,
+            top: top + window.scrollY,
+            bottom: bottom + window.scrollY,
           },
         },
       }

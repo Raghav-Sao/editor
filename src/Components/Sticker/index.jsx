@@ -42,7 +42,15 @@ class Sticker extends Component {
     this.props.dispatch(actionCreator.SET_ACTIVE_STICKER({ id: null }))
   }
 
-  checkForReadjust = ({ newTranslateX, newTranslateY, nextTop, nextLeft }) => {
+  checkForReadjust = ({
+    newTranslateX,
+    newTranslateY,
+    nextTop,
+    nextLeft,
+    nextBottom,
+    nextRight,
+  }) => {
+    //@todo: can we use nextTop to get nextBottom??
     if (!this.props.activeSticker.id) return [newTranslateX, newTranslateY]
     let restranslateY = newTranslateY,
       restranslateX = newTranslateX
@@ -60,7 +68,13 @@ class Sticker extends Component {
         cards: {
           [cardIndex]: {
             background: {
-              style: { width: cardWidth, left: cardLeft, right: cardRight },
+              style: {
+                width: cardWidth,
+                left: cardLeft,
+                right: cardRight,
+                bottom: cardBottom,
+                top: cardTop,
+              },
             },
           },
         },
@@ -74,12 +88,22 @@ class Sticker extends Component {
 
     const leftDiff = Math.abs(nextLeft - cardLeft - 10)
     const rightDiff = Math.abs(cardLeft + cardWidth - 10 - nextLeft - activeWidth)
+    const topDiff = Math.abs(nextTop - cardTop - 10)
+    const bottomDiff = Math.abs(cardBottom - 10 - nextBottom)
     if (leftDiff <= 5) {
       restranslateX = restranslateX + Math.round(cardLeft + 10 - nextLeft)
       return [restranslateX, restranslateY]
     }
     if (rightDiff <= 5) {
       restranslateX = restranslateX + Math.round(cardLeft + cardWidth - 10 - nextLeft - activeWidth)
+      return [restranslateX, restranslateY]
+    }
+    if (topDiff <= 5) {
+      restranslateY = restranslateY + Math.round(cardTop + 10 - nextTop)
+      return [restranslateX, restranslateY]
+    }
+    if (bottomDiff <= 5) {
+      restranslateY = restranslateY + Math.round(cardBottom - 10 - nextBottom)
       return [restranslateX, restranslateY]
     }
     // const { top: activeTop, left: activeLeft } = this.stickerRef.current.getBoundingClientRect()
@@ -268,14 +292,16 @@ class Sticker extends Component {
           newTranslateY: newDy,
           nextTop: top + window.scrollY + newDy - lastTraslateY,
           nextLeft: left + window.scrollX + newDx - lastTraslateX,
+          nextBottom: bottom + window.scrollY + newDy - lastTraslateY,
+          nextRight: left + window.scrollX + newDx - lastTraslateX,
         })
         sticker.dataset.lastTransform = JSON.stringify({ lastOffsetX: transX, lastOffsetY: transY })
         return {
           translateX: transX,
           translateY: transY,
-          bottom,
+          bottom: bottom + window.scrollY + transY - lastTraslateY,
           top: top + window.scrollY + transY - lastTraslateY,
-          right,
+          right: right + window.scrollX + transX - lastTraslateX,
           left: left + window.scrollX + transX - lastTraslateX,
           width,
         }

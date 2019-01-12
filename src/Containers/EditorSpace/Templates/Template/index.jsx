@@ -71,8 +71,9 @@ class Template extends Component {
               boundingRect: {
                 left: activeLeft,
                 top: activeTop,
-                width: activeWidth,
+                bottom: activeBottom,
                 right: activeRight,
+                width: activeWidth,
               } = {},
               translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
             } = {},
@@ -82,6 +83,8 @@ class Template extends Component {
       {
         left: cardLeft = 0,
         right: cardRight = 0,
+        top: cardTop = 0,
+        bottom: cardBottom = 0,
         height = 0,
         width: cardWidth = 0,
       } = this.cardRef.current.getBoundingClientRect()
@@ -90,8 +93,15 @@ class Template extends Component {
       showCardMiddleGuide = true
     }
     const leftBorderDiff = Math.abs(cardLeft + 10 - activeLeft).toFixed(1)
-    const rightBorderDiff = Math.abs(cardRight - 10 - activeLeft - activeWidth).toFixed(1)
-    if (leftBorderDiff <= 1 || rightBorderDiff <= 1) {
+    const rightBorderDiff = Math.abs(cardRight - 10 - activeRight).toFixed(1)
+    const topBorderDiff = Math.abs(cardTop + 10 - activeTop).toFixed(1)
+    const bottomBorderDiff = Math.abs(cardBottom - 10 - activeBottom).toFixed(1)
+    if (
+      leftBorderDiff <= 1 ||
+      rightBorderDiff <= 1 ||
+      topBorderDiff <= 1 ||
+      bottomBorderDiff <= 1
+    ) {
       showBorderGuid = true
     }
 
@@ -123,8 +133,18 @@ class Template extends Component {
         props: { cardIndex, dispatch },
         cardRef: { current },
       } = this,
-      { height, width, left, top } = current.getBoundingClientRect()
-    dispatch(actionCreator.SET_BACKGROUND_IMAGE_STYLE({ cardIndex, height, width, left, top }))
+      { height, width, left, top, bottom, right } = current.getBoundingClientRect()
+    dispatch(
+      actionCreator.SET_BACKGROUND_IMAGE_STYLE({
+        cardIndex,
+        height,
+        width,
+        left,
+        top,
+        bottom,
+        right,
+      })
+    )
   }
 
   getImageStyle = ({ height, width }) => ({ height, width })
