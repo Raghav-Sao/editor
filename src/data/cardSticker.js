@@ -1,5 +1,6 @@
 import imageStickers from 'assests/images/marriage-icons'
-import cardImg from 'assests/images/card-bg.jpg'
+// import cardImg from 'assests/images/card-bg.jpg'
+import cardImg from 'assests/images/business-card.jpg'
 export const cards = [
   {
     stickers: [
@@ -95,7 +96,7 @@ export const cards = [
     ],
     background: {
       type: 'image',
-      value: cardImg,
+      value: 'https://s3.ap-south-1.amazonaws.com/prosevents/violet-sample-verticle.png',
       style: { height: 'auto' },
     },
   },
