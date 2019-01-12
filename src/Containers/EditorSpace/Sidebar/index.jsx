@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Divider, Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
 import { general, language } from 'Constants'
 import Toolbar from 'Components/Toolbar'
 
+import { actionCreator } from 'store/actionCreator'
+
 import './Style.css'
 
-const { TEXT, IMAGE } = general[language]
+const { TEXT, IMAGE, TEMPLATES } = general[language]
 
-export default class SidebarComponent extends Component {
+class SidebarComponent extends Component {
   state = { visible: true, type: IMAGE }
+
+  componentDidMount() {
+    this.props.dispatch({ type: 'FETCH_TEMPLATES' })
+  }
 
   slectType = type => this.setState({ visible: !this.state.visible })
 
@@ -21,7 +28,10 @@ export default class SidebarComponent extends Component {
   }
 
   render() {
-    const { visible, type } = this.state
+    const {
+      state: { visible, type },
+      props: { templates },
+    } = this
 
     return (
       <div className="sidebar">
@@ -43,7 +53,11 @@ export default class SidebarComponent extends Component {
               <Icon name="image" />
               {IMAGE}
             </Menu.Item>
-            <Menu.Item as="a">
+            <Menu.Item
+              as="a"
+              className={type === IMAGE ? 'active' : ''}
+              onClick={() => this.showSibarContent(TEMPLATES)}
+            >
               <Icon name="layout" />
               Layout
             </Menu.Item>
@@ -62,3 +76,6 @@ export default class SidebarComponent extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ templateReducer: templates }) => ({ templates })
+export default connect(mapStateToProps)(SidebarComponent)

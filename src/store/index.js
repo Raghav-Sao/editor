@@ -3,7 +3,7 @@ import { createEpicMiddleware } from 'redux-observable'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import logger from 'redux-logger'
 
-import { rootEpic } from './Epics'
+import rootEpic from './epics'
 import reducer from 'reducers'
 
 const epicMiddleware = createEpicMiddleware()
