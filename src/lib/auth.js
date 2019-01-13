@@ -1,7 +1,7 @@
-import {get} from './localStorageManager';
+import Cookie from 'js-cookie';
 
 export const isLoggedIn = () => {
-    const token = get("token");
+    const token = Cookie.get("_session");
     return token ? true : false;
 };
 

@@ -1,10 +1,11 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
-import adminReducer from './AdminReducer'
-import imageEditor from './ImageEditorReducer'
-import editorSpace from './EditorSpaceReducer'
-import galleryReducer from './GalleryReducer'
-import templateReducer from 'store/Template/TemplateReducer'
+import adminReducer from './AdminReducer';
+import imageEditor from './ImageEditorReducer';
+import editorSpace from './EditorSpaceReducer';
+import galleryReducer from './GalleryReducer';
+import templateReducer from 'store/Template/TemplateReducer';
+import authReducer from 'store/Auth/AuthReducer';
 
 export default combineReducers({
   adminReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   galleryReducer,
   imageEditor,
   templateReducer,
+  authReducer
 })

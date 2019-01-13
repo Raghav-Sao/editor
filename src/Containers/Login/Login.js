@@ -1,33 +1,35 @@
 
 import React from 'react';
+import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
-import { Button, Checkbox, Form } from 'semantic-ui-react';
+import authReducer from 'store/Auth/AuthReducer';
+import { actionCreator } from 'store/actionCreator';
+import './Login.css';
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
     }
-    
+
+    onClick = () => {
+        console.log(actionCreator);
+        this.props.dispatch(actionCreator.LOGIN_USER({ provider: 'google' }));
+
+        // this.props.dispatch();  
+    }
+
     render() {
         return (
-            <div>
-                <Form>
-                    <Form.Field>
-                        <label>First Name</label>
-                        <input placeholder='First Name' />
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Last Name</label>
-                        <input placeholder='Last Name' />
-                    </Form.Field>
-                    <Form.Field>
-                        <Checkbox label='I agree to the Terms and Conditions' />
-                    </Form.Field>
-                    <Button type='submit'>Submit</Button>
-                </Form>
+            <div className="login-page">
+                <button className="loginBtn loginBtn--google" onClick={this.onClick}>
+                    Login with Google
+                </button>
             </div>
         );
     }
 }
 
-export default Login;
+const mapStateToProps = (state) => state.authReducer;
+
+export default connect(mapStateToProps)(Login)
