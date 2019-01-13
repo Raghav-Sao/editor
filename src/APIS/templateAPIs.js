@@ -7,5 +7,5 @@ export const fetchTemplates = () => {
   return request({
     method: 'get',
     url,
-  })
+  });
 }

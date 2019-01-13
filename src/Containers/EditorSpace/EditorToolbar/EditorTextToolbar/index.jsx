@@ -230,5 +230,8 @@ class EditorTextToolbar extends Component {
 }
 
 const mapStateToProps = ({ editorSpace: { activeSticker } }) => ({ activeSticker })
+// const mapStateToProps = (state) => {
+//   return state.editorSpace.activeSticker;
+// }
 
 export default connect(mapStateToProps)(EditorTextToolbar)
