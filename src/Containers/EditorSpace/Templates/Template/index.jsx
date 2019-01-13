@@ -22,7 +22,7 @@ class Template extends Component {
     const sticker = {
       type,
       resource: src || text,
-      style: {
+      styles: {
         position: {
           left: position.startX - x - 20,
           top: position.startY - y - 20,
@@ -41,53 +41,59 @@ class Template extends Component {
         width: type === 'text' ? 250 : 150,
         height: 'auto',
         textAlign: 'center',
-        boundingRect: {
-          top: window.scrollY + position.startY - 20,
-        },
+      },
+      boundingRect: {
+        top: window.scrollY + position.startY - 20,
       },
     }
     // style = type === 'text' ? { ...style, color: '#000', textAlign: 'center' } : style
     this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ sticker, cardIndex }))
   }
 
-  onMoveSticker = (id, position) => {
+  onMoveSticker = (_id, position) => {
+    //@todo: i think its not used
     const rootRef = findDOMNode(this)
     const { x, y } = rootRef.getBoundingClientRect()
-    const style = { left: position.startX - x, top: position.startY - y }
-    this.props.dispatch(actionCreator.MOVE_STICKER({ id, style }))
+    const styles = { left: position.startX - x, top: position.startY - y }
+    this.props.dispatch(actionCreator.MOVE_STICKER({ _id, styles }))
   }
 
   setActiveMiddel = () => {
-    if (!this.props.activeSticker.id) return [false, false]
+    if (!this.props.activeSticker._id) return [false, false]
     let showBorderGuid = false,
       showTopGuide = false,
       showLeftGuide = false,
       showCardMiddleGuide = false
     const {
-        props: {
-          activeSticker: {
-            id: activeId,
-            style: {
-              boundingRect: {
-                left: activeLeft,
-                top: activeTop,
-                bottom: activeBottom,
-                right: activeRight,
-                width: activeWidth,
-              } = {},
-              translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
-            } = {},
+      props: {
+        activeCardIndex,
+        activeSticker: {
+          _id: activeId,
+          boundingRect: {
+            left: activeLeft,
+            top: activeTop,
+            bottom: activeBottom,
+            right: activeRight,
+            width: activeWidth,
+          } = {},
+          styles: {
+            translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
+          } = {},
+        },
+        card: {
+          background: {
+            boundingRect: {
+              left: cardLeft = 0,
+              right: cardRight = 0,
+              top: cardTop = 0,
+              bottom: cardBottom = 0,
+              height = 0,
+              width: cardWidth = 0,
+            },
           },
         },
-      } = this,
-      {
-        left: cardLeft = 0,
-        right: cardRight = 0,
-        top: cardTop = 0,
-        bottom: cardBottom = 0,
-        height = 0,
-        width: cardWidth = 0,
-      } = this.cardRef.current.getBoundingClientRect()
+      },
+    } = this
     if (activeLeft + activeWidth / 2 === cardLeft + window.scrollX + cardWidth / 2) {
       //add scrollX while saving only
       showCardMiddleGuide = true
@@ -108,19 +114,19 @@ class Template extends Component {
     this.props.card.stickers.forEach(
       (
         {
-          id,
-          style: {
-            boundingRect: { top, left, width },
-            translate: { translateX, translateY },
+          _id,
+          styles: {
+            translate: { translateX, translateY } = {},
             position: { left: absLeft },
           },
+          boundingRect: { top, left, width },
         },
         index
       ) => {
-        if (id !== activeId && top === activeTop) {
+        if (_id !== activeId && top === activeTop) {
           showTopGuide = true
         }
-        if (id !== activeId && left === activeLeft) {
+        if (_id !== activeId && left === activeLeft) {
           showLeftGuide = true
         }
       }
@@ -133,21 +139,26 @@ class Template extends Component {
         props: { cardIndex, dispatch },
         cardRef: { current },
       } = this,
-      { height, width, left, top, bottom, right } = current.getBoundingClientRect()
+      { height, width, left, top, bottom, right } = current.getBoundingClientRect(),
+      boundingRect = {
+        bottom: bottom + window.scrollY,
+        left: left + window.scrollX,
+        right: right + window.scrollX,
+        top: top + window.scrollY,
+        width,
+        height,
+      }
     dispatch(
       actionCreator.SET_BACKGROUND_IMAGE_STYLE({
         cardIndex,
         height,
         width,
-        left,
-        top,
-        bottom,
-        right,
+        boundingRect,
       })
     )
   }
 
-  getImageStyle = ({ height, width }) => ({ height, width })
+  getImageStyle = ({ height, width } = {}) => ({ height, width }) //checkwhy
 
   render() {
     const {
@@ -158,16 +169,16 @@ class Template extends Component {
           getStickers,
           isBackgroundImageSelected = false,
           card: {
-            background: { style, value: src, type },
+            background: { styles, value: src, type },
             stickers,
             placeholder,
           },
           activeSticker: {
-            style: {
+            styles: {
               position: { left: activeLeft, top: activeTop } = {},
               translate: { translateX, translateY } = {},
-              boundingRect: { top = 0, left = 0, width = 0 } = {},
             } = {},
+            boundingRect: { top = 0, left = 0, width = 0 } = {},
           },
         },
       } = this,
@@ -187,7 +198,7 @@ class Template extends Component {
               alt="img"
               src={src}
               onClick={e => acivedBackgroundImage(e, cardIndex)}
-              style={this.getImageStyle(style)}
+              style={this.getImageStyle(styles)}
               draggable="false"
               width="100%"
               ref={this.cardRef}
@@ -248,7 +259,7 @@ class Template extends Component {
 
 const dropSpecs = {
   drop(props, monitor, component) {
-    const { id, src, style, text, type } = monitor.getItem()
+    const { _id, src, styles, text, type } = monitor.getItem()
     const { x: clientX, y: clientY } = monitor.getClientOffset()
     const { x: sourceX, y: sourceY } = monitor.getInitialSourceClientOffset()
     const { x: initialClientX, y: initialClientY } = monitor.getInitialClientOffset()
@@ -256,7 +267,7 @@ const dropSpecs = {
     const startY = clientY - initialClientY + sourceY
     const position = { startX, startY }
     if (type) {
-      component.onAddSticker({ position, src, style, text, type, cardIndex: props.cardIndex })
+      component.onAddSticker({ position, src, styles, text, type, cardIndex: props.cardIndex })
     }
     return { name: 'Content' }
   },

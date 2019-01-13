@@ -12,8 +12,8 @@ class EditorTextToolbar extends Component {
     this.state = { showColorPalette: true }
   }
 
-  deleteSticker = id => {
-    this.props.dispatch(actionCreator.DELETE_STICKER({ id }))
+  deleteSticker = _id => {
+    this.props.dispatch(actionCreator.DELETE_STICKER({ _id }))
   }
 
   getFontSizeOptions = () =>
@@ -22,22 +22,22 @@ class EditorTextToolbar extends Component {
         key={i}
         value={i + 10}
         selected={
-          this.props.activeSticker.style && i + 10 === this.props.activeSticker.style.fontSize
+          this.props.activeSticker.styles && i + 10 === this.props.activeSticker.styles.fontSize
         }
         onClick={this.onTextFontSizeChange}
       >{`${i + 10}px`}</Dropdown.Item>
     ))
   handleColorChanges = color => {
-    const style = {
+    const styles = {
       color: color.hex,
     }
-    this.props.dispatch(actionCreator.CHANGE_TEXT_STICKER_STYLE({ style }))
+    this.props.dispatch(actionCreator.CHANGE_TEXT_STICKER_STYLE({ styles }))
   }
 
   onTextStyleChange = e => {
     this.props.dispatch(
       actionCreator.CHANGE_TEXT_STICKER_STYLE({
-        style: { [e.currentTarget.name]: e.currentTarget.value },
+        styles: { [e.currentTarget.name]: e.currentTarget.value },
         cardIndex: 0,
       })
     )
@@ -46,7 +46,7 @@ class EditorTextToolbar extends Component {
   onTextFontSizeChange = (e, data) => {
     this.props.dispatch(
       actionCreator.CHANGE_TEXT_STICKER_STYLE({
-        style: { fontSize: data.value },
+        styles: { fontSize: data.value },
         cardIndex: 0,
       })
     )
@@ -76,28 +76,27 @@ class EditorTextToolbar extends Component {
       ${html}
       </foreignObject>
       </svg>`
-    const image = document.createElement('img');
-    console.log(html);
-    image.src = 'data:image/svg+xml; charset=utf8, ' + data;
-    setTimeout(()=> {
+    const image = document.createElement('img')
+    console.log(html)
+    image.src = 'data:image/svg+xml; charset=utf8, ' + data
+    setTimeout(() => {
       //image.onload = () => {
-        ctx.drawImage(image, 0, 0)
-        const outputDataURI = canvas.toDataURL()
-        var link = document.createElement('a')
-        link.download = 'name.png'
-        link.href = outputDataURI
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
+      ctx.drawImage(image, 0, 0)
+      const outputDataURI = canvas.toDataURL()
+      var link = document.createElement('a')
+      link.download = 'name.png'
+      link.href = outputDataURI
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
       //}
-    }, 1000);
-    
+    }, 1000)
   }
 
   render() {
     const {
       props: {
-        activeSticker: { style: activeStyle = {}, type: activeType },
+        activeSticker: { styles: activeStyle = {}, type: activeType },
       },
     } = this
 

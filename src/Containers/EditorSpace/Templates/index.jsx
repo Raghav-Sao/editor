@@ -32,10 +32,10 @@ class Templates extends Component {
       const {
         props: {
           dispatch,
-          activeSticker: { id, type },
+          activeSticker: { _id, type },
         },
       } = this
-      if (id && type !== 'text') dispatch(actionCreator.DELETE_STICKER({ id }))
+      if (_id && type !== 'text') dispatch(actionCreator.DELETE_STICKER({ _id }))
     } else if (e.keyCode == 90 && e.ctrlKey) {
       const savedUndoData = JSON.parse(window.localStorage.getItem('savedUndoData' || '[]')),
         savedUndoDataLength = savedUndoData.length

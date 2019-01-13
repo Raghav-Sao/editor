@@ -5,10 +5,10 @@ export const cards = [
   {
     stickers: [
       {
-        id: 123123,
+        _id: 123123,
         type: 'text',
         resource: 'Sample text 1',
-        style: {
+        styles: {
           position: {
             left: 10,
             top: 10,
@@ -28,18 +28,18 @@ export const cards = [
           fontWeight: 'bold',
           textAlign: 'center',
           fontStyle: 'normal',
-          boundingRect: {
-            top: 110,
-          },
+        },
+        boundingRect: {
+          top: 110,
         },
         labels: ['Sample text'],
         name: 'sample text',
       },
       {
-        id: 123124,
+        _id: 123124,
         type: 'svg',
         resource: imageStickers[0].src,
-        style: {
+        styles: {
           position: {
             left: 10,
             top: 150,
@@ -57,8 +57,8 @@ export const cards = [
           width: 150,
           height: 'auto',
           fontWeight: 'bold',
-          boundingRect: { top: 250 },
         },
+        boundingRect: { top: 250 },
         labels: ['God Svg'],
         name: 'Lord-Ganesh7',
       },
@@ -95,7 +95,7 @@ export const cards = [
       },
     ],
     background: {
-      type: 'image',
+      bgType: 'image',
       value: 'https://s3.ap-south-1.amazonaws.com/prosevents/violet-sample-verticle.png',
       style: { height: 'auto' },
     },
