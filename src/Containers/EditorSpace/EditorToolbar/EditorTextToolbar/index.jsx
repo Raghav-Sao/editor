@@ -93,6 +93,16 @@ class EditorTextToolbar extends Component {
     }, 1000)
   }
 
+  saveChanges = () => {
+    const {
+      props: {
+        activeSticker: { cardIndex },
+        cards: { [cardIndex]: card },
+      },
+    } = this
+    this.props.dispatch(actionCreator.SAVE_EDITOR_CARD_TO_SERVER({ card }))
+  }
+
   render() {
     const {
       props: {
@@ -102,8 +112,15 @@ class EditorTextToolbar extends Component {
 
     return (
       <Fragment>
-        <div className="editor__text__toolbar__container" onClick={e => this.preventPropagation(e)}>
-          <Button onClick={this.onDownloadImage}>Download</Button>
+        <div
+          className="editor__text__toolbar__container"
+          onClick={e => {
+            this.preventPropagation(e)
+            console.log('click')
+          }}
+        >
+          {/*<Button onClick={this.onDownloadImage}>Download</Button>*/}
+          <Button onClick={this.saveChanges.bind(this)}>Save</Button>
           <Fragment>
             <Popup
               trigger={
@@ -229,7 +246,7 @@ class EditorTextToolbar extends Component {
   }
 }
 
-const mapStateToProps = ({ editorSpace: { activeSticker } }) => ({ activeSticker })
+const mapStateToProps = ({ editorSpace: { activeSticker, cards } }) => ({ activeSticker, cards })
 // const mapStateToProps = (state) => {
 //   return state.editorSpace.activeSticker;
 // }

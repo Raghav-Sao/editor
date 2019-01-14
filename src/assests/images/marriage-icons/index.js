@@ -2,6 +2,8 @@ import allah from './allah'
 import ganesh from './ganesh'
 import sikh from './sikh'
 import ring from './ring'
+import fZeroIcon from './fZeroIcon'
+import nintendogsIcon from './nintendogsIcon'
 
 export default [
   {
@@ -22,6 +24,16 @@ export default [
   {
     id: 4,
     src: ring.data,
+    type: 'svg',
+  },
+  {
+    id: 5,
+    src: fZeroIcon.data,
+    type: 'svg',
+  },
+  {
+    id: 6,
+    src: nintendogsIcon.data,
     type: 'svg',
   },
 ]

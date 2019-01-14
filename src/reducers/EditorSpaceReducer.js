@@ -8,6 +8,7 @@ const initialState = {
   imageStickers,
   cards,
   activeCardIndex: 0,
+  status: 'All Changes Saved',
 }
 
 const EditorSpace = (state = initialState, { payload, type }) => {
@@ -288,6 +289,14 @@ const EditorSpace = (state = initialState, { payload, type }) => {
       return {
         ...state,
         cards: [...pages],
+      }
+    }
+
+    case types.UPDATE_EDITOR_DATA_SYNC_STATUS: {
+      const { status } = payload
+      return {
+        ...state,
+        status,
       }
     }
 

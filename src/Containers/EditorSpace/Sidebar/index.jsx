@@ -11,7 +11,7 @@ import './Style.css'
 const { TEXT, IMAGE, TEMPLATES } = general[language]
 
 class SidebarComponent extends Component {
-  state = { visible: true, type: IMAGE }
+  state = { visible: true, type: TEMPLATES }
 
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_TEMPLATES' })
@@ -55,7 +55,7 @@ class SidebarComponent extends Component {
             </Menu.Item>
             <Menu.Item
               as="a"
-              className={type === IMAGE ? 'active' : ''}
+              className={type === TEMPLATES ? 'active' : ''}
               onClick={() => this.showSibarContent(TEMPLATES)}
             >
               <Icon name="layout" />

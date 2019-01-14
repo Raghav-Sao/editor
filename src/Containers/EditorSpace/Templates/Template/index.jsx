@@ -39,7 +39,7 @@ class Template extends Component {
         color: '#FFF',
         fontSize: 25,
         width: type === 'text' ? 250 : 150,
-        height: 'auto',
+        // height: 'auto', think about this
         textAlign: 'center',
       },
       boundingRect: {

@@ -310,12 +310,18 @@ class Sticker extends Component {
     }
   }
 
-  stopEvents = state => {
+  stopEvents = ({ state, cardIndex }) => {
     // Todo: Make it better
     const {
       state: { isDragging, isResizing, isRotating },
+      props: {
+        cards: { [cardIndex]: card },
+      },
     } = this
-    if (isDragging || isResizing || isRotating) this.saveChanges(state)
+    if (isDragging || isResizing || isRotating) {
+      this.saveChanges(state)
+      // this.props.dispatch(actionCreator.SAVE_EDITOR_CARD_TO_SERVER({ card }))
+    }
     this.setState({ isDragging: false, isResizing: false, isRotating: false })
   }
 
@@ -351,7 +357,7 @@ class Sticker extends Component {
         stopEvents$.pipe(
           tap(() => {
             this.m = NaN
-            this.stopEvents(state)
+            this.stopEvents({ state, cardIndex })
           })
         )
       ),
