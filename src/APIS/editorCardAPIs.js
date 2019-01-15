@@ -18,3 +18,19 @@ export const updateEditorCard = ({ card, card: { _id } }) => {
     body: { card },
   })
 }
+
+export const addaEditorCardSticker = ({ _id, sticker }) => {
+  const url = `${BASE_URL}/api/user/card/${_id}/updateField`
+  const payload = {
+    updates: {
+      type: 'insert',
+      keyPath: ['stickers'],
+      value: sticker,
+    },
+  }
+  return request({
+    method: 'post',
+    url,
+    body: payload,
+  })
+}

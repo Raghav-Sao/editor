@@ -58,7 +58,7 @@ class SidebarComponent extends Component {
               className={type === TEMPLATES ? 'active' : ''}
               onClick={() => this.showSibarContent(TEMPLATES)}
             >
-              <Icon name="layout" />
+              <Icon name={`${type === TEMPLATES ? 'open' : ''} folder outline`} />
               Layout
             </Menu.Item>
           </Sidebar>

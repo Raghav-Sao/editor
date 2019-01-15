@@ -230,6 +230,7 @@ class EditorTextToolbar extends Component {
                   selection
                   text={`${activeStyle.fontSize}`}
                   style={{ margin: '0 .25em 0 0' }}
+                  onClick={e => this.preventPropagation(e)}
                 />
               </Fragment>
             </Fragment>

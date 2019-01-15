@@ -32,6 +32,30 @@ const EditorSpace = (state = initialState, { payload, type }) => {
       }
     }
 
+    case 'UPDATE_CARD_STICKER_ID': {
+      const { tempId, _id } = payload
+      const { cardIndex } = state.activeSticker
+      const stickers = state.cards[cardIndex].stickers
+      const updatedStickers = stickers.map(sticker => {
+        if (sticker.tempId === tempId) {
+          return { ...sticker, _id, tempId: undefined }
+        }
+        return sticker
+      })
+      const updatedTemplate = {
+        ...state.cards[cardIndex],
+        stickers: updatedStickers,
+      }
+      return {
+        ...state,
+        cards: [
+          ...state.cards.slice(0, cardIndex),
+          updatedTemplate,
+          ...state.cards.slice(cardIndex + 1),
+        ],
+      }
+    }
+
     case 'CHANGE_TEXT_STICKER_STYLE': {
       const { _id, styles } = payload
       const { cardIndex } = state.activeSticker

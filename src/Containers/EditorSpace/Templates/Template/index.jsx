@@ -20,34 +20,40 @@ class Template extends Component {
     const rootRef = findDOMNode(this)
     const { x, y } = rootRef.getBoundingClientRect()
     const sticker = {
-      type,
-      resource: src || text,
-      styles: {
-        position: {
-          left: position.startX - x - 20,
-          top: position.startY - y - 20,
+        tempId: Date.now(),
+        type,
+        resource: src || text,
+        styles: {
+          position: {
+            left: position.startX - x - 20,
+            top: position.startY - y - 20,
+          },
+          scale: 1,
+          rotation: {
+            unit: 'deg',
+            rotation: 0,
+          },
+          translate: {
+            translateX: 0,
+            translateY: 0,
+          },
+          color: '#FFF',
+          fontSize: 25,
+          width: type === 'text' ? 250 : 150,
+          // height: 'auto', think about this
+          textAlign: 'center',
         },
-        scale: 1,
-        rotation: {
-          unit: 'deg',
-          rotation: 0,
+        boundingRect: {
+          top: window.scrollY + position.startY - 20,
         },
-        translate: {
-          translateX: 0,
-          translateY: 0,
-        },
-        color: '#FFF',
-        fontSize: 25,
-        width: type === 'text' ? 250 : 150,
-        // height: 'auto', think about this
-        textAlign: 'center',
       },
-      boundingRect: {
-        top: window.scrollY + position.startY - 20,
-      },
-    }
+      {
+        props: {
+          card: { _id },
+        },
+      } = this
     // style = type === 'text' ? { ...style, color: '#000', textAlign: 'center' } : style
-    this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ sticker, cardIndex }))
+    this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ sticker, cardIndex, _id }))
   }
 
   onMoveSticker = (_id, position) => {

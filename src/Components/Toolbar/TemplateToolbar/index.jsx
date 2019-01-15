@@ -5,6 +5,8 @@ import { Image, Grid } from 'semantic-ui-react'
 import { actionCreator } from 'store/actionCreator'
 import placeholderImage from 'assests/images/placeholder-image.jpg'
 
+import './Style.css'
+
 class TemplateToolbar extends PureComponent {
   showTemplate = ({ _id }) => {
     this.props.dispatch(actionCreator.FETCH_EDITOR_CARD({ _id }))

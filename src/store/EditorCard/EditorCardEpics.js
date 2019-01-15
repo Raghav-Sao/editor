@@ -8,10 +8,15 @@ import {
   FETCH_EDITOR_CARD,
   FETCH_EDITOR_CARD_FULFILLED,
   SAVE_EDITOR_CARD_TO_SERVER,
+  UPDATE_CARD_STICKER_ID,
 } from './EditorCardActions'
 
 const fetchEditorCardFulfilled = payload => ({ type: FETCH_EDITOR_CARD_FULFILLED, payload })
 const updateEditorSyncStatus = payload => ({ type: 'UPDATE_EDITOR_DATA_SYNC_STATUS', payload })
+const updateAddedStickerId = ({ response, sticker: { tempId } }) => ({
+  type: UPDATE_CARD_STICKER_ID,
+  payload: { _id: response.updatedValue.slice(-1)[0]._id, tempId },
+})
 const BASE_URL = 'http://localhost:3000'
 
 const fetchEditorCardEpic = action$ =>
@@ -32,4 +37,14 @@ const saveEditorCardToServerEpic = action$ =>
     )
   )
 
-export default [fetchEditorCardEpic, saveEditorCardToServerEpic]
+const addStickerEpic = action$ =>
+  action$.pipe(
+    ofType('ADD_TEXT_STICKER'),
+    mergeMap(({ payload: { sticker, cardIndex, _id } }) =>
+      editorAPIs
+        .addaEditorCardSticker({ sticker, _id })
+        .pipe(map(response => updateAddedStickerId({ response, sticker })))
+    )
+  )
+
+export default [fetchEditorCardEpic, saveEditorCardToServerEpic, addStickerEpic]
