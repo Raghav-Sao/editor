@@ -5,7 +5,7 @@ import Cookie from 'js-cookie';
 
 // const baseURI = process.env.REACT_APP_BASE_URI
 
-const headers = { 'Content-Type': 'application/json', Cookie: `_session= +${Cookie.get('_session')}` };
+const headers = { Cookie: `_session= +${Cookie.get('_session')}` };
 
 const errorHandler = catchError(data => throwError(new Error(data.error || data)));
 

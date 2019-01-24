@@ -6,11 +6,21 @@ import { Route, Redirect } from 'react-router';
 import Login from '../Login';
 import Gallery from '../Gallery';
 import EditorSpace from '../EditorSpace';
+import Cookie from 'js-cookie';
+
 
 class Root extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props.children);
+        console.log(props);
+        if (props.location.search) {
+            const token = props.location.search.split("=")[1];
+            if (token) {
+                Cookie.set("_session", token);
+                window.close();
+            }
+
+        }
     }
 
     render() {
