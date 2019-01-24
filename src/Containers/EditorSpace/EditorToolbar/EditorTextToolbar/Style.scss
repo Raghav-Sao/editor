@@ -3,15 +3,33 @@
   input[type='checkbox']:checked + label {
     background: #babbbc;
   }
-  .ui.selection.dropdown {
-    min-width: 100px;
-  }
 }
 
-/* dont put inside other coz it on outer layer*/
+/* dont put inside other coz it on outer layer coz of popup*/
 .text__align__container {
   input[type='checkbox']:checked + label,
   input[type='radio']:checked + label {
     background: #babbbc;
+  }
+}
+
+.ui.selection.dropdown {
+  min-width: 75px;
+}
+.color_palletee__container {
+  .ui.divider {
+    font-size: 0.7em;
+    color: #ccc;
+  }
+  .document_color__container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 5px;
+
+    span {
+      margin: 5px;
+      box-shadow: inset 0 0 0 1px rgba(14, 19, 24, 0.15);
+    }
   }
 }

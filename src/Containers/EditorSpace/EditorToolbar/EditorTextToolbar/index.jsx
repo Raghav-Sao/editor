@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Button, Dropdown, Grid, Icon, Label, Popup } from 'semantic-ui-react'
+import { Button, Divider, Dropdown, Grid, Icon, Label, Popup } from 'semantic-ui-react'
 import { SketchPicker } from 'react-color'
 
 import { actionCreator } from 'store/actionCreator'
@@ -9,7 +9,9 @@ import './Style.css'
 class EditorTextToolbar extends Component {
   constructor(props) {
     super(props)
-    this.state = { showColorPalette: true }
+    this.state = {
+      documentColors: ['#f00', '#0f0', '#00f'],
+    }
   }
 
   deleteSticker = _id => {
@@ -130,10 +132,30 @@ class EditorTextToolbar extends Component {
               }
               position="bottom center"
               on={['hover']}
-              flowing
               hoverable
             >
-              <SketchPicker color={activeStyle.color} onChangeComplete={this.handleColorChanges} />
+              <div className="color_palletee__container">
+                <Divider horizontal>Document Color</Divider>
+                <div className="document_color__container">
+                  {this.state.documentColors.map(color => (
+                    <span
+                      style={{
+                        backgroundColor: color,
+                        width: '25px',
+                        height: '25px',
+                        display: 'inline-block',
+                      }}
+                      onClick={() => this.handleColorChanges({ hex: color })}
+                    />
+                  ))}
+                </div>
+                <Divider horizontal>Default Color</Divider>
+
+                <SketchPicker
+                  color={activeStyle.color}
+                  onChangeComplete={this.handleColorChanges}
+                />
+              </div>
             </Popup>
           </Fragment>
           {activeType === 'text' && (

@@ -96,7 +96,7 @@ export const cards = [
     ],
     background: {
       bgType: 'image',
-      value: 'https://s3.ap-south-1.amazonaws.com/prosevents/violet-sample-verticle.png',
+      value: 'https://s3.ap-south-1.amazonaws.com/prosevents/orange-sample-verticle.png',
       style: { height: 'auto' },
     },
   },

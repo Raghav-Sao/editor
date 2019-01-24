@@ -64,8 +64,9 @@ class Template extends Component {
     this.props.dispatch(actionCreator.MOVE_STICKER({ _id, styles }))
   }
 
-  setActiveMiddel = () => {
-    if (!this.props.activeSticker._id) return [false, false]
+  setActiveMiddel = cardIndex => {
+    if (!this.props.activeSticker._id || this.props.activeSticker.cardIndex !== cardIndex)
+      return [false, false, false, false]
     let showBorderGuid = false,
       showTopGuide = false,
       showLeftGuide = false,
@@ -188,7 +189,9 @@ class Template extends Component {
           },
         },
       } = this,
-      [showBorderGuid, showLeftGuide, showTopGuide, showCardMiddleGuide] = this.setActiveMiddel(),
+      [showBorderGuid, showLeftGuide, showTopGuide, showCardMiddleGuide] = this.setActiveMiddel(
+        this.props.cardIndex
+      ),
       cardRect = this.cardRef.current ? this.cardRef.current.getBoundingClientRect() : {},
       alignTop = showTopGuide && this.cardRef.current ? top - cardRect.top - window.scrollY : 0,
       alignLeft = showLeftGuide && this.cardRef.current ? left - cardRect.left - window.scrollX : 0,
