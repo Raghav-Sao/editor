@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { actionCreator } from 'store/actionCreator'
 import { findDOMNode } from 'react-dom'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import Sticker from 'Components/Sticker'
 import Template from './Template'
@@ -12,6 +13,15 @@ class Templates extends Component {
     window.localStorage.removeItem('savedUndoData')
     window.localStorage.removeItem('savedRedoData')
     document.addEventListener('keyup', this.deleteActiveSticker)
+    const {
+      props: {
+        dispatch,
+        match: {
+          params: { id: _id = '5c3ed16a3fde554da3ad1eea' },
+        },
+      },
+    } = this
+    dispatch(actionCreator.FETCH_EDITOR_CARD({ _id }))
   }
 
   saveChanges = () => {
@@ -114,4 +124,4 @@ const mapStateToProps = ({ editorSpace: { cards, activeSticker } }) => ({
   cards,
   activeSticker,
 })
-export default connect(mapStateToProps)(Templates)
+export default withRouter(connect(mapStateToProps)(Templates))
