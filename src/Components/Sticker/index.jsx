@@ -48,7 +48,7 @@ class Sticker extends Component {
     nextTop,
     nextLeft,
     nextBottom,
-    nextRight,
+    // nextRight,
   }) => {
     //@todo: can we use nextTop to get nextBottom??
     if (!this.props.activeSticker._id) return [newTranslateX, newTranslateY]
@@ -63,7 +63,7 @@ class Sticker extends Component {
             position: { left: activeAbsLeft, top: activeAbsTop },
             translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
           } = {},
-          boundingRect: { width: activeWidth, left: boundingLeft } = {}, //not taking left right from here coz it will update soon
+          boundingRect: { width: activeWidth, left: boundingLeftm, height: activeHeight } = {}, //not taking left right from here coz it will update soon
         },
         cards: {
           [cardIndex]: {
@@ -81,30 +81,29 @@ class Sticker extends Component {
         },
       },
     } = this
-
-    const midDiff = cardLeft + cardWidth / 2 + window.scrollX - nextLeft - activeWidth / 2
+    const midDiff = cardWidth / 2 + window.scrollX - nextLeft - activeWidth / 2
     if (Math.abs(midDiff) < 5) {
       restranslateX += midDiff
     }
 
-    const leftDiff = Math.abs(nextLeft - cardLeft - 10)
-    const rightDiff = Math.abs(cardLeft + cardWidth - 10 - nextLeft - activeWidth)
-    const topDiff = Math.abs(nextTop - cardTop - 10)
-    const bottomDiff = Math.abs(cardBottom - 10 - nextBottom)
+    const leftDiff = Math.abs(nextLeft - 10)
+    const rightDiff = Math.abs(cardWidth - 10 - nextLeft - activeWidth)
+    const topDiff = Math.abs(nextTop - 10)
+    const bottomDiff = Math.abs(cardHeight - 10 - nextBottom)
     if (leftDiff <= 5) {
-      restranslateX = restranslateX + Math.round(cardLeft + 10 - nextLeft)
+      restranslateX = restranslateX + Math.round(10 - nextLeft)
       return [restranslateX, restranslateY]
     }
     if (rightDiff <= 5) {
-      restranslateX = restranslateX + Math.round(cardLeft + cardWidth - 10 - nextLeft - activeWidth)
+      restranslateX = restranslateX + Math.round(cardWidth - 10 - nextLeft - activeWidth)
       return [restranslateX, restranslateY]
     }
     if (topDiff <= 5) {
-      restranslateY = restranslateY + Math.round(cardTop + 10 - nextTop)
+      restranslateY = restranslateY + Math.round(10 - nextTop)
       return [restranslateX, restranslateY]
     }
     if (bottomDiff <= 5) {
-      restranslateY = restranslateY + Math.round(cardBottom - 10 - nextBottom)
+      restranslateY = restranslateY + Math.round(bottomDiff)
       return [restranslateX, restranslateY]
     }
     // const { top: activeTop, left: activeLeft } = this.stickerRef.current.getBoundingClientRect()
@@ -119,7 +118,7 @@ class Sticker extends Component {
             position: { left: absLeft, top: absTop },
             translate: { translateX, translateY },
           },
-          boundingRect: { top, left },
+          boundingRect: { top, left } = {},
         },
         index
       ) => {
@@ -142,6 +141,13 @@ class Sticker extends Component {
 
   resizeOrRotateSticker = (_id, calculatedStyle, type, cardIndex) => {
     const { bottom, top, right, left, width } = calculatedStyle
+    const boundingRect = {
+      bottom,
+      left,
+      right,
+      top,
+      width,
+    }
     if (type === 'rotate') {
       const { rotation } = calculatedStyle
       this.props.dispatch(
@@ -149,7 +155,7 @@ class Sticker extends Component {
           _id,
           rotation,
           cardIndex,
-          boundingRect: { bottom, top: top + window.scrollY, right, left: left + window.scrollX },
+          boundingRect,
         })
       )
     } else if (type === 'drag') {
@@ -161,13 +167,7 @@ class Sticker extends Component {
           _id,
           translate,
           cardIndex,
-          boundingRect: {
-            bottom,
-            top: top,
-            right,
-            left: left,
-            width,
-          },
+          boundingRect,
         })
       )
     } else {
@@ -180,13 +180,7 @@ class Sticker extends Component {
           leftDiff,
           topDiff,
           cardIndex,
-          boundingRect: {
-            bottom,
-            top: top + window.scrollY,
-            right,
-            left: left + window.scrollX,
-            width,
-          },
+          boundingRect,
         })
       )
     }
@@ -196,7 +190,35 @@ class Sticker extends Component {
     e.stopPropagation()
     const sticker = this.stickerRef.current
     if (this.stickerRef === null) return
-    const { bottom, left, top, right, width, height } = sticker.getBoundingClientRect()
+    const {
+      bottom,
+      left,
+      top,
+      right,
+      width,
+      height,
+      left: activeBoundingLeft,
+      top: activeBoundingTop,
+    } = sticker.getBoundingClientRect()
+    const {
+      props: {
+        activeCardIndex,
+        cards: {
+          [activeCardIndex]: {
+            background: {
+              boundingRect: {
+                width: cardWidth,
+                height: cardHeight,
+                left: cardLeft,
+                right: cardRight,
+                bottom: cardBottom,
+                top: cardTop,
+              },
+            },
+          },
+        },
+      },
+    } = this
     const { offsetWidth } = sticker
     const {
       data: {
@@ -208,6 +230,7 @@ class Sticker extends Component {
         styles: {
           translate: { translateX: lastTraslateX = 0, translateY: lastTraslateY = 0 } = {},
         } = {},
+        // boundingRect: { left: activeBoundingLeft, top: activeBoundingTop } = {},
       },
     } = this.props
 
@@ -291,19 +314,19 @@ class Sticker extends Component {
         const [transX, transY] = this.checkForReadjust({
           newTranslateX: newDx,
           newTranslateY: newDy,
-          nextTop: top + window.scrollY + newDy - lastTraslateY,
-          nextLeft: left + window.scrollX + newDx - lastTraslateX,
-          nextBottom: bottom + window.scrollY + newDy - lastTraslateY,
-          nextRight: left + window.scrollX + newDx - lastTraslateX,
+          nextTop: activeBoundingTop - cardTop + newDy - lastTraslateY + window.scrollY,
+          nextLeft: activeBoundingLeft - cardLeft + newDx - lastTraslateX + window.scrollX, //@todo: should we remove window.scrollX?
+          nextBottom: activeBoundingTop - cardTop + newDy - lastTraslateY + window.scrollY + height, //not using for now
+          // nextRight: left + newDx - lastTraslateX, //not using for now
         })
         sticker.dataset.lastTransform = JSON.stringify({ lastOffsetX: transX, lastOffsetY: transY })
         return {
           translateX: transX,
           translateY: transY,
-          bottom: bottom + window.scrollY + transY - lastTraslateY,
-          top: top + window.scrollY + transY - lastTraslateY,
-          right: right + window.scrollX + transX - lastTraslateX,
-          left: left + window.scrollX + transX - lastTraslateX,
+          bottom: activeBoundingTop - cardTop + height + transY - lastTraslateY + window.scrollY,
+          top: activeBoundingTop - cardTop + transY - lastTraslateY + window.scrollY,
+          left: activeBoundingLeft - cardLeft + transX - lastTraslateX,
+          right: activeBoundingLeft - cardLeft + width + transX - lastTraslateX,
           width,
         }
       }
@@ -552,8 +575,9 @@ const dragCollect = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 })
 
-const mapStateToProps = ({ editorSpace: { activeSticker, cards } }) => ({
+const mapStateToProps = ({ editorSpace: { activeSticker, cards, activeCardIndex } }) => ({
   activeSticker,
   cards,
+  activeCardIndex,
 })
 export default connect(mapStateToProps)(DragSource(dragType, dragSpec, dragCollect)(Sticker))

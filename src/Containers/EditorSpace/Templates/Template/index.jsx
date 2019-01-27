@@ -66,11 +66,12 @@ class Template extends Component {
 
   setActiveMiddel = cardIndex => {
     if (!this.props.activeSticker._id || this.props.activeSticker.cardIndex !== cardIndex)
-      return [false, false, false, false]
+      return [false, false, false, false, false]
     let showBorderGuid = false,
       showTopGuide = false,
       showLeftGuide = false,
-      showCardMiddleGuide = false
+      showCardVerticalMiddleGuide = false,
+      showCardHorizontalMiddleGuide = false
     const {
       props: {
         activeCardIndex,
@@ -82,6 +83,7 @@ class Template extends Component {
             bottom: activeBottom,
             right: activeRight,
             width: activeWidth,
+            height: activeHeight,
           } = {},
           styles: {
             translate: { translateX: activeTraslateX, translateY: activeTraslateY } = {},
@@ -94,21 +96,24 @@ class Template extends Component {
               right: cardRight = 0,
               top: cardTop = 0,
               bottom: cardBottom = 0,
-              height = 0,
+              height: cardHeight = 0,
               width: cardWidth = 0,
             },
           },
         },
       },
     } = this
-    if (activeLeft + activeWidth / 2 === cardLeft + window.scrollX + cardWidth / 2) {
+    if (cardWidth / 2 === activeWidth / 2 + activeLeft) {
       //add scrollX while saving only
-      showCardMiddleGuide = true
+      showCardVerticalMiddleGuide = true
     }
-    const leftBorderDiff = Math.abs(cardLeft + 10 - activeLeft).toFixed(1)
-    const rightBorderDiff = Math.abs(cardRight - 10 - activeRight).toFixed(1)
-    const topBorderDiff = Math.abs(cardTop + 10 - activeTop).toFixed(1)
-    const bottomBorderDiff = Math.abs(cardBottom - 10 - activeBottom).toFixed(1)
+    if (cardHeight / 2 === activeHeight / 2 + activeTop) {
+      showCardHorizontalMiddleGuide = true
+    }
+    const leftBorderDiff = Math.abs(10 - activeLeft).toFixed(1)
+    const rightBorderDiff = Math.abs(cardRight - cardLeft - 10 - activeRight).toFixed(1)
+    const topBorderDiff = Math.abs(10 - activeTop).toFixed(1)
+    const bottomBorderDiff = Math.abs(cardHeight - 10 - activeBottom).toFixed(1)
     if (
       leftBorderDiff <= 1 ||
       rightBorderDiff <= 1 ||
@@ -126,7 +131,7 @@ class Template extends Component {
             translate: { translateX, translateY } = {},
             position: { left: absLeft },
           },
-          boundingRect: { top, left, width },
+          boundingRect: { top, left, width } = {},
         },
         index
       ) => {
@@ -138,7 +143,13 @@ class Template extends Component {
         }
       }
     )
-    return [showBorderGuid, showLeftGuide, showTopGuide, showCardMiddleGuide]
+    return [
+      showBorderGuid,
+      showLeftGuide,
+      showTopGuide,
+      showCardVerticalMiddleGuide,
+      showCardHorizontalMiddleGuide,
+    ]
   }
 
   handleImageLoad = () => {
@@ -189,12 +200,16 @@ class Template extends Component {
           },
         },
       } = this,
-      [showBorderGuid, showLeftGuide, showTopGuide, showCardMiddleGuide] = this.setActiveMiddel(
-        this.props.cardIndex
-      ),
+      [
+        showBorderGuid,
+        showLeftGuide,
+        showTopGuide,
+        showCardVerticalMiddleGuide,
+        showCardHorizontalMiddleGuide,
+      ] = this.setActiveMiddel(this.props.cardIndex),
       cardRect = this.cardRef.current ? this.cardRef.current.getBoundingClientRect() : {},
-      alignTop = showTopGuide && this.cardRef.current ? top - cardRect.top - window.scrollY : 0,
-      alignLeft = showLeftGuide && this.cardRef.current ? left - cardRect.left - window.scrollX : 0,
+      alignTop = showTopGuide && this.cardRef.current ? top - window.scrollY : 0,
+      alignLeft = showLeftGuide && this.cardRef.current ? left - window.scrollX : 0,
       cardWidth = this.cardRef.current ? cardRect.width : 0
 
     return (
@@ -250,9 +265,17 @@ class Template extends Component {
                   }}
                 />
               )}
-              {showCardMiddleGuide && (
+              {showCardVerticalMiddleGuide && (
                 <div
                   className="align__card__center__guide"
+                  style={{
+                    left: cardWidth / 2,
+                  }}
+                />
+              )}
+              {showCardHorizontalMiddleGuide && (
+                <div
+                  className="align__card__verical_center__guide"
                   style={{
                     left: cardWidth / 2,
                   }}

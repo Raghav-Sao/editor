@@ -2,7 +2,8 @@
   position: relative;
   .align__top__guide,
   .align__center__guide,
-  .align__bottom__guide {
+  .align__bottom__guide,
+  .align__card__verical_center__guide {
     width: 100%;
     border-bottom: 1px dashed #ccc;
     position: absolute;
@@ -14,6 +15,7 @@
     position: absolute;
     top: 0;
   }
+
   .card__border {
     border: 1px dashed #ccc;
     height: calc(100% - 20px);

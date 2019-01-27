@@ -18,6 +18,27 @@ class EditorTextToolbar extends Component {
     this.props.dispatch(actionCreator.DELETE_STICKER({ _id }))
   }
 
+  setDocumentColorPallete = () => {
+    const {
+        props: {
+          activeSticker: { cardIndex = null },
+        },
+      } = this,
+      documentColors = []
+    if (cardIndex === 0 || cardIndex)
+      document
+        .getElementsByClassName('template_container')
+        [cardIndex].childNodes.forEach(
+          ({ style: { color, fill } }) =>
+            color || fill ? documentColors.push(color) : console.log(color || fill)
+        )
+
+    console.log(cardIndex, documentColors)
+    this.setState({
+      documentColors: [...new Set(documentColors)],
+    })
+  }
+
   getFontSizeOptions = () =>
     [...Array(20)].map((x, i) => (
       <Dropdown.Item
@@ -34,6 +55,7 @@ class EditorTextToolbar extends Component {
       color: color.hex,
     }
     this.props.dispatch(actionCreator.CHANGE_TEXT_STICKER_STYLE({ styles }))
+    setTimeout(this.setDocumentColorPallete)
   }
 
   onTextStyleChange = e => {
@@ -132,6 +154,7 @@ class EditorTextToolbar extends Component {
               }
               position="bottom center"
               on={['hover']}
+              onOpen={this.setDocumentColorPallete}
               hoverable
             >
               <div className="color_palletee__container">
@@ -146,6 +169,7 @@ class EditorTextToolbar extends Component {
                         display: 'inline-block',
                       }}
                       onClick={() => this.handleColorChanges({ hex: color })}
+                      key={color}
                     />
                   ))}
                 </div>
