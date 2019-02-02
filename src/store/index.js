@@ -1,10 +1,16 @@
 import { applyMiddleware, createStore, compose } from 'redux'
+import { actionCreator } from 'store/actionCreator'
 import { createEpicMiddleware } from 'redux-observable'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { Observable, timer } from 'rxjs';
+import { distinctUntilChanged, map, takeUntil, tap, throttleTime, debounce } from 'rxjs/operators'
+
+
 import logger from 'redux-logger'
 
 import rootEpic from './epics'
 import reducer from 'reducers'
+import { filter } from 'rxjs/operators';
 
 const epicMiddleware = createEpicMiddleware()
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -15,7 +21,33 @@ const store = createStore(
   )
 )
 epicMiddleware.run(rootEpic)
-store.subscribe(()=> {
-  console.log(store.getState());
-})
+
+let currStore = null;
+function getState$(store) {
+  return new Observable(function (observer) {
+    const unsubscribe = store.subscribe(function () {
+      let prevStore = currStore
+      currStore = store.getState().editorSpace
+      if(prevStore && (prevStore !== currStore)) {
+        observer.next(store.getState().editorSpace);
+      }
+    });
+    return unsubscribe;
+  });
+}
+
+
+const state$ = getState$(store);
+const evenCounter$ = state$.pipe(
+  debounce(() => timer(1000)),
+);
+evenCounter$.subscribe(editorSpaceReducer => {
+  const {
+      activeCardIndex,
+      cards: { [activeCardIndex]: card },
+    } = editorSpaceReducer
+    console.log(activeCardIndex, card)
+    store.dispatch(actionCreator.SAVE_EDITOR_CARD_TO_SERVER({ card }))
+});
+
 export default store

@@ -316,7 +316,7 @@ class Sticker extends Component {
           newTranslateY: newDy,
           nextTop: activeBoundingTop - cardTop + newDy - lastTraslateY + window.scrollY,
           nextLeft: activeBoundingLeft - cardLeft + newDx - lastTraslateX + window.scrollX, //@todo: should we remove window.scrollX?
-          nextBottom: activeBoundingTop - cardTop + newDy - lastTraslateY + window.scrollY + height, //not using for now
+          nextBottom: activeBoundingTop - cardTop + newDy - lastTraslateY + window.scrollY + height,
           // nextRight: left + newDx - lastTraslateX, //not using for now
         })
         sticker.dataset.lastTransform = JSON.stringify({ lastOffsetX: transX, lastOffsetY: transY })
@@ -356,21 +356,21 @@ class Sticker extends Component {
   }
 
   onResizeOrRotate = (e, type, cardIndex, styles = {}, state) => {
-    if (this.stickerRef === null) return
+    if (this.stickerRef === null) return //why??
 
     // Todo: make some name for other e
-    this.setState({ isRotatedRecently: true })
+    this.setState({ isRotatedRecently: true }) //why?? r we using
     const sticker = this.stickerRef.current
     e.stopPropagation()
-    e.nativeEvent.stopImmediatePropagation()
-    const {
-      dataset: { lastTransform = JSON.stringify({}) },
-    } = sticker
+    e.nativeEvent.stopImmediatePropagation() //why
+    // const {
+    //   dataset: { lastTransform = JSON.stringify({}) },
+    // } = sticker //r we using this?
     // const { lastOffsetX = 0, lastOffsetY = 0 } = JSON.parse(lastTransform)
     const { translate: { translateX: lastOffsetX, translateY: lastOffsetY } = {} } = styles
     const pageX = e.pageX || e.touches[0].pageX,
       pageY = e.pageY || e.touches[0].pageY
-    var startX = pageX - lastOffsetX,
+    const startX = pageX - lastOffsetX,
       startY = pageY - lastOffsetY
     this.resizeOrRotate$ = merge(
       fromEvent(document, 'touchmove'),
@@ -379,7 +379,7 @@ class Sticker extends Component {
       takeUntil(
         stopEvents$.pipe(
           tap(() => {
-            this.m = NaN
+            this.m = NaN //why?
             this.stopEvents({ state, cardIndex })
           })
         )
@@ -402,6 +402,7 @@ class Sticker extends Component {
       this.resizeOrRotateSticker(this.props.data._id, calculatedStyle, type, cardIndex)
     )
   }
+
   getTransformData = ({
     translate: { translateX = 0, translateY = 0 },
     rotation: { unit, rotation },

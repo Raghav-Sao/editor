@@ -33,7 +33,7 @@ const saveEditorCardToServerEpic = action$ =>
     mergeMap(({ payload: { card } }) =>
       editorAPIs
         .updateEditorCard({ card })
-        .pipe(map(response => updateEditorSyncStatus({ status: 'done' })))
+        // .pipe(map(response => updateEditorSyncStatus({ status: 'done' })))
     )
   )
 
