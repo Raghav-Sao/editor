@@ -2,9 +2,9 @@ import React, { Component, Fragment, createRef } from 'react'
 import { actionCreator } from 'store/actionCreator'
 import { findDOMNode } from 'react-dom'
 import { DropTarget } from 'react-dnd'
-import './Style.css'
+import './CardPageEditor.css';
 
-class Template extends Component {
+class CardPageEditor extends Component {
   cardRef = React.createRef()
   componentDidMount() {
   }
@@ -304,4 +304,4 @@ const dropCollect = (connect, monitor) => ({
   canDrop: monitor.canDrop(),
 })
 
-export default DropTarget(dropTypes, dropSpecs, dropCollect)(Template)
+export default DropTarget(dropTypes, dropSpecs, dropCollect)(CardPageEditor)

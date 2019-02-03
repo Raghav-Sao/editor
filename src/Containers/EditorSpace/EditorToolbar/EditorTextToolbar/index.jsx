@@ -114,7 +114,7 @@ class EditorTextToolbar extends Component {
       link.click()
       document.body.removeChild(link)
       //}
-    }, 1000)
+    }, 1000);
   }
 
   saveChanges = () => {
@@ -123,8 +123,8 @@ class EditorTextToolbar extends Component {
         activeSticker: { cardIndex },
         cards: { [cardIndex]: card },
       },
-    } = this
-    this.props.dispatch(actionCreator.SAVE_EDITOR_CARD_TO_SERVER({ card }))
+    } = this;
+    this.props.dispatch(actionCreator.SAVE_EDITOR_CARD_TO_SERVER({ card }));
   }
 
   render() {
@@ -132,7 +132,7 @@ class EditorTextToolbar extends Component {
       props: {
         activeSticker: { styles: activeStyle = {}, type: activeType },
       },
-    } = this
+    } = this;
 
     return (
       <Fragment>

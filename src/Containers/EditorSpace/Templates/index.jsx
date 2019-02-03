@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import Sticker from 'Components/Sticker'
-import Template from './Template'
+import CardPageEditor from '../CardPageEditor';
 import './Style.css'
 
 class Templates extends Component {
@@ -104,7 +104,7 @@ class Templates extends Component {
       <div className="templates__container">
         <div id="background__image__container" className="col-10 drop-target">
           {cards.map((card, index) => (
-            <Template
+            <CardPageEditor
               acivedBackgroundImage={this.acivedBackgroundImage}
               cardIndex={index}
               dispatch={this.props.dispatch}
