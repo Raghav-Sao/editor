@@ -29,7 +29,7 @@ class Root extends React.Component {
                 <Route path="/login" component={Login} />
                 <Route path="/gallery" component={Gallery} />
                 <Route path="/editor/:cardId" component={EditorSpace} />
-                {!isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" />}
+                {/*!isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" />*/}
             </div>
         );
     }
