@@ -1,6 +1,6 @@
 import request from './request'
 
-const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'http://13.232.230.56:3000'
 
 export const fetchEditorCard = ({ _id }) => {
   const url = `${BASE_URL}/api/user/card/template/${_id}`
