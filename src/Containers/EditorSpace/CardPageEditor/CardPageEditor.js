@@ -1,8 +1,11 @@
 import React, { Component, Fragment, createRef } from 'react'
 import { actionCreator } from 'store/actionCreator'
 import { findDOMNode } from 'react-dom'
-import { DropTarget } from 'react-dnd'
+import { DropTarget } from 'react-dnd';
+
 import './CardPageEditor.css';
+
+
 
 class CardPageEditor extends Component {
   cardRef = React.createRef()

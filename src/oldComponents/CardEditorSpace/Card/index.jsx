@@ -1,12 +1,12 @@
-import react from 'react'
-import React, { Component, Fragment } from 'react'
-import { actionCreator } from 'store/actionCreator'
+import react from 'react';
+import React, { Component, Fragment } from 'react';
+import { actionCreator } from 'store/actionCreator';
 
 import { DropTarget } from 'react-dnd'
 
 class Card extends Component {
   componentDidMount() {
-    document.addEventListener('click', () => this.deactiveBackgroundImage(this.props.index))
+    document.addEventListener('click', () => this.deactiveBackgroundImage(this.props.index));
   }
 
   deactiveBackgroundImage = cardIndex => {
@@ -54,10 +54,10 @@ const dropSpecs = {
     const { id, src, style, text, type } = monitor.getItem()
     const { x: clientX, y: clientY } = monitor.getClientOffset()
     const { x: sourceX, y: sourceY } = monitor.getInitialSourceClientOffset()
-    const { x: initialClientX, y: initialClientY } = monitor.getInitialClientOffset()
+    const { x: initialClientX, y: initialClientY } = monitor.getInitialClientOffset();
     console.log(sourceX, initialClientX, clientX)
-    const startX = clientX - initialClientX + sourceX
-    const startY = clientY - initialClientY + sourceY
+    const startX = (clientX - initialClientX) + sourceX;
+    const startY = (clientY - initialClientY) + sourceY;
     const position = { startX, startY }
     if (type) {
       props.onAddSticker({ position, src, style, text, type, cardIndex: props.index })

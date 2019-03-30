@@ -33,6 +33,7 @@ class CardEditorSpace extends Component {
       actionCreator.ADD_TEXT_STICKER({ style: { text, src, style, type }, cardIndex })
     )
   }
+
   onMoveSticker = (id, position) => {
     const rootRef = findDOMNode(this)
     const { x, y } = rootRef.getBoundingClientRect()
@@ -41,7 +42,6 @@ class CardEditorSpace extends Component {
   }
   render() {
     const { card, connectDropTarget } = this.props
-    debugger
     const getStickers = ({ stickers, cardIndex }) =>
       stickers.map((sticker, index) => (
         <Sticker
@@ -50,7 +50,7 @@ class CardEditorSpace extends Component {
           onClick={e => this.onTextToolbarClick(e)}
           cardIndex={cardIndex}
         />
-      ))
+      ));
 
     return (
       <div id="background__image__container" className="col-10 drop-target">
@@ -63,7 +63,7 @@ class CardEditorSpace extends Component {
               index={index}
               isBackgroundImageSelected={isBackgroundImageSelected}
               backgroundImageStyle={backgroundImageStyle}
-              stickers={getStickers({ stickers, cardIndex: index })}
+              stickers={stickers}
               aciveBackgroundImage={this.aciveBackgroundImage}
               connectDropTarget={connectDropTarget}
               backgroundImage={backgroundImage}
