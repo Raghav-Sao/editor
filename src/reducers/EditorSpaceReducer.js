@@ -9,26 +9,22 @@ const initialState = {
   cards,
   activeCardIndex: 0,
   status: 'All Changes Saved',
+  cardCollection: {
+    1234: {
+      stickers: [],
+    },
+  }
 }
 
 const EditorSpace = (state = initialState, { payload, type }) => {
   switch (type) {
     case 'ADD_TEXT_STICKER': {
-      const { sticker, cardIndex } = payload
-      const _id = Date.now()
-      const updatedTemplate = {
-        ...state.cards[cardIndex],
-        stickers: [...state.cards[cardIndex].stickers, { ...sticker, _id }],
-      }
+      const { sticker, cardId } = payload;
+      const cardCollection = state.cardCollection;
+      cardCollection[cardId].stickers.push(sticker);
       return {
         ...state,
-        activeSticker: { ...sticker, cardIndex, _id },
-        cards: [
-          ...state.cards.slice(0, cardIndex),
-          updatedTemplate,
-          ...state.cards.slice(cardIndex + 1),
-        ],
-        activeCardIndex: cardIndex,
+        cardCollection,
       }
     }
 

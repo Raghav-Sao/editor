@@ -143,7 +143,6 @@ class EditorTextToolbar extends Component {
             console.log('click')
           }}
         >
-          {/*<Button onClick={this.onDownloadImage}>Download</Button>*/}
           <Button onClick={this.saveChanges.bind(this)}>Save</Button>
           <Fragment>
             <Popup
@@ -294,8 +293,5 @@ class EditorTextToolbar extends Component {
 }
 
 const mapStateToProps = ({ editorSpace: { activeSticker, cards } }) => ({ activeSticker, cards })
-// const mapStateToProps = (state) => {
-//   return state.editorSpace.activeSticker;
-// }
 
 export default connect(mapStateToProps)(EditorTextToolbar)

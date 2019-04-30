@@ -8,6 +8,7 @@ import Gallery from '../Gallery';
 import EditorSpace from '../EditorSpace';
 import Cookie from 'js-cookie';
 
+import './Root.css';
 
 class Root extends React.Component {
     constructor(props) {
@@ -19,7 +20,6 @@ class Root extends React.Component {
                 Cookie.set("_session", token);
                 window.close();
             }
-
         }
     }
 
@@ -28,7 +28,7 @@ class Root extends React.Component {
             <div className="root-app-container">
                 <Route path="/login" component={Login} />
                 <Route path="/gallery" component={Gallery} />
-                <Route path="/editor/:cardId" component={EditorSpace} />
+                <Route path="/editor" component={EditorSpace}/>
                 {/* {!isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" />} */}
                 {/*!isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" />*/}
             </div>

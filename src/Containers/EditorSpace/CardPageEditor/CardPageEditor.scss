@@ -10,8 +10,12 @@
   .sidebar__container {
     position: absolute;
   }
-  .templates__container {
-    margin-top: 50px;
+  .template_container {
+    height: 100%;
+  }
+  .editor-wrapper {
+    width: 100%;
+    height: 100%;
   }
 }
 

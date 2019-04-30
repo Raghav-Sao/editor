@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Grid } from 'semantic-ui-react'
-
 import Sidebar from './Sidebar'
-import Templates from './Templates'
+import CardPageEditor from './CardPageEditor';
 import EditorToolbar from './EditorToolbar'
 import './Style.css'
 
@@ -16,7 +15,7 @@ class EditorSpace extends Component {
               <Sidebar />
             </Grid.Column>
             <Grid.Column width={12}>
-              <Templates />
+              <CardPageEditor cardId={1234} />
             </Grid.Column>
           </Grid.Row>
         </Grid>

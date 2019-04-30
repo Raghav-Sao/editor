@@ -1,19 +1,22 @@
-import React, { Component, Fragment, createRef } from 'react'
+import React, { Component, Fragment, createRef } from 'react';
+import PropTypes from 'prop-types'; 
 import { actionCreator } from 'store/actionCreator'
 import { findDOMNode } from 'react-dom'
 import { DropTarget } from 'react-dnd'
 import Sticker from '../Sticker';
 
-import './CardPageEditor.css';
+import './CardPage.css';
 
 class CardPage extends React.Component {
     constructor(props) {
       super(props);
+
+      this.cardRef = React.createRef();
     }
  
     getStickers() {
       if (this.props.stickers) {
-        return this.props.stickers.map(item, (item) => {
+        return this.props.stickers.map((item) => {
           return (<Sticker 
             onStickerActivity={this.props.onStickerActivity}
             stickerData={item}
@@ -23,30 +26,30 @@ class CardPage extends React.Component {
       }
     }
 
-
     render() {
         const showBorderGuid = this.props.showLines;
+        const cardRect = this.cardRef.current ? this.cardRef.current.getBoundingClientRect() : {};
+        const alignTop = showBorderGuid && this.cardRef.current ? cardRect.top - window.scrollY : 0;
+        const alignLeft = showBorderGuid && this.cardRef.current ? cardRect.left - window.scrollX : 0;
+        const cardWidth = this.cardRef.current ? cardRect.width : 0;
+        const background = this.props.background;
+        const src = background && background.src;
 
         return (
             <Fragment>
-                {connectDropTarget(
                     <div className="template_container" key="cardIndex" id="iii">
                     <img
                         id="card__imag e"
-                        className={`${isBackgroundImageSelected ? 'active' : ''}`}
                         alt="img"
                         src={src}
-                        onClick={e => acivedBackgroundImage(e, cardIndex)}
-                        style={this.getImageStyle(styles)}
                         draggable="false"
                         width="100%"
                         ref={this.cardRef}
-                        onLoad={this.handleImageLoad}
                     />
                     {showBorderGuid && <div className="card__border" />}
-                    {this.getStickers({ stickers, cardIndex, card: this.props.card })}
+                    {this.getStickers()}
                     <Fragment>
-                        {showLeftGuide && (
+                        {showBorderGuid && (
                         <div
                             className="align__left__guide"
                             style={{
@@ -54,7 +57,7 @@ class CardPage extends React.Component {
                             }}
                         />
                         )}
-                        {showTopGuide && (
+                        {showBorderGuid && (
                         <div
                             className="align__top__guide"
                             style={{
@@ -62,25 +65,7 @@ class CardPage extends React.Component {
                             }}
                         />
                         )}
-                        {false && (
-                        <div
-                            className="align__center__guide"
-                            style={{
-                            top: activeTop + 30,
-                            transform: `translate(0px, ${translateY}px)`,
-                            }}
-                        />
-                        )}
-                        {false && (
-                        <div
-                            className="align__bottom__guide"
-                            style={{
-                            top: activeTop + 60,
-                            transform: `translate(0px, ${translateY}px)`,
-                            }}
-                        />
-                        )}
-                        {showCardVerticalMiddleGuide && (
+                        {showBorderGuid && (
                         <div
                             className="align__card__center__guide"
                             style={{
@@ -88,7 +73,7 @@ class CardPage extends React.Component {
                             }}
                         />
                         )}
-                        {showCardHorizontalMiddleGuide && (
+                        {showBorderGuid && (
                         <div
                             className="align__card__verical_center__guide"
                             style={{
@@ -98,7 +83,6 @@ class CardPage extends React.Component {
                         )}
                     </Fragment>
                     </div>
-                )}
             </Fragment>
           );
         }
@@ -106,11 +90,14 @@ class CardPage extends React.Component {
 
 
 CardPage.prototypes = {
-    'onAddSticker': Proptypes.function,
-    'onDeleteSticker': Proptypes.function,
-    'onBackgroundChange': Proptypes.function,
-    'readOnly': Proptypes.boolean,
-    'stickers': Proptypes.array,
-    'onStickerActivity':  Proptypes.function,
-    'showLines': Proptypes.boolean,
+    'onAddSticker': PropTypes.function,
+    'onDeleteSticker': PropTypes.function,
+    'onBackgroundChange': PropTypes.function,
+    'readOnly': PropTypes.boolean,
+    'stickers': PropTypes.array,
+    'onStickerActivity':  PropTypes.function,
+    'showLines': PropTypes.boolean,
+    'background': PropTypes.string
 }
+
+export default CardPage;
