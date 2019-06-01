@@ -39,7 +39,7 @@ class CardPage extends React.Component {
             <Fragment>
                     <div className="template_container" key="cardIndex" id="iii">
                     <img
-                        id="card__imag e"
+                        id="card__image"
                         alt="img"
                         src={src}
                         draggable="false"
