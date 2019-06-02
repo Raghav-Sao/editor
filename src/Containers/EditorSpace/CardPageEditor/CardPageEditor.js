@@ -110,6 +110,7 @@ class CardPageEditor extends Component {
               onStickerAdd={this.onStickerAdd}
               onStickerDelete={this.onStickerDelete}
               onBackgroundChange={this.onBackgroundChange}
+              activeSticker={this.state.activeSticker}
             />
           </div>
         )}

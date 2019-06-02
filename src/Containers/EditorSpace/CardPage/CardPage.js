@@ -20,7 +20,8 @@ class CardPage extends React.Component {
           return (<Sticker 
             onStickerActivity={this.props.onStickerActivity}
             stickerData={item}
-            readOnly={this.props.readOnly || item.readOnly} 
+            readOnly={this.props.readOnly || item.readOnly}
+            isActive={this.props.activeSticker === item} 
             />);
         });
       }

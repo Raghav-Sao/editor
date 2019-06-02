@@ -244,7 +244,7 @@ class Sticker extends Component {
     // this.props.dispatch(actionCreator.ON_INPUT_TEXT_CHANGE({ innerText }))
     return false
   }
-  
+
   placeCaretAtEnd = el => {
     if (!el) return
     el.focus()
@@ -264,15 +264,15 @@ class Sticker extends Component {
   }
 
   onSelect = ()=> {
-    if (!this.state.isActive) {
-      this.setState({isActive : true});
+    if (!this.props.isActive) {
       this.props.onStickerActivity('SELECT', this.props.stickerData);
     }
   }
 
+
   render() {
     const data = this.props.stickerData;
-    const isStickerActive = this.state.isActive;
+    const isStickerActive = this.props.isActive;
     const isEditable =
       isStickerActive && !this.state.isRotating && !this.state.isDragging && !this.state.isResizing;
     const sticker = () => {
