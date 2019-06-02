@@ -48,7 +48,9 @@ class CardPageEditor extends Component {
           top: window.scrollY + position.startY - 20,
         },
       };
-     this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ sticker, cardId: this.props.cardId }))
+      const card = {...this.props.cardCollection[this.props.cardId]};
+      card.stickers.push(sticker);
+      this.props.dispatch(actionCreator.SAVE_CARD_TO_STORE({ card, }))
   }
 
   onStickerActivity = (action, sticker) => {
@@ -58,6 +60,7 @@ class CardPageEditor extends Component {
       });
     }   
   }
+
   onStickerAdd = () => {}
   onStickerDelete = () => {}
   onBackgroundChange = () => {}

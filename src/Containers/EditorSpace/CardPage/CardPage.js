@@ -10,7 +10,6 @@ import './CardPage.css';
 class CardPage extends React.Component {
     constructor(props) {
       super(props);
-
       this.cardRef = React.createRef();
     }
  

@@ -19,16 +19,6 @@ const initialState = {
 
 const EditorSpace = (state = initialState, { payload, type }) => {
   switch (type) {
-    case 'ADD_TEXT_STICKER': {
-      const { sticker, cardId } = payload;
-      const cardCollection = {...state.cardCollection};
-      cardCollection[cardId].stickers.push(sticker);
-      return {
-        ...state,
-        cardCollection,
-      }
-    }
-
     case 'SAVE_CARD_TO_STORE' : {
       const cardCollection = {...state.cardCollection};
       const cardId = payload.card.id;
