@@ -29,9 +29,10 @@ class Sticker extends Component {
 
   resizeOrRotate = (params) => {
     const { mouseX, mouseY, type, e, startX, startY, lastOffsetX, lastOffsetY } = params;
-    e.stopPropagation()
+    e.stopPropagation();
     const sticker = this.stickerRef.current
-    if (this.stickerRef === null) return
+    if (this.stickerRef === null) 
+      return;
     const {
       bottom,
       left,
@@ -243,6 +244,7 @@ class Sticker extends Component {
     // this.props.dispatch(actionCreator.ON_INPUT_TEXT_CHANGE({ innerText }))
     return false
   }
+  
   placeCaretAtEnd = el => {
     if (!el) return
     el.focus()
@@ -258,6 +260,13 @@ class Sticker extends Component {
       textRange.moveToElementText(el)
       textRange.collapse(false)
       textRange.select()
+    }
+  }
+
+  onSelect = ()=> {
+    if (!this.state.isActive) {
+      this.setState({isActive : true});
+      this.props.onStickerActivity('SELECT', this.props.stickerData);
     }
   }
 
@@ -288,12 +297,14 @@ class Sticker extends Component {
       )
     }
 
+
+
     return (
       <div
         className={`sticker ${isStickerActive ? 'active' : ''}`}
         style={this.getStyle(data.styles)}
         key={data._id}
-        onClick={e => this.setState({isActive : true})}
+        onClick={this.onSelect}
         onMouseDown={e =>
           this.onResizeOrRotate(e, 'drag', data.styles)
         } // Todo: use id from key and make better for isRotating true event

@@ -26,6 +26,7 @@ class CardPage extends React.Component {
       }
     }
 
+
     render() {
         const showBorderGuid = this.props.showLines;
         const cardRect = this.cardRef.current ? this.cardRef.current.getBoundingClientRect() : {};

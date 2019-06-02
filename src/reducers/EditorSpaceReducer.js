@@ -11,6 +11,7 @@ const initialState = {
   status: 'All Changes Saved',
   cardCollection: {
     1234: {
+      id: 1234,
       stickers: [],
     },
   }
@@ -20,8 +21,18 @@ const EditorSpace = (state = initialState, { payload, type }) => {
   switch (type) {
     case 'ADD_TEXT_STICKER': {
       const { sticker, cardId } = payload;
-      const cardCollection = state.cardCollection;
+      const cardCollection = {...state.cardCollection};
       cardCollection[cardId].stickers.push(sticker);
+      return {
+        ...state,
+        cardCollection,
+      }
+    }
+
+    case 'SAVE_CARD_TO_STORE' : {
+      const cardCollection = {...state.cardCollection};
+      const cardId = payload.card.id;
+      cardCollection[cardId] = payload.card;
       return {
         ...state,
         cardCollection,
@@ -49,61 +60,6 @@ const EditorSpace = (state = initialState, { payload, type }) => {
           updatedTemplate,
           ...state.cards.slice(cardIndex + 1),
         ],
-      }
-    }
-
-    case 'CHANGE_TEXT_STICKER_STYLE': {
-      const { _id, styles } = payload
-      const { cardIndex } = state.activeSticker
-      const stickers = state.cards[cardIndex].stickers
-      const index = stickers.findIndex(
-        ({ _id: stickerId }) => stickerId === state.activeSticker._id
-      )
-      const sticker = {
-        ...stickers[index],
-        styles: {
-          ...stickers[index].styles,
-          ...styles,
-        },
-      }
-      const updatedTemplate = {
-        ...state.cards[cardIndex],
-        stickers: [...stickers.slice(0, index), sticker, ...stickers.slice(index + 1)],
-      }
-      return {
-        ...state,
-        activeSticker: { ...sticker, cardIndex },
-        cards: [
-          ...state.cards.slice(0, cardIndex),
-          updatedTemplate,
-          ...state.cards.slice(cardIndex + 1),
-        ],
-        activeCardIndex: cardIndex,
-      }
-    }
-
-    case types.DELETE_STICKER: {
-      const {
-        cards,
-        activeSticker: { _id, cardIndex },
-      } = state
-      const stickers = cards[cardIndex].stickers
-      const index = stickers.findIndex(
-        ({ _id: stickerId }) => stickerId === state.activeSticker._id
-      )
-      const updatedTemplate = {
-        ...state.cards[cardIndex],
-        stickers: [...stickers.slice(0, index), ...stickers.slice(index + 1)],
-      }
-      return {
-        ...state,
-        activeSticker: {},
-        cards: [
-          ...state.cards.slice(0, cardIndex),
-          updatedTemplate,
-          ...state.cards.slice(cardIndex + 1),
-        ],
-        activeCardIndex: cardIndex,
       }
     }
 

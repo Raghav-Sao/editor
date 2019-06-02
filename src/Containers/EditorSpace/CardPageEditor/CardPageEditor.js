@@ -5,6 +5,7 @@ import { findDOMNode } from 'react-dom'
 import { DropTarget } from 'react-dnd';
 import CardPage from '../CardPage';
 import {connect} from 'react-redux';
+import EditorToolbar from '../EditorToolbar';
 
 import './CardPageEditor.css';
 
@@ -12,6 +13,7 @@ class CardPageEditor extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {};
   }
   
   cardRef = React.createRef()
@@ -49,10 +51,38 @@ class CardPageEditor extends Component {
      this.props.dispatch(actionCreator.ADD_TEXT_STICKER({ sticker, cardId: this.props.cardId }))
   }
 
-  onStickerActivity = () => {}
+  onStickerActivity = (action, sticker) => {
+    if (action === 'SELECT') {
+      this.setState({
+        activeSticker: sticker,
+      });
+    }   
+  }
   onStickerAdd = () => {}
   onStickerDelete = () => {}
   onBackgroundChange = () => {}
+
+  onToolbarActivity = (action, sticker, params) => {
+    const card = {...this.props.cardCollection[this.props.cardId]};
+    if(action === 'DELETE') {
+      card.stickers = card.stickers.filter((item) => item !== sticker );
+      this.setState({ activeSticker: null });
+    }
+    else if (['TEXT_FONT_CHANGE', 'TEXT_STYLE_CHANGE', 'STYLE_CHANGE'].indexOf(action) > -1) {
+      const stickerIndex = card.stickers.indexOf(sticker);
+      const updatedSticker = {...sticker};
+      updatedSticker.styles = {
+        ...updatedSticker.styles,
+        ...params,
+      };
+      card.stickers[stickerIndex] = updatedSticker;
+      this.setState({ activeSticker: updatedSticker });
+    } else if (action === 'SAVE') {
+      // todo: save to backend
+    }
+
+    this.props.dispatch(actionCreator.SAVE_CARD_TO_STORE({ card, }));
+  }
 
   render() {
     const {
@@ -63,7 +93,13 @@ class CardPageEditor extends Component {
     const card = this.props.cardCollection[this.props.cardId];
 
     return (
-      <Fragment>
+      <div className="card_page_editor_wrapper">
+        {
+          this.state.activeSticker && 
+          <EditorToolbar 
+            activeSticker={this.state.activeSticker} 
+            onToolbarActivity={this.onToolbarActivity} />
+        }
         {connectDropTarget(
           <div className="editor-wrapper">
             <CardPage 
@@ -77,7 +113,7 @@ class CardPageEditor extends Component {
             />
           </div>
         )}
-      </Fragment>
+      </div>
     )
   }
 }

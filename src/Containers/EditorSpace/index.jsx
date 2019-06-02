@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react'
 import { Grid } from 'semantic-ui-react'
 import Sidebar from './Sidebar'
 import CardPageEditor from './CardPageEditor';
-import EditorToolbar from './EditorToolbar'
 import './Style.css'
 
 class EditorSpace extends Component {
@@ -19,7 +18,6 @@ class EditorSpace extends Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <EditorToolbar />
       </Fragment>
     )
   }

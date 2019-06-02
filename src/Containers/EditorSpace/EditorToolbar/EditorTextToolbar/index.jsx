@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Button, Divider, Dropdown, Grid, Icon, Label, Popup } from 'semantic-ui-react'
 import { SketchPicker } from 'react-color'
+import { actionCreator } from 'store/actionCreator';
 
-import { actionCreator } from 'store/actionCreator'
 import './Style.css'
 
 class EditorTextToolbar extends Component {
@@ -15,7 +15,7 @@ class EditorTextToolbar extends Component {
   }
 
   deleteSticker = _id => {
-    this.props.dispatch(actionCreator.DELETE_STICKER({ _id }))
+    this.props.onToolbarActivity('DELETE', this.props.activeSticker);
   }
 
   setDocumentColorPallete = () => {
@@ -33,13 +33,12 @@ class EditorTextToolbar extends Component {
             color || fill ? documentColors.push(color) : console.log(color || fill)
         )
 
-    console.log(cardIndex, documentColors)
     this.setState({
       documentColors: [...new Set(documentColors)],
     })
   }
 
-  getFontSizeOptions = () =>
+  getFontSizeOptions = () => 
     [...Array(20)].map((x, i) => (
       <Dropdown.Item
         key={i}
@@ -49,41 +48,34 @@ class EditorTextToolbar extends Component {
         }
         onClick={this.onTextFontSizeChange}
       >{`${i + 10}px`}</Dropdown.Item>
-    ))
+    ));
+
   handleColorChanges = color => {
     const styles = {
       color: color.hex,
     }
-    this.props.dispatch(actionCreator.CHANGE_TEXT_STICKER_STYLE({ styles }))
+    this.props.onToolbarActivity('STYLE_CHANGE', this.props.activeSticker, styles);
     setTimeout(this.setDocumentColorPallete)
   }
 
   onTextStyleChange = e => {
-    this.props.dispatch(
-      actionCreator.CHANGE_TEXT_STICKER_STYLE({
-        styles: { [e.currentTarget.name]: e.currentTarget.value },
-        cardIndex: 0,
-      })
-    )
+    const style = { [e.currentTarget.name]: e.currentTarget.value };
+    this.props.onToolbarActivity('TEXT_STYLE_CHANGE', this.props.activeSticker, style)
   }
 
   onTextFontSizeChange = (e, data) => {
-    this.props.dispatch(
-      actionCreator.CHANGE_TEXT_STICKER_STYLE({
-        styles: { fontSize: data.value },
-        cardIndex: 0,
-      })
-    )
+    const style = { fontSize: data.value };
+    this.props.onToolbarActivity('TEXT_FONT_CHANGE', this.props.activeSticker, style)
   }
 
   toggleTextAlignFilter = () => {
     this.setState(prevState => ({
       showTextAlignFilter: !prevState.showTextAlignFilter,
-    }))
+    }));
   }
 
   preventPropagation = e => {
-    e.stopPropagation()
+    e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation()
   }
 
@@ -101,10 +93,8 @@ class EditorTextToolbar extends Component {
       </foreignObject>
       </svg>`
     const image = document.createElement('img')
-    console.log(html)
     image.src = 'data:image/svg+xml; charset=utf8, ' + data
     setTimeout(() => {
-      //image.onload = () => {
       ctx.drawImage(image, 0, 0)
       const outputDataURI = canvas.toDataURL()
       var link = document.createElement('a')
@@ -113,18 +103,11 @@ class EditorTextToolbar extends Component {
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-      //}
     }, 1000);
   }
 
   saveChanges = () => {
-    const {
-      props: {
-        activeSticker: { cardIndex },
-        cards: { [cardIndex]: card },
-      },
-    } = this;
-    this.props.dispatch(actionCreator.SAVE_EDITOR_CARD_TO_SERVER({ card }));
+    this.props.onToolbarActivity('SAVE', this.props.activeSticker);
   }
 
   render() {
@@ -133,7 +116,7 @@ class EditorTextToolbar extends Component {
         activeSticker: { styles: activeStyle = {}, type: activeType },
       },
     } = this;
-
+    console.log(activeStyle, activeType);
     return (
       <Fragment>
         <div
@@ -275,7 +258,7 @@ class EditorTextToolbar extends Component {
                   selection
                   text={`${activeStyle.fontSize}`}
                   style={{ margin: '0 .25em 0 0' }}
-                  onClick={e => this.preventPropagation(e)}
+                  onClick={this.preventPropagation}
                 />
               </Fragment>
             </Fragment>
@@ -292,6 +275,4 @@ class EditorTextToolbar extends Component {
   }
 }
 
-const mapStateToProps = ({ editorSpace: { activeSticker, cards } }) => ({ activeSticker, cards })
-
-export default connect(mapStateToProps)(EditorTextToolbar)
+export default EditorTextToolbar;
