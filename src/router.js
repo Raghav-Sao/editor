@@ -8,15 +8,14 @@ import Root from 'Containers/Root';
 import './App.css';
 import './Generic.css';
 
-
 const Routes = ({ store }) => (
   <DragDropContextProvider backend={HTML5Backend}>
-    <Provider store={store}>
-      <Router>
-         <Route path="/" component={Root} />
-      </Router>
+      <Provider store={store}>
+            <Router>
+          <Route path="/" component={Root} />
+        </Router>
     </Provider>
-  </DragDropContextProvider>
-)
+    </DragDropContextProvider>
+);
 
-export default Routes
+export default Routes;

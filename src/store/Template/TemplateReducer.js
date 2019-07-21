@@ -1,14 +1,15 @@
-import { FETCH_TEMPLATES, FETCH_TEMPLATES_FULFILLED } from './TemplateActions.js'
-const initialState = []
-const reducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case FETCH_TEMPLATES_FULFILLED: {
-      return { ...payload }
-    }
+import { FETCH_TEMPLATES, FETCH_TEMPLATES_FULFILLED } from './TemplateActions.js';
 
-    default: {
-      return state
+const initialState = [];
+const reducer = (state = initialState, { type, payload }) => {
+    switch (type) {
+        case FETCH_TEMPLATES_FULFILLED: {
+            return { ...payload };
+        }
+
+        default: {
+            return state;
+        }
     }
-  }
-}
-export default reducer
+};
+export default reducer;

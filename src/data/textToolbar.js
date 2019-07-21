@@ -1,26 +1,26 @@
 export const textStickers = [
-  {
-    id: 1,
-    text: 'Sample Big-Text',
-    style: {
-      fontSize: '25px',
+    {
+        id: 1,
+        text: 'Sample Big-Text',
+        style: {
+            fontSize: '25px',
+        },
+        type: 'text',
     },
-    type: 'text',
-  },
-  {
-    id: 2,
-    text: 'Sample Medium-Text',
-    style: {
-      fontSize: '20px',
+    {
+        id: 2,
+        text: 'Sample Medium-Text',
+        style: {
+            fontSize: '20px',
+        },
+        type: 'text',
     },
-    type: 'text',
-  },
-  {
-    id: 3,
-    text: 'Sample Small-Text',
-    style: {
-      fontSize: '15px',
+    {
+        id: 3,
+        text: 'Sample Small-Text',
+        style: {
+            fontSize: '15px',
+        },
+        type: 'text',
     },
-    type: 'text',
-  },
-]
+];

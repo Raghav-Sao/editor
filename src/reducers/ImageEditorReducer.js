@@ -2,8 +2,7 @@ const initialState = {
     activeSticker: {},
     card: [
         {
-            backgroundImage:
-                'https://images-na.ssl-images-amazon.com/images/I/A1zCDGS7n-L._SY879_.jpg',
+            backgroundImage: 'https://images-na.ssl-images-amazon.com/images/I/A1zCDGS7n-L._SY879_.jpg',
             backgroundImageStyle: {},
             isBackgroundImageSelected: false,
             pageNo: 0,
@@ -29,12 +28,10 @@ const initialState = {
             type: 'page',
         },
     ],
-}
+};
 export default function reducer(state = initialState, { payload, type }) {
     switch (type) {
-       
-
         default:
-            return state
+            return state;
     }
 }

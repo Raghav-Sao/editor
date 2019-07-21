@@ -8,11 +8,14 @@ const loginSuccess = payload => ({ type: 'LOGIN_SUCCESS', payload });
 
 const loginFailure = payload => ({ type: 'LOGIN_FAILURE', payload });
 
-
 const loginUserEpic = action$ =>
-  action$.pipe(
-    ofType('LOGIN_USER'),
-    mergeMap(action => loginUser(action.payload.provider).pipe(map(response => (response.status === 'success' ? loginSuccess(response) : loginFailure(response)))))
-  )
+    action$.pipe(
+        ofType('LOGIN_USER'),
+        mergeMap(action =>
+            loginUser(action.payload.provider).pipe(
+                map(response => (response.status === 'success' ? loginSuccess(response) : loginFailure(response)))
+            )
+        )
+    );
 
-export default [loginUserEpic]
+export default [loginUserEpic];

@@ -1,2 +1,2 @@
-export * from './textToolbar'
-export * from './cardSticker'
+export * from './textToolbar';
+export * from './cardSticker';

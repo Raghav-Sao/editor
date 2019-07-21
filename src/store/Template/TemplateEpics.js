@@ -22,9 +22,9 @@ const BASE_URL = 'http://localhost:3000';
 //  )
 
 const fetchTemplatesEpic = action$ =>
-  action$.pipe(
-    ofType('FETCH_TEMPLATES'),
-    mergeMap(action => fetchTemplates().pipe(map(response => fetchTemplateFulfilled(response))))
-  )
+    action$.pipe(
+        ofType('FETCH_TEMPLATES'),
+        mergeMap(action => fetchTemplates().pipe(map(response => fetchTemplateFulfilled(response))))
+    );
 
-export default [fetchTemplatesEpic]
+export default [fetchTemplatesEpic];

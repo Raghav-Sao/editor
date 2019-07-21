@@ -1,12 +1,11 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { isLoggedIn } from '../../lib/auth';
 import { Route, Redirect } from 'react-router';
+import Cookie from 'js-cookie';
+import { isLoggedIn } from '../../lib/auth';
 import Login from '../Login';
 import Gallery from '../Gallery';
 import EditorSpace from '../EditorSpace';
-import Cookie from 'js-cookie';
 
 import './Root.css';
 
@@ -15,9 +14,9 @@ class Root extends React.Component {
         super(props);
         console.log(props);
         if (props.location.search) {
-            const token = props.location.search.split("=")[1];
+            const token = props.location.search.split('=')[1];
             if (token) {
-                Cookie.set("_session", token);
+                Cookie.set('_session', token);
                 window.close();
             }
         }
@@ -28,10 +27,10 @@ class Root extends React.Component {
             <div className="root-app-container">
                 <Route path="/login" component={Login} />
                 <Route path="/gallery" component={Gallery} />
-                <Route path="/editor" component={EditorSpace}/>
+            <Route path="/editor" component={EditorSpace} />
                 {/* {!isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" />} */}
-                {/*!isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" />*/}
-            </div>
+                {/*! isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" /> */}
+          </div>
         );
     }
 }
