@@ -40,43 +40,43 @@ class CardPage extends React.Component {
         return (
             <Fragment>
                 <div className="template_container" key="cardIndex" id="iii">
-                <img id="card__image" alt="img" src={src} draggable="false" width="100%" ref={this.cardRef} />
-                {showBorderGuid && <div className="card__border" />}
-                    {this.getStickers()}
+                    <img id="card__image" alt="img" src={src} draggable="false" width="100%" ref={this.cardRef} />
+                    {showBorderGuid && <div className="card__border" />}
+                {this.getStickers()}
                 <Fragment>
-                    {showBorderGuid && (
-                            <div
-                        className="align__left__guide"
-                        style={{
-                                    left: alignLeft,
-                                }}
-                      />
-                        )}
                         {showBorderGuid && (
-                  <div
-                          className="align__top__guide"
-                          style={{
-                                    top: alignTop,
-                                }}
-                        />
-                        )}
-                    {showBorderGuid && (
                             <div
-                          className="align__card__center__guide"
-                          style={{
-                                    left: cardWidth / 2,
+                                className="align__left__guide"
+                                style={{
+                                    left: alignLeft,
                                 }}
                         />
                         )}
                     {showBorderGuid && (
                         <div
-                              className="align__card__verical_center__guide"
+                                className="align__top__guide"
                               style={{
-                                    left: cardWidth / 2,
+                                    top: alignTop,
                                 }}
                             />
                         )}
-                    </Fragment>
+                    {showBorderGuid && (
+                            <div
+                      className="align__card__center__guide"
+                      style={{
+                                    left: cardWidth / 2,
+                                }}
+                    />
+                        )}
+                    {showBorderGuid && (
+                        <div
+                                className="align__card__verical_center__guide"
+                                style={{
+                                    left: cardWidth / 2,
+                                }}
+                    />
+                        )}
+                  </Fragment>
               </div>
           </Fragment>
         );

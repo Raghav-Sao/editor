@@ -3035,6 +3035,13 @@ eslint-plugin-flowtype@2.39.1:
   dependencies:
     lodash "^4.15.0"
 
+eslint-plugin-flowtype@^3.12.1:
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-3.12.1.tgz#b673c716b578c9aa66887feef3bc146f8cbe1c21"
+  integrity sha512-NZqf5iRgsfHOC31HQdtX2pvzCi0n/j9pB+L7Cf9QtuYxpx0i2wObT+R3rPKhQK4KtEDzGuzPYVf75j4eg+s9ZQ==
+  dependencies:
+    lodash "^4.17.11"
+
 eslint-plugin-import@2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.8.0.tgz#fa1b6ef31fcb3c501c09859c1b86f1fc5b986894"
@@ -3107,6 +3114,11 @@ eslint-plugin-prettier@^3.1.0:
   integrity sha512-XWX2yVuwVNLOUhQijAkXz+rMPPoCr7WFiAl8ig6I7Xn+pPVhDhzg4DxHpmbeb0iqjO9UronEA3Tb09ChnFVHHA==
   dependencies:
     prettier-linter-helpers "^1.0.0"
+
+eslint-plugin-react-hooks@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-1.6.1.tgz#3c66a5515ea3e0a221ffc5d4e75c971c217b1a4c"
+  integrity sha512-wHhmGJyVuijnYIJXZJHDUF2WM+rJYTjulUTqF9k61d3BTk8etydz+M4dXUVH7M76ZRS85rqBTCx0Es/lLsrjnA==
 
 eslint-plugin-react@7.4.0:
   version "7.4.0"
