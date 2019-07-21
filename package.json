@@ -46,15 +46,19 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-import-resolver-webpack": "0.4.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-no-unsanitized": "^3.0.2",
+    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.10.0",
     "husky": "0.14.3",
-    "lint-staged": "6.1.0"
+    "lint-staged": "6.1.0",
+    "prettier": "^1.18.2",
+    "rxjs-compat": "^6.5.2"
   },
   "lint-staged": {
-    "*.js": "eslint"
+    "src/**/*.{js,css}": "eslint"
   }
 }
