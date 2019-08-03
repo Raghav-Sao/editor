@@ -31,13 +31,13 @@ function getState$(store) {
 
 const state$ = getState$(store);
 const evenCounter$ = state$.pipe(debounce(() => timer(1000)));
-evenCounter$.subscribe(editorSpaceReducer => {
-    const {
-        activeCardIndex,
-        cards: { [activeCardIndex]: card },
-    } = editorSpaceReducer;
-    console.log(activeCardIndex, card);
-    store.dispatch(actionCreator.SAVE_EDITOR_CARD_TO_SERVER({ card }));
-});
+// evenCounter$.subscribe(editorSpaceReducer => {
+//     const {
+//         activeCardIndex,
+//         cards: { [activeCardIndex]: card },
+//     } = editorSpaceReducer;
+//     console.log(activeCardIndex, card);
+//     // store.dispatch(actionCreator.SAVE_EDITOR_CARD_TO_SERVER({ card }));
+// });
 
 export default store;

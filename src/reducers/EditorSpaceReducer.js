@@ -23,9 +23,9 @@ const initialState = {
 const EditorSpace = (state = initialState, { payload, type }) => {
     switch (type) {
         case 'SAVE_CARD_TO_STORE': {
+            const { card, card: { id: cardId } } = payload;
             const cardCollection = { ...state.cardCollection };
-            const cardId = payload.card.id;
-            cardCollection[cardId] = payload.card;
+            cardCollection[cardId] = card;
             return {
                 ...state,
                 cardCollection,

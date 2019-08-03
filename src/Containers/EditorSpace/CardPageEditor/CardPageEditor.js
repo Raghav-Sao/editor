@@ -67,8 +67,10 @@ class CardPageEditor extends Component {
     onAddSticker = ({ position, src, style, text, type }) => {
         const rootRef = findDOMNode(this);
         const { x, y } = rootRef.getBoundingClientRect();
+        const tempId = Date.now();
         const sticker = {
-            tempId: Date.now(),
+            tempId,
+            _id: tempId,
             type,
             resource: src || text,
             styles: {
