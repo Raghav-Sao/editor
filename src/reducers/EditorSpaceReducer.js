@@ -13,6 +13,9 @@ const initialState = {
         1234: {
             id: 1234,
             stickers: [],
+            background: {
+                src: "https://prosevents-assets.s3.ap-south-1.amazonaws.com/orange-sample-verticle.png",
+            }
         },
     },
 };
@@ -51,25 +54,34 @@ const EditorSpace = (state = initialState, { payload, type }) => {
 
         case 'MOVE_STICKER': {
             const { _id, translate, cardIndex, boundingRect } = payload;
-            const stickers = state.cards[cardIndex].stickers;
-            const index = stickers.findIndex(({ _id: stickerId }) => stickerId === _id);
+            const { cardCollection = {}, cardCollection: { [cardIndex]: card = {}, [cardIndex]: { stickers = [] } } = {} } = state;
+            const stickerIndex = stickers.findIndex(({ _id: stickerId }) => stickerId === _id);
+            if(stickerIndex < 0 ) {
+                console.error("check why stickerIndex is -1");
+                return;
+            }
+            const currentSticker = stickers[stickerIndex];
             const sticker = {
-                ...stickers[index],
+                ...currentSticker,
                 styles: {
-                    ...stickers[index].styles,
+                    ...currentSticker.styles,
                     translate,
                 },
                 boundingRect,
             };
-            const updatedTemplate = {
-                ...state.cards[cardIndex],
-                stickers: [...stickers.slice(0, index), sticker, ...stickers.slice(index + 1)],
-            };
+            const updatedStickers = [...stickers.slice(0, stickerIndex), sticker, ...stickers.slice(stickerIndex + 1)]
+
             return {
                 ...state,
                 activeSticker: { ...sticker, cardIndex },
-                cards: [...state.cards.slice(0, cardIndex), updatedTemplate, ...state.cards.slice(cardIndex + 1)],
                 activeCardIndex: cardIndex,
+                cardCollection: {
+                    ...cardCollection,
+                    [cardIndex]: {
+                        ...card,
+                        stickers: updatedStickers
+                    }
+                }
             };
         }
 

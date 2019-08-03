@@ -17,6 +17,53 @@ class CardPageEditor extends Component {
 
     cardRef = React.createRef();
 
+    updateSticker = (_id, calculatedStyle, type, cardIndex=this.props.cardId) => {
+        const { bottom, top, right, left, width } = calculatedStyle
+        const boundingRect = {
+          bottom,
+          left,
+          right,
+          top,
+          width,
+        }
+        if (type === 'rotate') {
+          const { rotation } = calculatedStyle
+          this.props.dispatch(
+            actionCreator.ROTATE_STICKER({
+              _id,
+              rotation,
+              cardIndex,
+              boundingRect,
+            })
+          )
+        } else if (type === 'drag') {
+          const { translateX, translateY } = calculatedStyle
+          const translate = { translateX, translateY }
+          // console.log(translateY, window.scrollY, top, this.stickerRef.current.getBoundingClientRect())
+          this.props.dispatch(
+            actionCreator.MOVE_STICKER({
+              _id,
+              translate,
+              cardIndex,
+              boundingRect,
+            })
+          )
+        } else {
+          const { diff, leftDiff, offsetWidth, topDiff } = calculatedStyle
+          if (diff < 0 && offsetWidth <= 2) return
+          this.props.dispatch(
+            actionCreator.RESIZE_STICKER({
+              _id,
+              diff,
+              leftDiff,
+              topDiff,
+              cardIndex,
+              boundingRect,
+            })
+          )
+        }
+      }
+
     onAddSticker = ({ position, src, style, text, type }) => {
         const rootRef = findDOMNode(this);
         const { x, y } = rootRef.getBoundingClientRect();
@@ -111,7 +158,8 @@ class CardPageEditor extends Component {
                       onStickerAdd={this.onStickerAdd}
                       onStickerDelete={this.onStickerDelete}
                       onBackgroundChange={this.onBackgroundChange}
-                      activeSticker={this.state.activeSticker}
+                      cardId={card.id}
+                      updateSticker={this.updateSticker}
                     />
                     </div>
                 )}

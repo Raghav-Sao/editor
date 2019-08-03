@@ -22,6 +22,8 @@ class CardPage extends React.Component {
                       stickerData={item}
                       readOnly={this.props.readOnly || item.readOnly}
                       isActive={this.props.activeSticker === item}
+                      cardId={this.props.cardId}
+                      updateSticker={this.props.updateSticker}
                     />
                 );
             });

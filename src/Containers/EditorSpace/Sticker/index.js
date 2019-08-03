@@ -126,6 +126,7 @@ class Sticker extends Component {
                     pageY = e.touches ? e.touches[0].pageY : e.pageY;
                 const transX = pageX - startX,
                     transY = pageY - startY;
+                //add here checkForReadjust
                 return {
                     translateX: transX,
                     translateY: transY,
@@ -194,6 +195,7 @@ class Sticker extends Component {
         );
         const resizeS = resizeOrRotate$.subscribe(calculatedStyle => {
             // this.resizeOrRotateSticker(this.props.stickerData._id, calculatedStyle, type)
+            this.props.updateSticker(this.props.stickerData._id, calculatedStyle, type)
         });
     };
 
