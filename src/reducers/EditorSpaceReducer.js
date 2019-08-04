@@ -53,7 +53,6 @@ const EditorSpace = (state = initialState, { payload, type }) => {
         }
 
         case 'MOVE_STICKER': {
-            return state;
             const { _id, translate, cardIndex, boundingRect } = payload;
             const { cardCollection = {}, cardCollection: { [cardIndex]: card = {}, [cardIndex]: { stickers = [] } } = {} } = state;
             const stickerIndex = stickers.findIndex(({ _id: stickerId }) => stickerId === _id);
@@ -145,31 +144,40 @@ const EditorSpace = (state = initialState, { payload, type }) => {
         }
 
         case 'ROTATE_STICKER': {
-            const { _id, rotation, cardIndex, boundingRect } = payload,
-                card = state.cards[cardIndex],
-                { stickers } = card,
-                index = stickers.findIndex(({ _id: stickerId }) => stickerId === _id),
-                sticker = stickers[index],
-                styles = {
-                    ...sticker.styles,
-                    rotation: {
-                        unit: 'deg',
-                        rotation,
-                    },
+            const { _id, rotation, cardIndex, boundingRect } = payload;
+            const { cardCollection = {}, cardCollection: { [cardIndex]: card = {}, [cardIndex]: { stickers = [] } } = {} } = state;
+            const stickerIndex = stickers.findIndex(({ _id: stickerId }) => stickerId === _id);
+            if(stickerIndex < 0 ) {
+                console.error("check why stickerIndex is -1");
+                return;
+            }
+            const currentSticker = stickers[stickerIndex];
+            const {
+                styles: {
+                    position: { left, top },
+                    width,
                 },
-                activeSticker = {
-                    ...sticker,
-                    styles,
-                    boundingRect,
+            } = currentSticker;
+            currentSticker["styles"] = {
+                ...currentSticker.styles,
+                rotation: {
+                    unit: 'deg',
+                    rotation,
                 },
-                updatedCard = {
-                    ...card,
-                    stickers: [...stickers.slice(0, index), activeSticker, ...stickers.slice(index + 1)],
-                };
+            }
+            currentSticker["boundingRect"] = boundingRect;
+            const updatedStickers = [...stickers.slice(0, stickerIndex), currentSticker, ...stickers.slice(stickerIndex + 1)];
             return {
                 ...state,
-                cards: [...state.cards.slice(0, cardIndex), updatedCard, ...state.cards.slice(cardIndex + 1)],
-                activeSticker: { ...sticker, cardIndex },
+                // activeSticker: { ...sticker, cardIndex },
+                activeCardIndex: cardIndex,
+                cardCollection: {
+                    ...cardCollection,
+                    [cardIndex]: {
+                        ...card,
+                        stickers: updatedStickers
+                    }
+                }
             };
         }
 
