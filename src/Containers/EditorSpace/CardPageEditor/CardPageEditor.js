@@ -162,6 +162,7 @@ class CardPageEditor extends Component {
                       onBackgroundChange={this.onBackgroundChange}
                       cardId={card.id}
                       updateSticker={this.updateSticker}
+                      activeSticker={this.state.activeSticker}
                     />
                     </div>
                 )}
