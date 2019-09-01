@@ -4,7 +4,7 @@ import { Grid } from 'semantic-ui-react'
 import TextToolbar from './TextToolbar'
 import ImageToolbar from './ImageToolbar'
 import TemplateToolbar from './TemplateToolbar'
-import { general, language } from 'Constants'
+import { general, language } from 'constant'
 
 import './Style.css'
 

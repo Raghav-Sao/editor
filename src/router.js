@@ -5,7 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { Provider } from 'react-redux';
 import Root from 'Containers/Root';
 
-import './App.css';
+import './App.scss';
 import './Generic.css';
 
 const Routes = ({ store }) => (
