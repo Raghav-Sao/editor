@@ -8,7 +8,7 @@ import { distinctUntilChanged, map, takeUntil, tap, throttleTime } from 'rxjs/op
 import { Image } from 'semantic-ui-react';
 // import { actionCreator } from 'store/actionCreator'
 
-import './Sticker.css';
+import './Sticker.scss';
 
 const stopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, 'mouseup'));
 
@@ -345,12 +345,12 @@ const dragCollect = (connect, monitor) => ({
 
 Sticker.propTypes = {
     data: PropTypes.object,
-    onResize: PropTypes.function,
-    onMove: PropTypes.function,
-    onDelete: PropTypes.onDelete,
-    onEdit: PropTypes.onEdit,
-    isActive: PropTypes.boolean,
-    readOnly: PropTypes.boolean,
+    // onResize: PropTypes.function,
+    // onMove: PropTypes.function,
+    // onDelete: PropTypes.onDelete,
+    // onEdit: PropTypes.onEdit,
+    // isActive: PropTypes.boolean,
+    // readOnly: PropTypes.boolean,
 };
 
 export default DragSource(dragType, dragSpec, dragCollect)(Sticker);

@@ -215,7 +215,7 @@ class EditorTextToolbar extends Component {
                     name="textAlign"
                     value="left"
                     onChange={e => {
-                      this.onTextStyleChange(e), this.toggleTextAlignFilter()
+                      this.onTextStyleChange(e); this.toggleTextAlignFilter()
                     }}
                   />
                   <label className="ui button icon" htmlFor="text__left">
@@ -229,7 +229,7 @@ class EditorTextToolbar extends Component {
                     name="textAlign"
                     value="center"
                     onChange={e => {
-                      this.onTextStyleChange(e), this.toggleTextAlignFilter()
+                      this.onTextStyleChange(e); this.toggleTextAlignFilter()
                     }}
                   />
                   <label className="ui button icon" htmlFor="text__middle">
@@ -244,7 +244,7 @@ class EditorTextToolbar extends Component {
                     name="textAlign"
                     value="right"
                     onChange={e => {
-                      this.onTextStyleChange(e), this.toggleTextAlignFilter()
+                      this.onTextStyleChange(e); this.toggleTextAlignFilter()
                     }}
                   />
                   <label className="ui button icon" htmlFor="text__right">

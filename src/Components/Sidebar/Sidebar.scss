@@ -1,0 +1,44 @@
+@import '../../styles/styles.scss';
+.sidebar {
+    display: flex;
+    height: 100%;
+    color: white;
+    position: relative;
+    .menu {
+        display: flex;
+        flex-direction: column;
+        height: 100%;;
+        background: $primaryBlack;
+        z-index: 2;
+        .menu--option {
+            width: 100px;
+            font-size: $big;
+            height: 100px;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 11;
+            // border-bottom: 2px solid $secondaryBlack;
+            &.active {
+                background: $secondaryBlack;
+            }
+        }
+    }
+    .menuDetails {
+        width: 300px;
+        background: $secondaryBlack;
+        transition: 0.6s all linear;
+        &.mobileView {
+            transform: translateX(-2000px);
+            position: absolute;
+            left: 100px;
+            height: 100%;
+            z-index: 1;
+            &.active {
+                transform: translateX(0);
+            }
+        }
+    }
+
+}

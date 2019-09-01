@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Route, Redirect } from 'react-router';
+import { Route } from 'react-router';
 import Cookie from 'js-cookie';
-import { isLoggedIn } from '../../lib/auth';
 import Login from '../Login';
 import Gallery from '../Gallery';
 import EditorSpace from '../EditorSpace';
@@ -27,7 +25,7 @@ class Root extends React.Component {
             <div className="root-app-container">
                 <Route path="/login" component={Login} />
                 <Route path="/gallery" component={Gallery} />
-            <Route path="/editor" component={EditorSpace} />
+                <Route path="/editor" component={EditorSpace} />
                 {/* {!isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" />} */}
                 {/*! isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" /> */}
           </div>
