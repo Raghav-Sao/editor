@@ -47,6 +47,7 @@
   .sticker {
     border: 1px dashed transparent;
     cursor: move;
+    user-select: none;
     &:hover {
       border: 1px dashed #ccc;
     }

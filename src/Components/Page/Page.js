@@ -32,9 +32,7 @@ export class Page extends PureComponent {
                     <IF condition={showBorderGuide}>
                         <BorderGuide pageWidth={pageWidth}/>
                     </IF>
-                    <Stickers
-                        {...this.props}
-                    />
+                    <Stickers {...this.props} />
                 </div>
             </div>
         )

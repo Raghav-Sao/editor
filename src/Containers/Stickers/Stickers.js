@@ -8,7 +8,7 @@ export class Stickers extends PureComponent {
 
         return (
             <div>
-                {Object.keys(stickers).map(key => <Sticker sticker={stickers[key]} />)}
+                {Object.keys(stickers).map(key => <Sticker sticker={stickers[key]} {...this.props} />)}
             </div>
         )
     }

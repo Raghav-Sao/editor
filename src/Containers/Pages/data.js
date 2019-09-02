@@ -10,11 +10,11 @@ export const pages = {
             }
         },
         stickers: {
-            '0': {
+            123123: {
                 _id: 123123,
                 id: 123123,
                 type: 'TEXT',
-                resource: 'Sample text 1',
+                resource: 'Sample text 12',
                 styles: {
                 position: {
                     left: 100,
@@ -57,7 +57,7 @@ export const pages = {
             }
         },
         stickers: {
-            '0': {
+            123123: {
                 _id: 123123,
                 id: 123123,
                 type: 'TEXT',
@@ -104,7 +104,7 @@ export const pages = {
             }
         },
         stickers: {
-            '0': {
+            123123: {
                 _id: 123123,
                 id: 123123,
                 type: 'TEXT',

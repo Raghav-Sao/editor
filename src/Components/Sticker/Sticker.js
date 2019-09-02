@@ -1,9 +1,20 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { createRef, PureComponent } from 'react';
 
 import { IF } from 'Components';
 import { TEXT, SVG } from 'constant';
 
 export class Sticker extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.stickerRef = createRef();
+        this.state = {
+            // Todo: make it in state if make sence
+            isRotating: false,
+            isDragging: false,
+            isResizing: false,
+        };
+    }
+
     getStyle = ({
         color,
         fontSize,
@@ -37,18 +48,25 @@ export class Sticker extends PureComponent {
     render() {
         const { 
             sticker : {
-                type, id, resource, isEditable = false, styles
-            }
+                type, id: stickerId, resource, isEditable = false, styles
+            },
+            page: { id: pageId},
+            handleDrag,
         } = this.props;
 
         const showTextSticker = type === TEXT;
         const showSVGSticker = type === SVG;
-
         return (
-            <div class={`sticker ${type}`} style={this.getStyle(styles)}>
+            <div 
+                class={`sticker ${type}`}
+                style={this.getStyle(styles)}
+                onMouseDown={e => handleDrag(e, 'drag', styles, this.stickerRef, stickerId, pageId)} // Todo: use id from key and make better for isRotating true event
+                onTouchStart={e => handleDrag(e, 'drag', styles, this.stickerRef, stickerId, pageId)}
+                ref={this.stickerRef}
+            >
                 <IF condition={showSVGSticker}>
-                    <div key={id} className={`sticker__image ${isEditable ? 'editable' : ''}`}>
-                        <div dangerouslySetInnerHTML={{ __html: resource }} key={id} />
+                    <div key={stickerId} className={`sticker__image ${isEditable ? 'editable' : ''}`}>
+                        <div dangerouslySetInnerHTML={{ __html: resource }} key={stickerId} />
                     </div>
                 </IF>
                 <IF condition={showTextSticker}>
