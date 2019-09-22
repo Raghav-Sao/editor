@@ -1,15 +1,13 @@
-import React, {PureComponent} from 'react';
+import React, { Fragment} from 'react';
 
 import { Sticker } from 'Components';
 
-export class Stickers extends PureComponent {
-    render() {
-        const { page: { stickers = {} } = {} } = this.props;
+export const Stickers = props => {
+    const { page: { stickers = {} } = {} } = props;
 
-        return (
-            <div>
-                {Object.keys(stickers).map(key => <Sticker sticker={stickers[key]} {...this.props} />)}
-            </div>
-        )
-    }
+    return (
+        <Fragment>
+            {Object.keys(stickers).map(key => <Sticker key={key} sticker={stickers[key]} {...props} />)}
+        </Fragment>
+    )
 }

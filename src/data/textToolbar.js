@@ -1,26 +1,101 @@
 export const textStickers = [
     {
         id: 1,
-        text: 'Sample Big-Text',
-        style: {
-            fontSize: '25px',
+        resource: 'Sample Big-Text',
+        styles: {
+            position: {
+                left: 100,
+                top: 100
+            },
+            scale: 1,
+            rotation: {
+                unit: 'deg',
+                rotation: 0
+            },
+            translate: {
+                translateX: 0,
+                translateY: 0
+            },
+            color: '#F0F',
+            fontSize: 35,
+            height: 'auto',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            fontStyle: 'normal'
         },
-        type: 'text',
+        boundingRect: {
+            top: 110
+        },
+        labels: [
+            'Sample text'
+        ],
+        name: 'sample text',
+        type: 'TEXT_STICKER',
     },
     {
         id: 2,
-        text: 'Sample Medium-Text',
-        style: {
-            fontSize: '20px',
+        resource: 'Sample Medium-Text',
+        styles: {
+            position: {
+                left: 100,
+                top: 100
+            },
+            scale: 1,
+            rotation: {
+                unit: 'deg',
+                rotation: 0
+            },
+            translate: {
+                translateX: 0,
+                translateY: 0
+            },
+            color: '#F0F',
+            fontSize: 35,
+            height: 'auto',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            fontStyle: 'normal'
         },
-        type: 'text',
+        boundingRect: {
+            top: 110
+        },
+        labels: [
+            'Sample text'
+        ],
+        name: 'sample text',
+        type: 'TEXT_STICKER',
     },
     {
         id: 3,
-        text: 'Sample Small-Text',
-        style: {
-            fontSize: '15px',
+        resource: 'Sample Small-Text',
+        styles: {
+            position: {
+                left: 100,
+                top: 100
+            },
+            scale: 1,
+            rotation: {
+                unit: 'deg',
+                rotation: 0
+            },
+            translate: {
+                translateX: 0,
+                translateY: 0
+            },
+            color: '#F0F',
+            fontSize: 35,
+            height: 'auto',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            fontStyle: 'normal'
         },
-        type: 'text',
+        boundingRect: {
+            top: 110
+        },
+        labels: [
+            'Sample text'
+        ],
+        name: 'sample text',
+        type: 'TEXT_STICKER',
     },
 ];

@@ -2,8 +2,15 @@
   height: 100%;
 }
 
-.hidden {
+.display--none {
   display: none;
+}
+.visibility--hidden {
+  opacity: 0;
+}
+.visible--smoothly {
+  opacity: 1;
+  transition: all 0.4s;
 }
 
 .ui.card {

@@ -24,7 +24,7 @@ class SortBy extends Component {
               <span className="sortby__filter">Sort By:</span>
               <input
               id="sortby__low__to__high"
-              className="hidden"
+              className="dispaly--none"
               type="checkbox"
                     group="sortby__price"
               onChange={this.handleSortbyChanges}
@@ -36,7 +36,7 @@ class SortBy extends Component {
             </label>
               <input
               id="sortby__high__to__low"
-              className="hidden"
+              className="dispaly--none"
                     type="checkbox"
               group="sortby__price"
                     onChange={this.handleSortbyChanges}
@@ -48,7 +48,7 @@ class SortBy extends Component {
             </label>
               <input
                   id="sortby__Popularity"
-                  className="hidden"
+                  className="dispaly--none"
                     type="checkbox"
                     onChange={this.handleSortbyChanges}
                   name="popularity"
@@ -59,7 +59,7 @@ class SortBy extends Component {
             </label>
                 <input
                     id="sortby__new"
-              className="hidden"
+              className="dispaly--none"
                     type="checkbox"
               name="new"
               checked={sortBy === 'new'}

@@ -23,18 +23,37 @@ const getPageItems = ({ pages = {}, pageId, stickerId } = {}) => {
 const EditorSpace = (state = initialState, { payload, type }) => {
     const { pages: currentPages } = state;
     switch (type) {
+        case actionType.ADD_STICKER: {
+            const { pageId, sticker } = payload;
+            const { id: stickerId } = sticker;
+            return {
+                ...state,
+                pages:{
+                    ...state.pages,
+                    [pageId]: {
+                        ...state.pages[pageId],
+                        stickers: {
+                            ...state.pages[pageId].stickers,
+                            [stickerId]: {
+                                ...sticker
+                            }
+                        }
+                       
+                    }
+                }
+            }
+        }
         case actionType.MOVE_STICKER: {
             const { stickerId, calculatedStyle, pageId } = payload;
             const { translateX, translateY } = calculatedStyle;
             const { page: currentPage, sticker: currentSticker, stickers: currentStickers } = getPageItems({ pages: currentPages, pageId, stickerId })
             const { styles, styles: { translate }} = currentSticker;
-
+            
             const sticker = {
                 ...currentSticker,
                 styles: {
                     ...styles,
                     translate: {
-                        ...translate,
                         translateX,
                         translateY
                     }
@@ -56,7 +75,6 @@ const EditorSpace = (state = initialState, { payload, type }) => {
                 ...currentPages,
                 [pageId]: page,
             }
-            
             return {
                 ...state,
                 pages

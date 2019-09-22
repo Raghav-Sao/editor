@@ -8,32 +8,32 @@ import nintendogsIcon from './nintendogsIcon';
 export default [
     {
         id: 1,
-        src: allah.data,
+        resource: allah.data,
         type: 'svg',
     },
     {
         id: 2,
-        src: ganesh.data,
+        resource: ganesh.data,
         type: 'svg',
     },
     {
         id: 3,
-        src: sikh.data,
+        resource: sikh.data,
         type: 'svg',
     },
     {
         id: 4,
-        src: ring.data,
+        resource: ring.data,
         type: 'svg',
     },
     {
         id: 5,
-        src: fZeroIcon.data,
+        resource: fZeroIcon.data,
         type: 'svg',
     },
     {
         id: 6,
-        src: nintendogsIcon.data,
+        resource: nintendogsIcon.data,
         type: 'svg',
     },
 ];

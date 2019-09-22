@@ -1,8 +1,5 @@
-import React, { Component, Fragment, createRef } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { actionCreator } from 'store/actionCreator';
-import { findDOMNode } from 'react-dom';
-import { DropTarget } from 'react-dnd';
 import Sticker from '../Sticker';
 
 import './CardPage.css';

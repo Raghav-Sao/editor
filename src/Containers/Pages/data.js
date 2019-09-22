@@ -13,7 +13,7 @@ export const pages = {
             123123: {
                 _id: 123123,
                 id: 123123,
-                type: 'TEXT',
+                type: 'TEXT_STICKER',
                 resource: 'Sample text 12',
                 styles: {
                 position: {
@@ -47,7 +47,7 @@ export const pages = {
         }
     },
     124: {
-        id: 123,
+        id: 124,
         name: 'font page',
         background: {
             backgroundType: 'IMAGE',
@@ -57,10 +57,10 @@ export const pages = {
             }
         },
         stickers: {
-            123123: {
-                _id: 123123,
-                id: 123123,
-                type: 'TEXT',
+            1231234: {
+                _id: 1231234,
+                id: 1231234,
+                type: 'TEXT_STICKER',
                 resource: 'Sample text 1',
                 styles: {
                 position: {
@@ -94,7 +94,7 @@ export const pages = {
         }
     },
     125: {
-        id: 123,
+        id: 125,
         name: 'font page',
         background: {
             backgroundType: 'IMAGE',
@@ -104,10 +104,10 @@ export const pages = {
             }
         },
         stickers: {
-            123123: {
-                _id: 123123,
-                id: 123123,
-                type: 'TEXT',
+            1231235: {
+                _id: 1231235,
+                id: 1231235,
+                type: 'TEXT_STICKER',
                 resource: 'Sample text 1',
                 styles: {
                 position: {

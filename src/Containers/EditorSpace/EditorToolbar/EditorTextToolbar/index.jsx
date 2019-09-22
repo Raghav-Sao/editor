@@ -170,7 +170,7 @@ class EditorTextToolbar extends Component {
                 <input
                   id="text__bold"
                   checked={activeStyle.fontWeight === 'bold'}
-                  className="hidden"
+                  className="display--none"
                   type="checkbox"
                   name="fontWeight"
                   value={activeStyle.fontWeight === 'bold' ? 'normal' : 'bold'}
@@ -184,7 +184,7 @@ class EditorTextToolbar extends Component {
                 <input
                   id="text__italic"
                   checked={activeStyle.fontStyle === 'italic'}
-                  className="hidden"
+                  className="display--none"
                   type="checkbox"
                   name="fontStyle"
                   value={activeStyle.fontStyle === 'italic' ? 'normal' : 'italic'}
@@ -210,7 +210,7 @@ class EditorTextToolbar extends Component {
                   <input
                     id="text__left"
                     checked={activeStyle.textAlign === 'left'}
-                    className="hidden"
+                    className="display--none"
                     type="radio"
                     name="textAlign"
                     value="left"
@@ -224,7 +224,7 @@ class EditorTextToolbar extends Component {
                   <input
                     id="text__middle"
                     checked={activeStyle.textAlign === 'center'}
-                    className="hidden"
+                    className="display--none"
                     type="radio"
                     name="textAlign"
                     value="center"
@@ -239,7 +239,7 @@ class EditorTextToolbar extends Component {
                   <input
                     id="text__right"
                     checked={activeStyle.textAlign === 'right'}
-                    className="hidden"
+                    className="display--none"
                     type="radio"
                     name="textAlign"
                     value="right"
