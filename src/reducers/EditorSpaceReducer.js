@@ -14,8 +14,8 @@ const initialState = {
             id: 1234,
             stickers: [],
             background: {
-                src: "https://prosevents-assets.s3.ap-south-1.amazonaws.com/orange-sample-verticle.png",
-            }
+                src: 'https://prosevents-assets.s3.ap-south-1.amazonaws.com/orange-sample-verticle.png',
+            },
         },
     },
 };

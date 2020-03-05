@@ -17,11 +17,16 @@ const EditorSpace = () => {
         <div className="mainContainer height-100">
             <Sidebar />
             <div className="editorContainer">
-                <div>Tool bar<br /><br /><br /></div>
+                <div>
+                    Tool bar
+                    <br />
+                    <br />
+                    <br />
+                </div>
                 <Editor pages={pages} updateSticker={updateSticker} handleDropSticker={handleDropSticker} />
             </div>
         </div>
     );
-}
+};
 
 export default EditorSpace;

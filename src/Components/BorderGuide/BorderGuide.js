@@ -38,6 +38,6 @@ export class BorderGuide extends PureComponent {
                     }}
                 />
             </Fragment>
-        )
+        );
     }
 }

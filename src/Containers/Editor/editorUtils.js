@@ -1,11 +1,11 @@
 import { distinctUntilChanged, map, takeUntil, tap, throttleTime } from 'rxjs/operators';
 import { fromEvent, merge } from 'rxjs';
 
-import {SVG_STICKER} from 'constant';
+import { SVG_STICKER } from 'constant';
 
 const defaultStopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, 'mouseup'));
 
-const calculatedDragDiff  = params => {
+const calculatedDragDiff = params => {
     const { e, mouseX, mouseY, startX, startY } = params;
 
     e.stopPropagation();
@@ -18,16 +18,15 @@ const calculatedDragDiff  = params => {
         translateX,
         translateY,
     };
-       
 };
 
 export const calculateDrag = (e, styles = {}, stopEvents$ = defaultStopEvents$) => {
-    const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = []} = e;
+    const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
     const { pageX = touchPageX, pageY = touchPageY } = e;
-    
+
     const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
 
-    const  startX = pageX - lastOffsetX;
+    const startX = pageX - lastOffsetX;
     const startY = pageY - lastOffsetY;
     const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
         takeUntil(
@@ -40,7 +39,7 @@ export const calculateDrag = (e, styles = {}, stopEvents$ = defaultStopEvents$) 
         ),
         throttleTime(100),
         map(e => {
-            const { touches: { 0: { pageX: touchMouseX, pageY: touchMouseY } = {} } = []} = e;
+            const { touches: { 0: { pageX: touchMouseX, pageY: touchMouseY } = {} } = [] } = e;
             const { clientX: mouseX = touchMouseX, clientY: mouseY = touchMouseY } = e;
             const temp = {
                 mouseX,
@@ -56,8 +55,7 @@ export const calculateDrag = (e, styles = {}, stopEvents$ = defaultStopEvents$) 
     );
 
     return resizeOrRotate$;
-} 
-
+};
 
 export const getStyle = ({
     color,
@@ -86,7 +84,7 @@ export const getStyle = ({
 });
 
 export const getTransformData = (param = {}) => {
-    const { translate: { translateX = 0, translateY = 0 } = {}, rotation: { unit = 'deg', rotation = 0 } = {}} = param;
+    const { translate: { translateX = 0, translateY = 0 } = {}, rotation: { unit = 'deg', rotation = 0 } = {} } = param;
     const data = `translate(${translateX}px, ${translateY}px) rotate(${rotation}${unit})`;
     return data;
 };
@@ -94,7 +92,7 @@ export const getTransformData = (param = {}) => {
 export const calculateNewStickerData = data => {
     const { left, styles, top, type, pageId, resource } = data;
 
-    const calculateStyles =  {
+    const calculateStyles = {
         ...styles,
         position: {
             left,
@@ -102,14 +100,14 @@ export const calculateNewStickerData = data => {
         },
         translate: {
             translateX: 0,
-            translateY: 0
+            translateY: 0,
         },
         rotation: {
             unit: 'deg',
-            rotation: 0
+            rotation: 0,
         },
     };
-    if(type === SVG_STICKER) {
+    if (type === SVG_STICKER) {
         calculateStyles['width'] = 136;
     }
     const sticker = {
@@ -120,7 +118,7 @@ export const calculateNewStickerData = data => {
             type,
             resource,
             styles: calculateStyles,
-        }
-    }
+        },
+    };
     return sticker;
-}
+};

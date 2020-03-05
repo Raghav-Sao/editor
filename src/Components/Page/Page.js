@@ -9,7 +9,7 @@ import { BorderGuide, IF, PageInfo } from 'Components';
 import { Stickers } from 'Containers';
 import './Page.scss';
 
-export const Page = (props) => {
+export const Page = props => {
     const pageRef = React.createRef();
     const { page = {}, showBorderGuide = false, pageNo } = props;
 
@@ -22,8 +22,8 @@ export const Page = (props) => {
         drop: (item, monitor) => {
             const [left, top] = calculateRelativeDragPosition(monitor, pageRef);
             const { type, resource, styles } = monitor.getItem();
-            const newStickerData = calculateNewStickerData({left, pageId, resource,  styles, top, type});        
-            props.handleDropSticker(newStickerData);            
+            const newStickerData = calculateNewStickerData({ left, pageId, resource, styles, top, type });
+            props.handleDropSticker(newStickerData);
         },
         // collect: monitor => ({
         //     isOver: !!monitor.isOver(),
@@ -33,7 +33,7 @@ export const Page = (props) => {
         //     getInitialSourceClientOffset: monitor.getInitialSourceClientOffset,
         //     getClientOffset: monitor.getClientOffset,
         // }) // check is Really Required? or can we write drop calculation here
-    })
+    });
 
     return (
         <div className="page--wrapper">
@@ -43,10 +43,11 @@ export const Page = (props) => {
                     <img alt="img" src={backgroundImage} draggable="false" width="100%" ref={pageRef} />
                 </IF>
                 <IF condition={showBorderGuide}>
-                    <BorderGuide pageWidth={pageWidth}/>
+                    <BorderGuide pageWidth={pageWidth} />
                 </IF>
                 <Stickers {...props} />
+                <div className="test"></div>
             </div>
         </div>
-    )
-}
+    );
+};

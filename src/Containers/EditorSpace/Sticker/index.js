@@ -195,7 +195,7 @@ class Sticker extends Component {
         );
         const resizeS = resizeOrRotate$.subscribe(calculatedStyle => {
             // this.resizeOrRotateSticker(this.props.stickerData._id, calculatedStyle, type)
-            this.props.updateSticker(this.props.stickerData._id, calculatedStyle, type)
+            this.props.updateSticker(this.props.stickerData._id, calculatedStyle, type);
         });
     };
 
@@ -272,55 +272,55 @@ class Sticker extends Component {
         const sticker = () => {
             if (data.type === 'text') {
                 return (
-                  <div
-                      className={`sticker__text ${isEditable ? 'editable' : ''}`}
-                      contentEditable={isEditable}
-                      suppressContentEditableWarning
-                      onInput={this.onInputChange}
-                      spellCheck={false}
+                    <div
+                        className={`sticker__text ${isEditable ? 'editable' : ''}`}
+                        contentEditable={isEditable}
+                        suppressContentEditableWarning
+                        onInput={this.onInputChange}
+                        spellCheck={false}
                     >
-                      {data.resource}
+                        {data.resource}
                     </div>
                 );
             }
 
             return (
-              <div key={data._id} className={`sticker__image ${isEditable ? 'editable' : ''}`}>
-                  <div dangerouslySetInnerHTML={{ __html: data.resource }} key={data._id} />
+                <div key={data._id} className={`sticker__image ${isEditable ? 'editable' : ''}`}>
+                    <div dangerouslySetInnerHTML={{ __html: data.resource }} key={data._id} />
                 </div>
             );
         };
 
         return (
-          <div
+            <div
                 className={`sticker ${isStickerActive ? 'active' : ''}`}
                 style={this.getStyle(data.styles)}
-              key={data._id}
-              onClick={this.onSelect}
+                key={data._id}
+                onClick={this.onSelect}
                 onMouseDown={e => this.onResizeOrRotate(e, 'drag', data.styles)} // Todo: use id from key and make better for isRotating true event
-              onTouchStart={e => this.onResizeOrRotate(e, 'drag', data.styles)}
-              ref={this.stickerRef}
+                onTouchStart={e => this.onResizeOrRotate(e, 'drag', data.styles)}
+                ref={this.stickerRef}
             >
                 {sticker()}
                 <div
-              className="h-l"
+                    className="h-l"
                     onMouseDown={e => this.onResizeOrRotate(e, 'leftResize', data.styles)}
                     onTouchStart={e => this.onResizeOrRotate(e, 'leftResize', data.styles)}
-            >
-              <span id="handle-left" />
-            </div>
-              <div
-              className="h-r"
+                >
+                    <span id="handle-left" />
+                </div>
+                <div
+                    className="h-r"
                     onMouseDown={e => this.onResizeOrRotate(e, 'rightResize', data.styles)}
                     onTouchStart={e => this.onResizeOrRotate(e, 'rightResize', data.styles)}
-            >
-              <span id="handle-right" />
-            </div>
+                >
+                    <span id="handle-right" />
+                </div>
                 <div
-              className="handle rotate"
+                    className="handle rotate"
                     onMouseDown={e => this.onResizeOrRotate(e, 'rotate', data.styles)}
                     onTouchStart={e => this.onResizeOrRotate(e, 'rotate', data.styles)}
-            />
+                />
             </div>
         );
     }

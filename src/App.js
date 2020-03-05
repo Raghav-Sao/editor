@@ -14,10 +14,10 @@ class App extends Component {
     render() {
         const { showAlert, dispatch } = this.props;
         return (
-          <div className="">
-              <Button animated="fade">
-                  <Button.Content visible>Sign-up for a Pro account</Button.Content>
-                  <Button.Content hidden>$12.99 a month</Button.Content>
+            <div className="">
+                <Button animated="fade">
+                    <Button.Content visible>Sign-up for a Pro account</Button.Content>
+                    <Button.Content hidden>$12.99 a month</Button.Content>
                 </Button>
             </div>
         );

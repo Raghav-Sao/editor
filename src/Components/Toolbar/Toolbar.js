@@ -8,44 +8,44 @@ import { general, language } from 'constant';
 import './Style.css';
 
 const Toolbar = props => {
-  const { type, handleDrag } = props;
+    const { type, handleDrag } = props;
 
-  const editorSpace = useSelector(({ editorSpace }) => editorSpace);
-  const { imageStickers, textStickers } = editorSpace;
+    const editorSpace = useSelector(({ editorSpace }) => editorSpace);
+    const { imageStickers, textStickers } = editorSpace;
 
-  const getToolbar = type => {
-    const { TEXT, IMAGE } = general[language]
-    switch (type) {
-      case TEXT: {
-        return (
-          <div className="text__toolbar__container">
-            {textStickers.map((sticker, index) => (
-              <TextToolbar sticker={sticker} index={index} handleDrag={handleDrag} />
-            ))}
-          </div>
-        )
-      }
+    const getToolbar = type => {
+        const { TEXT, IMAGE } = general[language];
+        switch (type) {
+            case TEXT: {
+                return (
+                    <div className="text__toolbar__container">
+                        {textStickers.map((sticker, index) => (
+                            <TextToolbar sticker={sticker} index={index} handleDrag={handleDrag} />
+                        ))}
+                    </div>
+                );
+            }
 
-      case IMAGE: {
-        return (
-          <div className="image__toolbar__container">
-            <Grid columns="two">
-              <Grid.Row>
-                {imageStickers.map((sticker, index) => (
-                  <Grid.Column>
-                    <ImageToolbar sticker={sticker} index={index} handleDrag={handleDrag} />
-                  </Grid.Column>
-                ))}
-              </Grid.Row>
-            </Grid>
-          </div>
-        )
-      }
+            case IMAGE: {
+                return (
+                    <div className="image__toolbar__container">
+                        <Grid columns="two">
+                            <Grid.Row>
+                                {imageStickers.map((sticker, index) => (
+                                    <Grid.Column>
+                                        <ImageToolbar sticker={sticker} index={index} handleDrag={handleDrag} />
+                                    </Grid.Column>
+                                ))}
+                            </Grid.Row>
+                        </Grid>
+                    </div>
+                );
+            }
 
-      default:
-        return <div />
-    }
-  }
-  return getToolbar(type);
-}
+            default:
+                return <div />;
+        }
+    };
+    return getToolbar(type);
+};
 export default Toolbar;

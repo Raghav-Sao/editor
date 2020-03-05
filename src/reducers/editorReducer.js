@@ -1,6 +1,6 @@
 import imageStickers from 'assests/images/marriage-icons';
 import { textStickers } from 'data';
-import { pages } from 'Containers/Pages/data'
+import { pages } from 'Containers/Pages/data';
 import * as actionType from 'store/actions';
 import Sticker from '../Containers/EditorSpace/Sticker';
 
@@ -10,15 +10,15 @@ const initialState = {
     imageStickers,
     activeCardIndex: 0,
     status: 'All Changes Saved',
-    pages
+    pages,
 };
 
 const getPageItems = ({ pages = {}, pageId, stickerId } = {}) => {
     const { [pageId]: page = {} } = pages;
     const { stickers = {} } = page;
     const { [stickerId]: sticker = {} } = stickers;
-    return { pages, page, stickers, sticker }
-}
+    return { pages, page, stickers, sticker };
+};
 
 const EditorSpace = (state = initialState, { payload, type }) => {
     const { pages: currentPages } = state;
@@ -28,56 +28,61 @@ const EditorSpace = (state = initialState, { payload, type }) => {
             const { id: stickerId } = sticker;
             return {
                 ...state,
-                pages:{
+                pages: {
                     ...state.pages,
                     [pageId]: {
                         ...state.pages[pageId],
                         stickers: {
                             ...state.pages[pageId].stickers,
                             [stickerId]: {
-                                ...sticker
-                            }
-                        }
-                       
-                    }
-                }
-            }
+                                ...sticker,
+                            },
+                        },
+                    },
+                },
+            };
         }
         case actionType.MOVE_STICKER: {
             const { stickerId, calculatedStyle, pageId } = payload;
             const { translateX, translateY } = calculatedStyle;
-            const { page: currentPage, sticker: currentSticker, stickers: currentStickers } = getPageItems({ pages: currentPages, pageId, stickerId })
-            const { styles, styles: { translate }} = currentSticker;
-            
+            const { page: currentPage, sticker: currentSticker, stickers: currentStickers } = getPageItems({
+                pages: currentPages,
+                pageId,
+                stickerId,
+            });
+            const {
+                styles,
+                styles: { translate },
+            } = currentSticker;
+
             const sticker = {
                 ...currentSticker,
                 styles: {
                     ...styles,
                     translate: {
                         translateX,
-                        translateY
-                    }
-                }
-                
-            }
+                        translateY,
+                    },
+                },
+            };
 
             const stickers = {
                 ...currentStickers,
-                [stickerId]: sticker
-            }
+                [stickerId]: sticker,
+            };
 
             const page = {
                 ...currentPage,
-                stickers
-            }
+                stickers,
+            };
 
             const pages = {
                 ...currentPages,
                 [pageId]: page,
-            }
+            };
             return {
                 ...state,
-                pages
+                pages,
             };
         }
 

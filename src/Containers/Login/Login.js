@@ -22,12 +22,12 @@ class Login extends React.Component {
     render() {
         return (
             <div className="login-page">
-            <a target='_blank' href={`${authApi}/google/login?target_path=${window.location.href}`}>
-                <button className="loginBtn loginBtn--google" onClick={this.onClick}>
+                <a target="_blank" href={`${authApi}/google/login?target_path=${window.location.href}`}>
+                    <button className="loginBtn loginBtn--google" onClick={this.onClick}>
                         Login with Google
                     </button>
                 </a>
-          </div>
+            </div>
         );
     }
 }

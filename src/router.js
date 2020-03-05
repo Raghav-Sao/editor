@@ -8,17 +8,17 @@ import Root from 'Containers/Root';
 import './App.scss';
 import './Generic.css';
 
-const Routes = (props) => {
-  const { store } = props;
-  return (
-    <Provider store={store}>
-      <DndProvider backend={HTML5Backend}>
-        <Router>
-          <Route path="/" component={Root} />
-        </Router>
-      </DndProvider>
-    </Provider>
-  )
-}
+const Routes = props => {
+    const { store } = props;
+    return (
+        <Provider store={store}>
+            <DndProvider backend={HTML5Backend}>
+                <Router>
+                    <Route path="/" component={Root} />
+                </Router>
+            </DndProvider>
+        </Provider>
+    );
+};
 
 export default Routes;

@@ -28,7 +28,7 @@ class Root extends React.Component {
                 <Route path="/editor" component={EditorSpace} />
                 {/* {!isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" />} */}
                 {/*! isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" /> */}
-          </div>
+            </div>
         );
     }
 }

@@ -20,52 +20,52 @@ class SortBy extends Component {
             },
         } = this;
         return (
-          <div className="row sortby__filter__container">
-              <span className="sortby__filter">Sort By:</span>
-              <input
-              id="sortby__low__to__high"
-              className="dispaly--none"
-              type="checkbox"
+            <div className="row sortby__filter__container">
+                <span className="sortby__filter">Sort By:</span>
+                <input
+                    id="sortby__low__to__high"
+                    className="dispaly--none"
+                    type="checkbox"
                     group="sortby__price"
-              onChange={this.handleSortbyChanges}
-              name="priceLowToHigh"
+                    onChange={this.handleSortbyChanges}
+                    name="priceLowToHigh"
                     checked={sortBy === 'priceLowToHigh'}
-            />
+                />
                 <label htmlFor="sortby__low__to__high" className="sortby__filter">
                     Price: Low to High
-            </label>
-              <input
-              id="sortby__high__to__low"
-              className="dispaly--none"
+                </label>
+                <input
+                    id="sortby__high__to__low"
+                    className="dispaly--none"
                     type="checkbox"
-              group="sortby__price"
+                    group="sortby__price"
                     onChange={this.handleSortbyChanges}
-              name="priceHighToLow"
+                    name="priceHighToLow"
                     checked={sortBy === 'priceHighToLow'}
-            />
+                />
                 <label htmlFor="sortby__high__to__low" className="sortby__filter">
                     Price: High to Low
-            </label>
-              <input
-                  id="sortby__Popularity"
-                  className="dispaly--none"
+                </label>
+                <input
+                    id="sortby__Popularity"
+                    className="dispaly--none"
                     type="checkbox"
                     onChange={this.handleSortbyChanges}
-                  name="popularity"
-                  checked={sortBy === 'popularity'}
+                    name="popularity"
+                    checked={sortBy === 'popularity'}
                 />
                 <label htmlFor="sortby__Popularity" className="sortby__filter">
                     Popularity
-            </label>
+                </label>
                 <input
                     id="sortby__new"
-              className="dispaly--none"
+                    className="dispaly--none"
                     type="checkbox"
-              name="new"
-              checked={sortBy === 'new'}
+                    name="new"
+                    checked={sortBy === 'new'}
                     onChange={this.handleSortbyChanges}
-            />
-              <label htmlFor="sortby__new" className="sortby__filter" name="popularity">
+                />
+                <label htmlFor="sortby__new" className="sortby__filter" name="popularity">
                     New Design
                 </label>
             </div>

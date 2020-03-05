@@ -14,13 +14,13 @@ class CardPage extends React.Component {
         if (this.props.stickers) {
             return this.props.stickers.map(item => {
                 return (
-                  <Sticker
-                      onStickerActivity={this.props.onStickerActivity}
-                      stickerData={item}
-                      readOnly={this.props.readOnly || item.readOnly}
-                      isActive={this.props.activeSticker === item}
-                      cardId={this.props.cardId}
-                      updateSticker={this.props.updateSticker}
+                    <Sticker
+                        onStickerActivity={this.props.onStickerActivity}
+                        stickerData={item}
+                        readOnly={this.props.readOnly || item.readOnly}
+                        isActive={this.props.activeSticker === item}
+                        cardId={this.props.cardId}
+                        updateSticker={this.props.updateSticker}
                     />
                 );
             });
@@ -41,43 +41,43 @@ class CardPage extends React.Component {
                 <div className="template_container" key="cardIndex" id="iii">
                     <img id="card__image" alt="img" src={src} draggable="false" width="100%" ref={this.cardRef} />
                     {showBorderGuid && <div className="card__border" />}
-                {this.getStickers()}
-                <Fragment>
+                    {this.getStickers()}
+                    <Fragment>
                         {showBorderGuid && (
                             <div
                                 className="align__left__guide"
                                 style={{
                                     left: alignLeft,
                                 }}
-                        />
+                            />
                         )}
-                    {showBorderGuid && (
-                        <div
+                        {showBorderGuid && (
+                            <div
                                 className="align__top__guide"
-                              style={{
+                                style={{
                                     top: alignTop,
                                 }}
                             />
                         )}
-                    {showBorderGuid && (
+                        {showBorderGuid && (
                             <div
-                      className="align__card__center__guide"
-                      style={{
+                                className="align__card__center__guide"
+                                style={{
                                     left: cardWidth / 2,
                                 }}
-                    />
+                            />
                         )}
-                    {showBorderGuid && (
-                        <div
+                        {showBorderGuid && (
+                            <div
                                 className="align__card__verical_center__guide"
                                 style={{
                                     left: cardWidth / 2,
                                 }}
-                    />
+                            />
                         )}
-                  </Fragment>
-              </div>
-          </Fragment>
+                    </Fragment>
+                </div>
+            </Fragment>
         );
     }
 }

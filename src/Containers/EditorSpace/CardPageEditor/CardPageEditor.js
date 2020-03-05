@@ -17,52 +17,52 @@ class CardPageEditor extends Component {
 
     cardRef = React.createRef();
 
-    updateSticker = (_id, calculatedStyle, type, cardIndex=this.props.cardId) => {
-        const { bottom, top, right, left, width } = calculatedStyle
+    updateSticker = (_id, calculatedStyle, type, cardIndex = this.props.cardId) => {
+        const { bottom, top, right, left, width } = calculatedStyle;
         const boundingRect = {
-          bottom,
-          left,
-          right,
-          top,
-          width,
-        }
+            bottom,
+            left,
+            right,
+            top,
+            width,
+        };
         if (type === 'rotate') {
-          const { rotation } = calculatedStyle
-          this.props.dispatch(
-            actionCreator.ROTATE_STICKER({
-              _id,
-              rotation,
-              cardIndex,
-              boundingRect,
-            })
-          )
+            const { rotation } = calculatedStyle;
+            this.props.dispatch(
+                actionCreator.ROTATE_STICKER({
+                    _id,
+                    rotation,
+                    cardIndex,
+                    boundingRect,
+                })
+            );
         } else if (type === 'drag') {
-          const { translateX, translateY } = calculatedStyle
-          const translate = { translateX, translateY }
-          // console.log(translateY, window.scrollY, top, this.stickerRef.current.getBoundingClientRect())
-          this.props.dispatch(
-            actionCreator.MOVE_STICKER({
-              _id,
-              translate,
-              cardIndex,
-              boundingRect,
-            })
-          )
+            const { translateX, translateY } = calculatedStyle;
+            const translate = { translateX, translateY };
+            // console.log(translateY, window.scrollY, top, this.stickerRef.current.getBoundingClientRect())
+            this.props.dispatch(
+                actionCreator.MOVE_STICKER({
+                    _id,
+                    translate,
+                    cardIndex,
+                    boundingRect,
+                })
+            );
         } else {
-          const { diff, leftDiff, offsetWidth, topDiff } = calculatedStyle
-          if (diff < 0 && offsetWidth <= 2) return
-          this.props.dispatch(
-            actionCreator.RESIZE_STICKER({
-              _id,
-              diff,
-              leftDiff,
-              topDiff,
-              cardIndex,
-              boundingRect,
-            })
-          )
+            const { diff, leftDiff, offsetWidth, topDiff } = calculatedStyle;
+            if (diff < 0 && offsetWidth <= 2) return;
+            this.props.dispatch(
+                actionCreator.RESIZE_STICKER({
+                    _id,
+                    diff,
+                    leftDiff,
+                    topDiff,
+                    cardIndex,
+                    boundingRect,
+                })
+            );
         }
-      }
+    };
 
     onAddSticker = ({ position, src, style, text, type }) => {
         const rootRef = findDOMNode(this);
@@ -143,27 +143,27 @@ class CardPageEditor extends Component {
         const card = this.props.cardCollection[this.props.cardId];
 
         return (
-          <div className="card_page_editor_wrapper">
-              {this.state.activeSticker && (
-            <EditorToolbar
-                      activeSticker={this.state.activeSticker}
-                      onToolbarActivity={this.onToolbarActivity}
+            <div className="card_page_editor_wrapper">
+                {this.state.activeSticker && (
+                    <EditorToolbar
+                        activeSticker={this.state.activeSticker}
+                        onToolbarActivity={this.onToolbarActivity}
                     />
                 )}
                 {connectDropTarget(
-              <div className="editor-wrapper">
+                    <div className="editor-wrapper">
                         <CardPage
-                      background={card.background}
-                      stickers={card.stickers}
+                            background={card.background}
+                            stickers={card.stickers}
                             showLines
-                      onStickerActivity={this.onStickerActivity}
-                      onStickerAdd={this.onStickerAdd}
-                      onStickerDelete={this.onStickerDelete}
-                      onBackgroundChange={this.onBackgroundChange}
-                      cardId={card.id}
-                      updateSticker={this.updateSticker}
-                      activeSticker={this.state.activeSticker}
-                    />
+                            onStickerActivity={this.onStickerActivity}
+                            onStickerAdd={this.onStickerAdd}
+                            onStickerDelete={this.onStickerDelete}
+                            onBackgroundChange={this.onBackgroundChange}
+                            cardId={card.id}
+                            updateSticker={this.updateSticker}
+                            activeSticker={this.state.activeSticker}
+                        />
                     </div>
                 )}
             </div>
