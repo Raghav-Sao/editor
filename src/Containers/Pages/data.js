@@ -1,10 +1,12 @@
+import green from 'assests/images/business-card/dark-geen-verticle.png'
+import orange from 'assests/images/business-card/orange-sample-verticle.png'
 export const pages = {
     123: {
         id: 123,
         name: 'font page',
         background: {
             backgroundType: 'IMAGE',
-            backgroundImage: 'https://s3.ap-south-1.amazonaws.com/prosevents/orange-sample-verticle.png',
+            backgroundImage: orange,
             style: {
                 height: 'auto'
             }
@@ -51,7 +53,7 @@ export const pages = {
         name: 'font page',
         background: {
             backgroundType: 'IMAGE',
-            backgroundImage: 'https://s3.ap-south-1.amazonaws.com/prosevents/orange-sample-verticle.png',
+            backgroundImage: green,
             style: {
                 height: 'auto'
             }
@@ -98,7 +100,7 @@ export const pages = {
         name: 'font page',
         background: {
             backgroundType: 'IMAGE',
-            backgroundImage: 'https://s3.ap-south-1.amazonaws.com/prosevents/orange-sample-verticle.png',
+            backgroundImage: orange,
             style: {
                 height: 'auto'
             }

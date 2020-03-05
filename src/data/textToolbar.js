@@ -20,7 +20,7 @@ export const textStickers = [
             fontSize: 35,
             height: 'auto',
             fontWeight: 'bold',
-            textAlign: 'center',
+            textAlign: 'left',
             fontStyle: 'normal'
         },
         boundingRect: {
@@ -50,10 +50,10 @@ export const textStickers = [
                 translateY: 0
             },
             color: '#F0F',
-            fontSize: 35,
+            fontSize: 25,
             height: 'auto',
             fontWeight: 'bold',
-            textAlign: 'center',
+            textAlign: 'left',
             fontStyle: 'normal'
         },
         boundingRect: {
@@ -83,10 +83,10 @@ export const textStickers = [
                 translateY: 0
             },
             color: '#F0F',
-            fontSize: 35,
+            fontSize: 15,
             height: 'auto',
             fontWeight: 'bold',
-            textAlign: 'center',
+            textAlign: 'left',
             fontStyle: 'normal'
         },
         boundingRect: {
