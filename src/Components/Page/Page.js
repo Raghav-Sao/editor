@@ -46,7 +46,7 @@ export const Page = props => {
                     <BorderGuide pageWidth={pageWidth} />
                 </IF>
                 <Stickers {...props} />
-                <div className="test"></div>
+                {/* <div className="test">dd</div> */}
             </div>
         </div>
     );

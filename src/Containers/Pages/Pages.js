@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { calculateDrag } from 'Containers/Editor/editorUtils';
+import { calculateMovement } from 'Containers/Editor/editorUtils';
 
 import { Page } from 'Components';
 import './Pages.scss';
@@ -9,7 +9,7 @@ export const Pages = props => {
     const { pages = {} } = props;
 
     const handleDrag = (e, type, styles, stickerRef, stickerId, pageId) => {
-        const resizeOrRotate$ = calculateDrag(e, styles);
+        const resizeOrRotate$ = calculateMovement({e, styles, movemenetType: 'DRAG'});
         resizeOrRotate$.subscribe(calculatedStyle => {
             props.updateSticker({ calculatedStyle, type, stickerId, pageId });
         });

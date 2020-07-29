@@ -5,22 +5,111 @@ import { SVG_STICKER } from 'constant';
 
 const defaultStopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, 'mouseup'));
 
-const calculatedDragDiff = params => {
-    const { e, mouseX, mouseY, startX, startY } = params;
+const calculateResizeOrRotateStyles = params => {
+    const { e, mouseX, mouseY, movemenetType, startX, startY } = params;
 
     e.stopPropagation();
     // const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = []} = e;
     // const { pageX = touchPageX, pageY = touchPageY } = e;
-    const translateX = mouseX - startX;
-    const translateY = mouseY - startY;
+    console.log(movemenetType)
+    switch(movemenetType) {
+        case 'DRAG': {
+            const translateX = mouseX - startX;
+            const translateY = mouseY - startY;
+        
+            return {
+                translateX,
+                translateY,
+            };
 
-    return {
-        translateX,
-        translateY,
-    };
+        }
+
+        default: {
+            return {}
+        }
+    }
+
+    
 };
 
-export const calculateDrag = (e, styles = {}, stopEvents$ = defaultStopEvents$) => {
+export const calculateMovement = ({e,styles={}, stopEvents$ = defaultStopEvents$, movemenetType}) => {
+    const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
+    const { pageX = touchPageX, pageY = touchPageY } = e;
+
+    const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
+
+    const startX = pageX - lastOffsetX;
+    const startY = pageY - lastOffsetY;
+    const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
+        takeUntil(
+            stopEvents$.pipe(
+                tap(() => {
+                    // this.m = NaN;
+                    // this.stopEvents({ state });
+                })
+            )
+        ),
+        throttleTime(100),
+        map(e => {
+            const { touches: { 0: { pageX: touchMouseX, pageY: touchMouseY } = {} } = [] } = e;
+            const { clientX: mouseX = touchMouseX, clientY: mouseY = touchMouseY } = e;
+            const temp = {
+                e,
+                mouseX,
+                mouseY,
+                movemenetType,
+                startX,
+                startY,
+            };
+            return temp;
+        }),
+        map(calculateResizeOrRotateStyles),
+        distinctUntilChanged()
+    );
+    return resizeOrRotate$;
+
+}
+
+
+export const calculateDrag = ({e, styles = {}, movemenetType, stopEvents$ = defaultStopEvents$}) => {
+    const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
+    const { pageX = touchPageX, pageY = touchPageY } = e;
+
+    const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
+
+    const startX = pageX - lastOffsetX;
+    const startY = pageY - lastOffsetY;
+    const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
+        takeUntil(
+            stopEvents$.pipe(
+                tap(() => {
+                    // this.m = NaN;
+                    // this.stopEvents({ state });
+                })
+            )
+        ),
+        throttleTime(100),
+        map(e => {
+            const { touches: { 0: { pageX: touchMouseX, pageY: touchMouseY } = {} } = [] } = e;
+            const { clientX: mouseX = touchMouseX, clientY: mouseY = touchMouseY } = e;
+            const temp = {
+                mouseX,
+                mouseY,
+                movemenetType,
+                e,
+                startX,
+                startY,
+            };
+            return temp;
+        }),
+        map(calculateResizeOrRotateStyles),
+        distinctUntilChanged()
+    );
+
+    return resizeOrRotate$;
+};
+
+export const calculateRoatation = (e, styles = {}, stopEvents$ = defaultStopEvents$) => {
     const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
     const { pageX = touchPageX, pageY = touchPageY } = e;
 
@@ -50,7 +139,7 @@ export const calculateDrag = (e, styles = {}, stopEvents$ = defaultStopEvents$) 
             };
             return temp;
         }),
-        map(calculatedDragDiff),
+        map(calculateResizeOrRotateStyles),
         distinctUntilChanged()
     );
 
