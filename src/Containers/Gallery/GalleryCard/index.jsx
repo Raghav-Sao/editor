@@ -8,7 +8,7 @@ import { Carousel } from 'react-responsive-carousel'
 import { withRouter } from 'react-router-dom'
 import cardDetails from 'data/cardDetails'
 
-import './Style.css'
+import './Style.scss'
 
 class GalleryCard extends Component {
   componentDidMount() {
