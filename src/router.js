@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import Root from 'Containers/Root';
 
 import './App.scss';
-import './Generic.css';
+import './Generic.scss';
 
 const Routes = props => {
     const { store } = props;
