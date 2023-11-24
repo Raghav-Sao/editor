@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import CardPage from '../CardPage';
 import EditorToolbar from '../EditorToolbar';
 
-import './CardPageEditor.css';
+import './CardPageEditor.scss';
 
 class CardPageEditor extends Component {
     constructor(props) {

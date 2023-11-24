@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import Filter from './SidebarFilter'
 import GalleryContent from './GalleryContent'
-import Style from './Style.css'
+import Style from './Style.scss'
 
 class Gallery extends Component {
   render() {

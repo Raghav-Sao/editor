@@ -3,7 +3,7 @@ import { Button, Grid, Header, Icon, Image, Modal, Rating } from 'semantic-ui-re
 
 import { fromEvent, merge } from 'rxjs'
 import { distinctUntilChanged, map, takeUntil, tap, throttleTime } from 'rxjs/operators'
-import './Style.css'
+import './Style.scss'
 const stopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, 'mouseup'))
 
 class ExpandedViewModel extends Component {

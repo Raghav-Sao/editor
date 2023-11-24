@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Sticker from '../Sticker';
 
-import './CardPage.css';
+import './CardPage.scss';
 
 class CardPage extends React.Component {
     constructor(props) {

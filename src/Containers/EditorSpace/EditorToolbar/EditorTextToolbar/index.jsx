@@ -4,7 +4,7 @@ import { Button, Divider, Dropdown, Grid, Icon, Label, Popup } from 'semantic-ui
 import { SketchPicker } from 'react-color'
 import { actionCreator } from 'store/actionCreator';
 
-import './Style.css'
+import './Style.scss'
 
 class EditorTextToolbar extends Component {
   constructor(props) {

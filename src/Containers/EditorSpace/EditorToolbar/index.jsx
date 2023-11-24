@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EditorTextToolbar from './EditorTextToolbar';
-import './Style.css';
+import './Style.scss';
 
 class EditorToolbar extends Component {
   render() {

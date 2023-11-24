@@ -4,7 +4,7 @@ import { Checkbox, Divider, Grid } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 
 import filterData from './data'
-import Style from './Style.css'
+import Style from './Style.scss'
 
 class SidebarFilter extends Component {
   change = (event, { checked, label }, filterKey) => {

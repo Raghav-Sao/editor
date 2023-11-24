@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { List } from 'semantic-ui-react';
 import { SORT_BY } from 'actions/galleryAction';
 
-import Style from './Style.css';
+import Style from './Style.scss';
 
 class SortBy extends Component {
     handleSortbyChanges = ({ target: { name } }) => {

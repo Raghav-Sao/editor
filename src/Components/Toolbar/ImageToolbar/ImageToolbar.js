@@ -3,7 +3,7 @@ import { useDrag } from 'react-dnd';
 
 import { SVG_STICKER } from 'constant';
 
-import './Style.css';
+import './Style.scss';
 
 const ImageToolbar = props => {
     const {

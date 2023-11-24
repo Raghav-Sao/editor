@@ -3,7 +3,7 @@ import { Button, Grid, Header, Icon, Image, Modal, Rating } from 'semantic-ui-re
 import cardDetails from 'data/cardDetails'
 import ExpandedViewModal from '../ExpandedView'
 
-import './Style.css'
+import './Style.scss'
 
 class CardDetails extends Component {
   constructor(props) {

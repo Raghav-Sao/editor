@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import authReducer from 'store/Auth/AuthReducer';
 import { actionCreator } from 'store/actionCreator';
-import './Login.css';
+import './Login.scss';
 
 export const authApi = 'https://eve123.herokuapp.com/api/auth';
 

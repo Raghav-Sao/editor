@@ -1,7 +1,7 @@
 import React, { createRef, Component, Fragment } from 'react'
 // import SortBy from 'Components/Filters/SortBy/SortBy'
 import { findDOMNode } from 'react-dom'
-import Style from './Style.css'
+import Style from './Style.scss'
 import GalleryCard from '../GalleryCard'
 import { Grid } from 'semantic-ui-react'
 
