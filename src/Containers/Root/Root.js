@@ -5,7 +5,7 @@ import Login from '../Login';
 import Gallery from '../Gallery';
 import EditorSpace from '../EditorSpace';
 
-import './Root.css';
+import './Root.scss';
 
 class Root extends React.Component {
     constructor(props) {

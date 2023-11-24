@@ -5,7 +5,7 @@ import { Image, Grid } from 'semantic-ui-react'
 import { actionCreator } from 'store/actionCreator'
 import placeholderImage from 'assests/images/placeholder-image.jpg'
 
-import './Style.css'
+import './Style.scss'
 
 class TemplateToolbar extends PureComponent {
   showTemplate = ({ _id }) => {
