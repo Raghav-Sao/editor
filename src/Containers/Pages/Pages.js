@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { calculateMovement } from 'Containers/Editor/editorUtils';
 
@@ -6,12 +6,27 @@ import { Page } from 'Components';
 import './Pages.scss';
 
 export const Pages = props => {
-    const { pages = {} } = props;
+    let activeMovementType = null; /* todo: handle it batter */
+    const { pages = {}} = props;
 
     const handleDrag = (e, type, styles, stickerRef, stickerId, pageId) => {
-        const resizeOrRotate$ = calculateMovement({e, styles, movemenetType: 'DRAG'});
+        console.log(type)
+        if(type=== 'END_DRAG') {
+            activeMovementType = null;
+            props.updateActiveStickerId({stickerId, pageId});
+            return
+        }
+        if(activeMovementType && type !== activeMovementType) {
+            console.log("returning movement ttype:", {type, activeMovementType})
+            return;
+        }
+        if(activeMovementType === null) {
+            activeMovementType = type;
+        }
+
+        const resizeOrRotate$ = calculateMovement({e, styles, stickerRef, movemenetType: type});
         resizeOrRotate$.subscribe(calculatedStyle => {
-            props.updateSticker({ calculatedStyle, type, stickerId, pageId });
+            props.updateSticker({ calculatedStyle, type, id: stickerId, pageId });
         });
     };
 

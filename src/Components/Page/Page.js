@@ -13,7 +13,7 @@ export const Page = props => {
     const pageRef = React.createRef();
     const { page = {}, showBorderGuide = false, pageNo } = props;
 
-    const { pageWidth, background, name, id: pageId } = page;
+    const { pageWidth, background = {}, name, id: pageId } = page;
     const { backgroundType, backgroundImage } = background;
     const showBackgroundImage = backgroundType === IMAGE;
 
@@ -32,13 +32,13 @@ export const Page = props => {
         //     getInitialClientOffset: monitor.getInitialClientOffset,
         //     getInitialSourceClientOffset: monitor.getInitialSourceClientOffset,
         //     getClientOffset: monitor.getClientOffset,
-        // }) // check is Really Required? or can we write drop calculation here
+        // }) /* todo: check is Really Required? or can we write drop calculation here */
     });
 
     return (
         <div className="page--wrapper">
             <PageInfo pageInfo={`Page ${pageNo}`} />
-            <div className="page content--row " ref={drop}>
+            <div className={`page content--row ${pageId}`} ref={drop}>
                 <IF condition={showBackgroundImage}>
                     <img alt="img" src={backgroundImage} draggable="false" width="100%" ref={pageRef} />
                 </IF>
@@ -46,7 +46,6 @@ export const Page = props => {
                     <BorderGuide pageWidth={pageWidth} />
                 </IF>
                 <Stickers {...props} />
-                {/* <div className="test">dd</div> */}
             </div>
         </div>
     );

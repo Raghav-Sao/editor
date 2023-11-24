@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ACTIVE, IMAGE } from 'constant';
+import { IMAGE } from 'constant';
 
 import Toolbar from 'Components/Toolbar';
 import './Sidebar.scss';
@@ -16,7 +16,7 @@ export const Sidebar = () => {
             <div className="menu">
                 {menu.map(option => (
                     <div
-                        className={`menu--option ${option === activeType ? ACTIVE : ''}`}
+                        className={`menu--option ${option === activeType ? 'active' : ''}`}
                         onClick={handleMenuOptionChanges(option)}
                     >
                         {option}

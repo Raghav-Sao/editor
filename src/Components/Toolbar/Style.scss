@@ -1,0 +1,15 @@
+.image__toolbar__container {
+    .image__toolbar {
+      text-align: center;
+      margin: 20px 0;
+      cursor: grab;
+      svg {
+        max-width: 100%;
+        height: auto;
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
+  

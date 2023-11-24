@@ -16,7 +16,7 @@ export const pages = {
                 _id: 123123,
                 id: 123123,
                 type: 'TEXT_STICKER',
-                resource: 'Sample text 12',
+                resource: 'RAGHAV',
                 styles: {
                     position: {
                         left: 100,
@@ -31,7 +31,7 @@ export const pages = {
                         translateX: 0,
                         translateY: 0,
                     },
-                    color: '#F0F',
+                    color: '#FFAA00',
                     fontSize: 35,
                     height: 'auto',
                     fontWeight: 'bold',
@@ -57,9 +57,9 @@ export const pages = {
             },
         },
         stickers: {
-            1231234: {
-                _id: 1231234,
-                id: 1231234,
+            123123: {
+                _id: 123123,
+                id: 123123,
                 type: 'TEXT_STICKER',
                 resource: 'Sample text 1',
                 styles: {

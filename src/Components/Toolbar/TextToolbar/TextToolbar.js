@@ -3,7 +3,7 @@ import { useDrag } from 'react-dnd';
 
 import { TEXT_STICKER } from 'constant';
 
-import './Style.css';
+import './Style.scss';
 
 const TextToolbar = props => {
     const {
@@ -11,6 +11,7 @@ const TextToolbar = props => {
     } = props;
 
     const [{ isDragging }, drag] = useDrag({
+        type: TEXT_STICKER,
         item: { type: TEXT_STICKER, resource, styles },
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),

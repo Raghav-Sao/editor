@@ -4,3 +4,4 @@ export * from './IF/IF';
 export * from './Page/Page';
 export * from './PageInfo/PageInfo';
 export * from './Sticker/Sticker';
+export * from './EditorToolbar/EditorToolbar';

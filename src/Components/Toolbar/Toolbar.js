@@ -5,7 +5,7 @@ import TextToolbar from './TextToolbar';
 import ImageToolbar from './ImageToolbar';
 import { general, language } from 'constant';
 
-import './Style.css';
+import './Style.scss';
 
 const Toolbar = props => {
     const { type, handleDrag } = props;

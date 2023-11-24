@@ -2,13 +2,12 @@ import imageStickers from 'assests/images/marriage-icons';
 import { textStickers } from 'data';
 import { pages } from 'Containers/Pages/data';
 import * as actionType from 'store/actions';
-import Sticker from '../Containers/EditorSpace/Sticker';
 
 const initialState = {
     activeSticker: {},
     textStickers,
     imageStickers,
-    activeCardIndex: 0,
+    activePageId: null,
     status: 'All Changes Saved',
     pages,
 };
@@ -28,6 +27,8 @@ const EditorSpace = (state = initialState, { payload, type }) => {
             const { id: stickerId } = sticker;
             return {
                 ...state,
+                activePageId: pageId,
+                activeSticker: sticker,
                 pages: {
                     ...state.pages,
                     [pageId]: {
@@ -42,9 +43,45 @@ const EditorSpace = (state = initialState, { payload, type }) => {
                 },
             };
         }
+        case actionType.UPDATE_STICKER: {
+            const { id: stickerId, calculatedStyle, pageId } = payload;
+            const { page: currentPage, sticker: currentSticker, stickers: currentStickers } = getPageItems({
+                pages: currentPages,
+                pageId,
+                stickerId,
+            });
+            debugger
+            const sticker = {
+                ...currentSticker,
+                styles: {
+                    ...currentSticker.styles,
+                    ...calculatedStyle
+                },
+            };
+
+            const stickers = {
+                ...currentStickers,
+                [stickerId]: sticker,
+            };
+
+            const page = {
+                ...currentPage,
+                stickers,
+            };
+
+            const pages = {
+                ...currentPages,
+                [pageId]: page,
+            };
+            debugger
+            return {
+                ...state,
+                pages,
+                activeSticker: sticker
+            };
+        }
         case actionType.MOVE_STICKER: {
-            const { stickerId, calculatedStyle, pageId } = payload;
-            const { translateX, translateY } = calculatedStyle;
+            const { id: stickerId, calculatedStyle, pageId } = payload;
             const { page: currentPage, sticker: currentSticker, stickers: currentStickers } = getPageItems({
                 pages: currentPages,
                 pageId,
@@ -52,17 +89,19 @@ const EditorSpace = (state = initialState, { payload, type }) => {
             });
             const {
                 styles,
-                styles: { translate },
+                styles: { translate: { translateX: defaultTranslateX, translateY: defaultTranslateY }, rotation: defaultRotation, position: defaultPosition },
             } = currentSticker;
-
+            const { translateX = defaultTranslateX, translateY = defaultTranslateY, position = defaultPosition, rotation = defaultRotation } = calculatedStyle;
             const sticker = {
                 ...currentSticker,
                 styles: {
                     ...styles,
+                    position,
                     translate: {
                         translateX,
                         translateY,
                     },
+                    rotation
                 },
             };
 
@@ -82,13 +121,24 @@ const EditorSpace = (state = initialState, { payload, type }) => {
             };
             return {
                 ...state,
+                activePageId: pageId,
+                activeSticker: sticker, /* plz check if its required always or we can optimise */
                 pages,
             };
         }
-
+        case actionType.UPDATE_ACTIVE_STICKER: {
+            const { stickerId,  pageId: activePageId } = payload;
+            debugger
+            return  {
+                ...state,
+                activePageId,
+                activeSticker: currentPages[activePageId].stickers[stickerId]
+            };
+        }
         default:
             return state;
     }
 };
 
 export default EditorSpace;
+/* todo: check for common reducer and batter function to pas minimum data */

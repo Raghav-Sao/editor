@@ -11,6 +11,7 @@ const ImageToolbar = props => {
     } = props;
 
     const [{ isDragging }, drag] = useDrag({
+        type: SVG_STICKER,
         item: { type: SVG_STICKER, resource, style },
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
