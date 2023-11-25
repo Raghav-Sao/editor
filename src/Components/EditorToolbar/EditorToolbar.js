@@ -77,7 +77,7 @@ export const EditorToolbar = (props) => {
         setTimeout(handleCaptureClick, 1000);
     }
     const handleCaptureClick = async () => {
-        const canvas = await html2canvas(document.querySelector('.page.content--row.page_123'));
+        const canvas = await html2canvas(document.querySelector(`.page.content--row.${activePageId}`));
         const dataURL = canvas.toDataURL('image/png');
         downloadjs(dataURL, 'download.png', 'image/png');
         
