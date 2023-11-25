@@ -40,7 +40,7 @@ export const Sticker = props => {
                 </div>
             </IF>
             <IF condition={showTextSticker}>
-                <div>{resource}</div>
+                <div contenteditable="true">{resource}</div>
             </IF>
             <div
                     className="h-l"

@@ -1,8 +1,8 @@
 import green from 'assests/images/business-card/dark-geen-verticle.png';
 import orange from 'assests/images/business-card/orange-sample-verticle.png';
 export const pages = {
-    123: {
-        id: 123,
+    'page_123': {
+        id: 'page_123',
         name: 'font page',
         background: {
             backgroundType: 'IMAGE',
@@ -12,9 +12,9 @@ export const pages = {
             },
         },
         stickers: {
-            123123: {
-                _id: 123123,
-                id: 123123,
+            "sticker_123123": {
+                _id: "sticker_123123",
+                id: "sticker_123123",
                 type: 'TEXT_STICKER',
                 resource: 'RAGHAV',
                 styles: {
@@ -46,8 +46,8 @@ export const pages = {
             },
         },
     },
-    124: {
-        id: 124,
+    'page_124': {
+        id: 'page_124',
         name: 'font page',
         background: {
             backgroundType: 'IMAGE',
@@ -57,9 +57,9 @@ export const pages = {
             },
         },
         stickers: {
-            123123: {
-                _id: 123123,
-                id: 123123,
+            "sticker_123123": {
+                _id: "sticker_123123",
+                id: "sticker_123123",
                 type: 'TEXT_STICKER',
                 resource: 'Sample text 1',
                 styles: {
@@ -91,8 +91,8 @@ export const pages = {
             },
         },
     },
-    125: {
-        id: 125,
+    'page_125': {
+        id: 'page_125',
         name: 'font page',
         background: {
             backgroundType: 'IMAGE',
@@ -102,9 +102,9 @@ export const pages = {
             },
         },
         stickers: {
-            1231235: {
-                _id: 1231235,
-                id: 1231235,
+            "sticker_1231235": {
+                _id: "sticker_1231235",
+                id: "sticker_1231235",
                 type: 'TEXT_STICKER',
                 resource: 'Sample text 1',
                 styles: {

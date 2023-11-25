@@ -285,7 +285,6 @@ export const calculateNewStickerData = data => {
 };
 
 export const calculateStyleChanges = (activityInfo) => {
-    debugger
     const {action, activePageId: pageId, activeSticker: {id: stickerId, styles: oldStyle} = {}, styles, pages } = activityInfo;
    
     if (['TEXT_FONT_CHANGE', 'TEXT_STYLE_CHANGE', 'STYLE_CHANGE'].indexOf(action) > -1) {

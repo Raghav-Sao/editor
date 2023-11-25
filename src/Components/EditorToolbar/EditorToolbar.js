@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import downloadjs from 'downloadjs';
+import html2canvas from 'html2canvas';
 import { Button, Divider, Dropdown, Grid, Icon, Label, Popup } from 'semantic-ui-react'
 import { SketchPicker } from 'react-color'
 import './EditorToolbar.scss';
@@ -7,8 +9,8 @@ export const EditorToolbar = (props) => {
     const {activePageId = '', activeSticker, activeSticker: { type: activeType, styles: activeStickerStyles = {}} = {}} = props;
     const [showTextAlignFilter, setShowTextAlignFilter] = useState(false);
     const [documentColors, setDocumentColors] = useState([]);
-    const deleteSticker = _id => {
-        this.props.onToolbarActivity('DELETE', this.props.activeSticker);
+    const deleteSticker = () => {
+        props.handleToolbarActivity({action: 'DELETE', activePageId, activeSticker });
       }
     
     const setDocumentColorPallete = () => {
@@ -70,33 +72,16 @@ export const EditorToolbar = (props) => {
     e.nativeEvent.stopImmediatePropagation()
     }
     
-    const onDownloadImage = () => {
-    // const canvas = document.createElement('canvas')
-    // const htmlElement = document.querySelector('#iii')
-    // const { offsetHeight: height, offsetWidth: width } = htmlElement.querySelector('#card__image')
-    // canvas.height = height
-    // canvas.width = width
-    // const ctx = canvas.getContext('2d')
-    // const html = new XMLSerializer().serializeToString(htmlElement)
-    // const data = `<svg height="${height}" width="${width}" xmlns="http://www.w3.org/2000/svg" >' +
-    //   '<foreignObject height="100%" width="100%" >
-    //   ${html}
-    //   </foreignObject>
-    //   </svg>`
-    // const image = document.createElement('img')
-    // image.src = 'data:image/svg+xml; charset=utf8, ' + data
-    // setTimeout(() => {
-    //   ctx.drawImage(image, 0, 0)
-    //   const outputDataURI = canvas.toDataURL()
-    //   var link = document.createElement('a')
-    //   link.download = 'name.png'
-    //   link.href = outputDataURI
-    //   document.body.appendChild(link)
-    //   link.click()
-    //   document.body.removeChild(link)
-    // }, 1000);
+    const hadleDownload = () => {
+        props.hideActiveSticker();
+        setTimeout(handleCaptureClick, 1000);
     }
-    
+    const handleCaptureClick = async () => {
+        const canvas = await html2canvas(document.querySelector('.page.content--row.page_123'));
+        const dataURL = canvas.toDataURL('image/png');
+        downloadjs(dataURL, 'download.png', 'image/png');
+        
+    };
     const saveChanges = () => {
     // this.props.onToolbarActivity('SAVE', this.props.activeSticker);
     }
@@ -109,7 +94,7 @@ export const EditorToolbar = (props) => {
                     console.log('click')
                 }}
             >
-                <Button onClick={saveChanges}>Save</Button>
+                <Button onClick={hadleDownload}>Download</Button>
                 <>
                     <Popup
                         trigger={

@@ -1,7 +1,9 @@
 #root {
   height: 100%;
 }
-
+[contenteditable] {
+  outline: 0px solid transparent;
+}
 .display--none {
   display: none;
 }

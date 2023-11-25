@@ -2,8 +2,7 @@ import allah from './allah';
 import ganesh from './ganesh';
 import sikh from './sikh';
 import ring from './ring';
-import fZeroIcon from './fZeroIcon';
-import nintendogsIcon from './nintendogsIcon';
+import cart from './cart';
 
 export default [
     {
@@ -28,12 +27,7 @@ export default [
     },
     {
         id: 5,
-        resource: fZeroIcon.data,
-        type: 'svg',
-    },
-    {
-        id: 6,
-        resource: nintendogsIcon.data,
+        resource: cart.data,
         type: 'svg',
     },
 ];

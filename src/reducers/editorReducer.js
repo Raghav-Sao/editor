@@ -128,11 +128,34 @@ const EditorSpace = (state = initialState, { payload, type }) => {
         }
         case actionType.UPDATE_ACTIVE_STICKER: {
             const { stickerId,  pageId: activePageId } = payload;
-            debugger
             return  {
                 ...state,
                 activePageId,
                 activeSticker: currentPages[activePageId].stickers[stickerId]
+            };
+        }
+        case actionType.RESET_ACTIVE_STICKER: {
+            return  {
+                ...state,
+                activeSticker: {}
+            };
+        }
+        case actionType.DELETE_STICKER: {
+            const { pageId, stickerId } = payload;
+            const { [pageId]: { stickers } = {}} = currentPages;
+            const {[stickerId]:_, ...restSticker} = stickers
+            return {
+                ...state,
+                activeSticker: {},
+                pages: {
+                    ...state.pages,
+                    [pageId]: {
+                        ...state.pages[pageId],
+                        stickers: {
+                            ...restSticker
+                        },
+                    },
+                },
             };
         }
         default:
