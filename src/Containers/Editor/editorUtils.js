@@ -71,7 +71,7 @@ const calculateResizeOrRotateStyles = params => {
             
             const updateLeft = stickerRef.current.offsetLeft - leftDiff;
             const updatedTop = stickerRef.current.offsetTop + topDiff;
-            const updatedWidth = stickerRef.current.style.width
+            const updatedWidth = stickerRef.current.offsetWidth;
             return { position: {left: updateLeft, top:updatedTop}, diff, leftDiff, offsetWidth, topDiff, bottom, top: updatedTop, right, width: updatedWidth };
         }
         case 'rotate': {
@@ -92,7 +92,6 @@ const calculateResizeOrRotateStyles = params => {
                 right,
                 left,
                 position: { left, top },
-                width,
             };
         }
 

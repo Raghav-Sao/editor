@@ -1,27 +1,33 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { getStyle } from 'Containers/Editor/editorUtils';
 import { TEXT_STICKER, SVG_STICKER } from 'constant';
 import { IF } from 'Components';
+import _debounce from 'lodash/debounce'
 import './Sticker.scss';
 
 export const Sticker = props => {
     const stickerRef = useRef(null);
-    
-    
     /* Todo: make it in state if make sence
     isRotating: false,
     isDragging: false,
     isResizing: false
     */
-    
     const {
         sticker: { type, id: stickerId, resource, isEditable = false, styles },
         page: { id: pageId },
         activeStickerId,
         activePageId,
         handleDrag,
-        
+        handleTextChanges,
     } = props;
+
+    const updateTextChanges = (payload) => {
+        handleTextChanges(payload);
+    }
+    const debounceFn = useCallback(_debounce(updateTextChanges, 1000), []);
+    const  handleChange = (event) => {
+        debounceFn({text: event.target.innerText, activePageId, activeStickerId});
+    };
     const showTextSticker = type === TEXT_STICKER;
     const showSVGSticker = type === SVG_STICKER;
     
@@ -40,7 +46,7 @@ export const Sticker = props => {
                 </div>
             </IF>
             <IF condition={showTextSticker}>
-                <div contenteditable="true">{resource}</div>
+                <div contenteditable="true" onInput={handleChange}>{resource}</div>
             </IF>
             <div
                     className="h-l"

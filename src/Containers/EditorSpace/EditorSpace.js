@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Editor } from 'Containers';
 import { Sidebar, EditorToolbar } from 'Components';
 import { calculateStyleChanges } from 'Containers/Editor/editorUtils';
-import { ADD_STICKER, DELETE_STICKER, MOVE_STICKER, RESET_ACTIVE_STICKER,  UPDATE_STICKER, UPDATE_ACTIVE_STICKER } from 'store/actions';
+import { ADD_STICKER, DELETE_STICKER, MOVE_STICKER, RESET_ACTIVE_STICKER,  UPDATE_STICKER, UPDATE_ACTIVE_STICKER, UPDATE_STICKER_TEXT } from 'store/actions';
 import './Style.scss';
 
 const EditorSpace = () => {
@@ -26,12 +26,16 @@ const EditorSpace = () => {
         dispatch({ type: RESET_ACTIVE_STICKER })
     }
 
+    const handleTextChanges = ({activePageId, text, activeStickerId}) => {
+        dispatch({ type: UPDATE_STICKER_TEXT, payload: {pageId: activePageId, stickerId: activeStickerId, text} });
+    }
+
     return (
         <div className="mainContainer height-100">
             <Sidebar />
             <div className="editorContainer">
                 <EditorToolbar activePageId={activePageId} pages={pages} activeSticker={activeSticker} handleToolbarActivity={handleToolbarActivity} hideActiveSticker={resetActiveSticker}/>
-                <Editor activePageId={activePageId} activeStickerId={activeStickerId} pages={pages} updateSticker={updateSticker} updateActiveStickerId={updateActiveStickerId} handleDropSticker={handleDropSticker} />
+                <Editor activePageId={activePageId} activeStickerId={activeStickerId} pages={pages} updateSticker={updateSticker} updateActiveStickerId={updateActiveStickerId} handleDropSticker={handleDropSticker} handleTextChanges={handleTextChanges}/>
             </div>
         </div>
     );

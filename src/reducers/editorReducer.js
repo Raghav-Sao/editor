@@ -80,6 +80,39 @@ const EditorSpace = (state = initialState, { payload, type }) => {
                 activeSticker: sticker
             };
         }
+        case actionType.UPDATE_STICKER_TEXT: {
+            debugger
+            const { stickerId, text: resource, pageId } = payload;
+            const { page: currentPage, sticker: currentSticker, stickers: currentStickers } = getPageItems({
+                pages: currentPages,
+                pageId,
+                stickerId,
+            });
+            const sticker = {
+                ...currentSticker,
+                resource,
+            };
+
+            const stickers = {
+                ...currentStickers,
+                [stickerId]: sticker,
+            };
+
+            const page = {
+                ...currentPage,
+                stickers,
+            };
+
+            const pages = {
+                ...currentPages,
+                [pageId]: page,
+            };
+            return {
+                ...state,
+                pages,
+                activeSticker: sticker
+            };
+        }
         case actionType.MOVE_STICKER: {
             const { id: stickerId, calculatedStyle, pageId } = payload;
             const { page: currentPage, sticker: currentSticker, stickers: currentStickers } = getPageItems({
@@ -89,13 +122,14 @@ const EditorSpace = (state = initialState, { payload, type }) => {
             });
             const {
                 styles,
-                styles: { translate: { translateX: defaultTranslateX, translateY: defaultTranslateY }, rotation: defaultRotation, position: defaultPosition },
+                styles: { width: defaultWidth, translate: { translateX: defaultTranslateX, translateY: defaultTranslateY }, rotation: defaultRotation, position: defaultPosition },
             } = currentSticker;
-            const { translateX = defaultTranslateX, translateY = defaultTranslateY, position = defaultPosition, rotation = defaultRotation } = calculatedStyle;
+            const { translateX = defaultTranslateX, translateY = defaultTranslateY, position = defaultPosition, rotation = defaultRotation, width = defaultWidth } = calculatedStyle;
             const sticker = {
                 ...currentSticker,
                 styles: {
                     ...styles,
+                    width,
                     position,
                     translate: {
                         translateX,
