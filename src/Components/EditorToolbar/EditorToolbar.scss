@@ -1,17 +1,20 @@
 .editor__text__toolbar__container {
-    visibility: hidden;
     position: fixed;
+    display: flex;
     top:0;
-    z-index: 1;
+    z-index: 4;
     background-color: white;
     padding: 10px;
     width: 100%;
-    &.active {
-        visibility: visible;
-    }
     margin: 0 10px;
     input[type='checkbox']:checked + label {
       background: #babbbc;
+    }
+    .toolbar {
+      visibility: hidden;
+      &.active {
+        visibility: visible;
+      }
     }
   }
   

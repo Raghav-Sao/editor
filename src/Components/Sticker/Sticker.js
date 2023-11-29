@@ -19,6 +19,7 @@ export const Sticker = props => {
         activePageId,
         handleDrag,
         handleTextChanges,
+        activeMovementType
     } = props;
 
     const updateTextChanges = (payload) => {
@@ -31,9 +32,15 @@ export const Sticker = props => {
     const showTextSticker = type === TEXT_STICKER;
     const showSVGSticker = type === SVG_STICKER;
     
+    const stylingText = {
+        'rotation': styles?.rotation?.rotation + '°',
+        'leftResize': `W: ${styles?.width}`,
+        'rightResize': `W: ${styles?.width}`
+    }
     return (
+        
         <div
-            class={`sticker ${type} ${pageId === activePageId && activeStickerId === stickerId ? 'active': ''}`}
+            class={`sticker ${type} ${activeMovementType} ${pageId === activePageId && activeStickerId === stickerId ? 'active': ''}`}
             style={getStyle(styles)}
             onMouseDown={e => handleDrag(e, 'DRAG', styles, stickerRef, stickerId, pageId)} /* Todo: use id from key and make better for isRotating true event */
             onTouchStart={e => handleDrag(e, 'DRAG', styles, stickerRef, stickerId, pageId)}
@@ -41,12 +48,12 @@ export const Sticker = props => {
             ref={stickerRef}
         >
             <IF condition={showSVGSticker}>
-                <div key={stickerId} className={`sticker__image ${isEditable ? 'editable' : ''}`}>
+                <div data-content={stylingText[activeMovementType]} key={stickerId} className={`sticker__image ${isEditable ? 'editable' : ''}`}>
                     <div dangerouslySetInnerHTML={{ __html: resource }} key={stickerId} />
                 </div>
             </IF>
             <IF condition={showTextSticker}>
-                <div contenteditable="true" onInput={handleChange}>{resource}</div>
+                <div data-content={stylingText[activeMovementType]} className="sticker__text" contenteditable="true">{resource}</div>
             </IF>
             <div
                     className="h-l"
@@ -54,19 +61,19 @@ export const Sticker = props => {
                     onTouchStart={e => handleDrag(e, 'leftResize', styles, stickerRef, stickerId, pageId)}
                 >
                     <span id="handle-left" />
-                </div>
-                <div
-                    className="h-r"
-                    onMouseDown={e => handleDrag(e, 'rightResize', styles, stickerRef, stickerId, pageId)}
-                    onTouchStart={e => handleDrag(e, 'rightResize', styles, stickerRef, stickerId, pageId)}
-                >
-                    <span id="handle-right" />
-                </div>
-                <div
-                    className="handle rotate"
-                    onMouseDown={e => handleDrag(e, 'rotate', styles, stickerRef, stickerId, pageId)}
-                    onTouchStart={e => handleDrag(e, 'rotate', styles, stickerRef, stickerId, pageId)}
-                /> {/* todo: move icon for rotated */}
+            </div>
+            <div
+                className="h-r"
+                onMouseDown={e => handleDrag(e, 'rightResize', styles, stickerRef, stickerId, pageId)}
+                onTouchStart={e => handleDrag(e, 'rightResize', styles, stickerRef, stickerId, pageId)}
+            >
+                <span id="handle-right" />
+            </div>
+            <div
+                className="handle rotate"
+                onMouseDown={e => handleDrag(e, 'rotation', styles, stickerRef, stickerId, pageId)}
+                onTouchStart={e => handleDrag(e, 'rotation', styles, stickerRef, stickerId, pageId)}
+            /> {/* todo: move icon for rotated */}
         </div>
     );
 };

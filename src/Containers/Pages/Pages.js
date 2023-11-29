@@ -7,12 +7,14 @@ import './Pages.scss';
 
 export const Pages = props => {
     let activeMovementType = null; /* todo: handle it batter */
-    const { pages = {}} = props;
+    const [activeType, setActiveType] = useState(null);
+    const { pages = {}, pages: {activeSticker: {id: activeStickerId} = {}} = {}} = props;
 
     const handleDrag = (e, type, styles, stickerRef, stickerId, pageId) => {
         console.log(type)
         if(type=== 'END_DRAG') {
             activeMovementType = null;
+            setActiveType(null);
             props.updateActiveStickerId({stickerId, pageId});
             return
         }
@@ -22,9 +24,10 @@ export const Pages = props => {
         }
         if(activeMovementType === null) {
             activeMovementType = type;
+            setActiveType(type);
         }
-
-        const resizeOrRotate$ = calculateMovement({e, styles, stickerRef, movemenetType: type});
+        const {[pageId]:{stickers: {[stickerId]: {boundingRect = {} } = {}}, mappedCord = {}} = {}} = pages;
+        const resizeOrRotate$ = calculateMovement({pageId, stickerId, mappedCord, boundingRect,  e, styles, stickerRef, movemenetType: type});
         resizeOrRotate$.subscribe(calculatedStyle => {
             props.updateSticker({ calculatedStyle, type, id: stickerId, pageId });
         });
@@ -38,6 +41,8 @@ export const Pages = props => {
                     page={pages[key]}
                     pageNo={index + 1}
                     handleDrag={handleDrag}
+                    activeMovementType={activeType}
+                    activeStickerId={activeStickerId}
                     handleDropSticker={props.handleDropSticker}
                     {...props}
                 />

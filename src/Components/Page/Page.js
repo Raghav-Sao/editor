@@ -11,9 +11,9 @@ import './Page.scss';
 
 export const Page = props => {
     const pageRef = React.createRef();
-    const { page = {}, showBorderGuide = false, pageNo } = props;
+    const { page = {}, showBorderGuide = true, pageNo, activeStickerId, activeMovementType = null } = props;
 
-    const { pageWidth, background = {}, name, id: pageId } = page;
+    const { drawPoints, background = {}, id: pageId } = page;
     const { backgroundType, backgroundImage } = background;
     const showBackgroundImage = backgroundType === IMAGE;
 
@@ -42,8 +42,8 @@ export const Page = props => {
                 <IF condition={showBackgroundImage}>
                     <img alt="img" src={backgroundImage} draggable="false" width="100%" ref={pageRef} />
                 </IF>
-                <IF condition={showBorderGuide}>
-                    <BorderGuide pageWidth={pageWidth} />
+                <IF condition={showBorderGuide && activeStickerId && activeMovementType}>
+                    <BorderGuide drawPoints={drawPoints} pageId={pageId}/>
                 </IF>
                 <Stickers {...props} />
             </div>

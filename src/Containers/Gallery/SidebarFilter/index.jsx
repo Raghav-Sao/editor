@@ -8,7 +8,6 @@ import Style from './Style.scss'
 
 class SidebarFilter extends Component {
   change = (event, { checked, label }, filterKey) => {
-    debugger
     this.props.dispatch({
       type: filterKey.toUpperCase(),
       payload: {

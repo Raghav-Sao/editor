@@ -7,7 +7,7 @@ const initialState = {
     activeSticker: {},
     textStickers,
     imageStickers,
-    activePageId: null,
+    activePageId: 'page_123',
     status: 'All Changes Saved',
     pages,
 };
@@ -50,7 +50,6 @@ const EditorSpace = (state = initialState, { payload, type }) => {
                 pageId,
                 stickerId,
             });
-            debugger
             const sticker = {
                 ...currentSticker,
                 styles: {
@@ -73,7 +72,6 @@ const EditorSpace = (state = initialState, { payload, type }) => {
                 ...currentPages,
                 [pageId]: page,
             };
-            debugger
             return {
                 ...state,
                 pages,
@@ -81,7 +79,6 @@ const EditorSpace = (state = initialState, { payload, type }) => {
             };
         }
         case actionType.UPDATE_STICKER_TEXT: {
-            debugger
             const { stickerId, text: resource, pageId } = payload;
             const { page: currentPage, sticker: currentSticker, stickers: currentStickers } = getPageItems({
                 pages: currentPages,
@@ -120,13 +117,16 @@ const EditorSpace = (state = initialState, { payload, type }) => {
                 pageId,
                 stickerId,
             });
+            const { [pageId]: { mappedCord: defaultMappedCord = {} } = {} } = currentPages;
             const {
+                boundingRect: defaultBoundingRect,
                 styles,
                 styles: { width: defaultWidth, translate: { translateX: defaultTranslateX, translateY: defaultTranslateY }, rotation: defaultRotation, position: defaultPosition },
             } = currentSticker;
-            const { translateX = defaultTranslateX, translateY = defaultTranslateY, position = defaultPosition, rotation = defaultRotation, width = defaultWidth } = calculatedStyle;
+            const { drawPoints, mappedCord = defaultMappedCord, boundingRect = defaultBoundingRect, translateX = defaultTranslateX, translateY = defaultTranslateY, position = defaultPosition, rotation = defaultRotation, width = defaultWidth } = calculatedStyle;
             const sticker = {
                 ...currentSticker,
+                boundingRect,
                 styles: {
                     ...styles,
                     width,
@@ -147,6 +147,8 @@ const EditorSpace = (state = initialState, { payload, type }) => {
             const page = {
                 ...currentPage,
                 stickers,
+                mappedCord,
+                drawPoints,
             };
 
             const pages = {
