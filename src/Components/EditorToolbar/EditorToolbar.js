@@ -227,7 +227,7 @@ export const EditorToolbar = (props) => {
                         <Dropdown
                             options={getFontSizeOptions()}
                             selection
-                            text={`${activeStickerStyles.fontSize}`}
+                            text={`${activeStickerStyles.fontSize || ''}`}
                             style={{ margin: '0 .25em 0 0' }}
                             onClick={preventPropagation}
                         />
