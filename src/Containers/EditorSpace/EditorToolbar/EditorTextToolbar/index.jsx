@@ -116,7 +116,6 @@ class EditorTextToolbar extends Component {
         activeSticker: { styles: activeStyle = {}, type: activeType },
       },
     } = this;
-    console.log(activeStyle, activeType);
     return (
       <Fragment>
         <div
