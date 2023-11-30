@@ -35,8 +35,8 @@
   "scripts": {
     "start-js": "react-scripts start",
     "start": "react-scripts start",
-    "build-js": "set \"GENERATE_SOURCEMAP=false\" &&  react-scripts build",
-    "build": "set \"GENERATE_SOURCEMAP=false\" &&  react-scripts build",
+    "build-js": "react-scripts build && react-scripts build && rm build/static/js/*.map && rm build/static/css/*.map && rm build/static/scss/*.map",
+    "build": "react-scripts build && react-scripts build && rm build/static/js/*.map && rm build/static/css/*.map && rm build/static/scss/*.map",
     "postbuild": "rimraf build/**/*.map",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
