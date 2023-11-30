@@ -19,7 +19,7 @@ export const Pages = props => {
             return
         }
         if(activeMovementType && type !== activeMovementType) {
-            console.log("returning movement ttype:", {type, activeMovementType})
+            console.log("returning movement type:", {type, activeMovementType})
             return;
         }
         if(activeMovementType === null) {
