@@ -11,6 +11,7 @@ export const Pages = props => {
     const { pages = {}, pages: {activeSticker: {id: activeStickerId} = {}} = {}} = props;
 
     const handleDrag = (e, type, styles, stickerRef, stickerId, pageId) => {
+        console.log(process.env, "env")
         if(type=== 'END_DRAG') {
             activeMovementType = null;
             setActiveType(null);
@@ -34,6 +35,7 @@ export const Pages = props => {
 
     return (
         <div className="pages">
+           
             {Object.keys(pages).map((key, index) => (
                 <Page
                     key={key}
