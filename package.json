@@ -1,6 +1,7 @@
 {
   "name": "cards",
   "version": "0.1.0",
+  "homepage": "/editor",
   "private": true,
   "dependencies": {
     "cookie-parser": "^1.4.3",
@@ -35,8 +36,8 @@
   "scripts": {
     "start-js": "react-scripts start",
     "start": "react-scripts start",
-    "build-js": "react-scripts build && react-scripts build && rm build/static/js/*.map && rm build/static/css/*.map && rm build/static/scss/*.map",
-    "build": "react-scripts build && react-scripts build && rm build/static/js/*.map && rm build/static/css/*.map && rm build/static/scss/*.map",
+    "build-js": "set \"GENERATE_SOURCEMAP=false\" &&  react-scripts build",
+    "build": "react-scripts build && react-scripts build && rm build/static/js/*.map && rm build/static/css/*.map && rm build/static/css/*.map",
     "postbuild": "rimraf build/**/*.map",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
