@@ -25,6 +25,7 @@ class Root extends React.Component {
             <div className="root-app-container">
                 <Route path="/login" component={Login} />
                 <Route path="/gallery" component={Gallery} />
+                <Route path="/" component={EditorSpace} />
                 <Route path="/editor" component={EditorSpace} />
                 {/* {!isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" />} */}
                 {/*! isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" /> */}
