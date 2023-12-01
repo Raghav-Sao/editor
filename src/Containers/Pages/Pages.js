@@ -4,7 +4,7 @@ import { calculateMovement } from 'Containers/Editor/editorUtils';
 
 import { Page } from 'Components';
 import './Pages.scss';
-
+require('dotenv').config()
 export const Pages = props => {
     let activeMovementType = null; /* todo: handle it batter */
     const [activeType, setActiveType] = useState(null);
