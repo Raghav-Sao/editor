@@ -6,12 +6,13 @@ import { Page } from 'Components';
 import './Pages.scss';
 require('dotenv').config()
 export const Pages = props => {
+    console.log(process.env, "top")
     let activeMovementType = null; /* todo: handle it batter */
     const [activeType, setActiveType] = useState(null);
     const { pages = {}, pages: {activeSticker: {id: activeStickerId} = {}} = {}} = props;
 
     const handleDrag = (e, type, styles, stickerRef, stickerId, pageId) => {
-        console.log(process.env.NODE_BUILD_FLAGS, process.env.GENERATE_SOURCEMAP, typeof(GENERATE_SOURCEMAP), "env")
+        console.log(process.env, process.env.GENERATE_SOURCEMAP, typeof(GENERATE_SOURCEMAP), "env")
         if(type=== 'END_DRAG') {
             activeMovementType = null;
             setActiveType(null);
