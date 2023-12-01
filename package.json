@@ -33,11 +33,11 @@
     "universal-rxjs-ajax": "^2.0.1"
   },
   "scripts": {
-    "start-js": "react-scripts start",
-    "start": "react-scripts start",
+    "start-js": "serve -s build",
+    "start": "serve -s build",
     "build-js": "react-scripts build",
     "build": "react-scripts build ",
-    "postbuild": "rimraf build/**/*.map",
+    "postbuild": "rm -rf app/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
