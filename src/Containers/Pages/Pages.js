@@ -11,7 +11,6 @@ export const Pages = props => {
     const { pages = {}, pages: {activeSticker: {id: activeStickerId} = {}} = {}} = props;
 
     const handleDrag = (e, type, styles, stickerRef, stickerId, pageId) => {
-        console.log(process.env, process.env.GENERATE_SOURCEMAP, typeof(GENERATE_SOURCEMAP), "env")
         if(type=== 'END_DRAG') {
             activeMovementType = null;
             setActiveType(null);
