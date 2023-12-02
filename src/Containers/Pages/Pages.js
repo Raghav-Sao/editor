@@ -5,7 +5,6 @@ import { calculateMovement } from 'Containers/Editor/editorUtils';
 import { Page } from 'Components';
 import './Pages.scss';
 export const Pages = props => {
-    console.log(process.env, "top")
     let activeMovementType = null; /* todo: handle it batter */
     const [activeType, setActiveType] = useState(null);
     const { pages = {}, pages: {activeSticker: {id: activeStickerId} = {}} = {}} = props;
