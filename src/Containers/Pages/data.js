@@ -16,7 +16,7 @@ export const pages = {
           _id: 'sticker_123123',
           id: 'sticker_123123',
           type: 'TEXT_STICKER',
-          resource: 'Ragahvendra Sao',
+          resource: 'Raghavendra Sao',
           styles: {
             position: {
               left: 157,
