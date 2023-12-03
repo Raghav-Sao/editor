@@ -16,6 +16,10 @@
         visibility: visible;
       }
     }
+    .download__button {
+      min-width: 110px;
+      position: relative;
+    }
   }
   
   /* dont put inside other coz it on outer layer coz of popup*/

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import downloadjs from 'downloadjs';
+import { Loader } from 'semantic-ui-react'
 import html2canvas from 'html2canvas';
 import { Button, Divider, Dropdown, Grid, Icon, Label, Popup } from 'semantic-ui-react'
 import { SketchPicker } from 'react-color'
@@ -8,6 +9,7 @@ import { TEXT_STICKER } from 'constant';
 export const EditorToolbar = (props) => {    
     const {activePageId = '', activeSticker, activeSticker: { type: activeType, styles: activeStickerStyles = {}} = {}} = props;
     const [showTextAlignFilter, setShowTextAlignFilter] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
     const [documentColors, setDocumentColors] = useState([]);
     const deleteSticker = () => {
         props.handleToolbarActivity({action: 'DELETE', activePageId, activeSticker });
@@ -73,14 +75,15 @@ export const EditorToolbar = (props) => {
     }
     
     const hadleDownload = () => {
+        setIsDownloading(true);
         props.hideActiveSticker();
-        setTimeout(handleCaptureClick, 1000);
+        setTimeout(handleCaptureClick, 500);
     }
     const handleCaptureClick = async () => {
         const canvas = await html2canvas(document.querySelector(`.page.content--row.${activePageId}`));
         const dataURL = canvas.toDataURL('image/png');
         downloadjs(dataURL, 'download.png', 'image/png');
-        
+        setIsDownloading(false);
     };
     const saveChanges = () => {
     // this.props.onToolbarActivity('SAVE', this.props.activeSticker);
@@ -93,7 +96,7 @@ export const EditorToolbar = (props) => {
                 console.log('click')
             }}
         >
-            <Button onClick={hadleDownload}>Download</Button>
+            <Button className="download__button" onClick={hadleDownload}>{isDownloading ? <Loader size='mini' active/> : 'Download'}</Button>
             <div className={`toolbar ${activeType ? 'active': ''}`}>
             <>
                 <Popup
