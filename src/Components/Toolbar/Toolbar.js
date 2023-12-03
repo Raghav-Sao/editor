@@ -20,7 +20,7 @@ const Toolbar = props => {
                 return (
                     <div className="text__toolbar__container">
                         {textStickers.map((sticker, index) => (
-                            <TextToolbar sticker={sticker} index={index} handleDrag={handleDrag} />
+                            <TextToolbar sticker={sticker} index={index} handleDrag={handleDrag} {...props} />
                         ))}
                     </div>
                 );
@@ -33,7 +33,7 @@ const Toolbar = props => {
                             <Grid.Row>
                                 {imageStickers.map((sticker, index) => (
                                     <Grid.Column>
-                                        <ImageToolbar sticker={sticker} index={index} handleDrag={handleDrag} />
+                                        <ImageToolbar sticker={sticker} index={index} handleDrag={handleDrag} {...props} />
                                     </Grid.Column>
                                 ))}
                             </Grid.Row>

@@ -8,6 +8,8 @@ import './Style.scss';
 const TextToolbar = props => {
     const {
         sticker: { id, styles, resource },
+        handleAddSticker,
+        setShowDetails,
     } = props;
 
     const [{ isDragging }, drag] = useDrag({
@@ -18,8 +20,13 @@ const TextToolbar = props => {
         }),
     });
 
+    const onAddSticker = () => {
+        setShowDetails(false);
+        handleAddSticker({ type: TEXT_STICKER, resource, styles })
+    }
+
     return (
-        <div className="text__toolbar" onMouseDown={props.handleDrag} ref={drag} style={styles}>
+        <div className="text__toolbar" ref={drag} style={styles} onClick={onAddSticker}>
             <div key={id} className={isDragging ? 'visibility--hidden' : ''}>
                 {resource}
             </div>
