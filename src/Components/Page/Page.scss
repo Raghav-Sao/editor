@@ -1,13 +1,21 @@
 .page--wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     flex-direction: column;
     margin-top: 30px;
     .page {
         display: flex;
         position: relative;
         border: 1px solid #ccc;
-        overflow: hidden;
+        overflow: hidden;  
+    }
+    .comp--visible {
+        visibility: visible;
+       
+    }
+    .comp--hide {
+        visibility: hidden;
+        height: 0 !important;
     }
 }

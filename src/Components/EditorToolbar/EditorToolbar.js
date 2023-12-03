@@ -228,10 +228,11 @@ export const EditorToolbar = (props) => {
                     </>
                     <>
                         <Dropdown
+                            className='mobileHidden'
                             options={getFontSizeOptions()}
                             selection
                             text={`${activeStickerStyles.fontSize || ''}px`}
-                            style={{ margin: '0 .25em 0 0' }}
+                            style={{ margin: '0 .25em 0 0', minWidth: '100px' }}
                             onClick={preventPropagation}
                         />
                     </>

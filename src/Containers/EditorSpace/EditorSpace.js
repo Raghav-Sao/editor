@@ -7,10 +7,9 @@ import { ADD_STICKER, DELETE_STICKER, MOVE_STICKER, RESET_ACTIVE_STICKER,  UPDAT
 import './Style.scss';
 
 const EditorSpace = () => {
-    /*
-    const [scale, setScale] = useState((window.innerWidth/2)/1420);
+    const [scale, setScale] = useState(Math.min(window.innerWidth < 1024 ? window.innerWidth/1200 : 1),1);
     const handleResize = () => {
-        const _scale = (window.innerWidth/2)/1420
+        const _scale = Math.min(window.innerWidth/1200, 1);
         setScale(_scale);
     }
     useEffect(() => {
@@ -19,7 +18,6 @@ const EditorSpace = () => {
             window.removeEventListener('resize', handleResize);
         }
     }, window.innerWidth)
-    */
     const preventDefault = e => {
         e.preventDefault();
     }
@@ -65,7 +63,7 @@ const EditorSpace = () => {
             <Sidebar handleAddSticker={handleAddSticker}/>
             <div className="editorContainer">
                 <EditorToolbar activePageId={activePageId} pages={pages} activeSticker={activeSticker} handleToolbarActivity={handleToolbarActivity} hideActiveSticker={resetActiveSticker}/>
-                <Editor activePageId={activePageId} activeStickerId={activeStickerId} pages={pages} updateSticker={updateSticker} updateActiveStickerId={updateActiveStickerId} handleDropSticker={handleDropSticker} handleTextChanges={handleTextChanges}/>
+                <Editor scale={scale} activePageId={activePageId} activeStickerId={activeStickerId} pages={pages} updateSticker={updateSticker} updateActiveStickerId={updateActiveStickerId} handleDropSticker={handleDropSticker} handleTextChanges={handleTextChanges}/>
             </div>
         </div>
     );

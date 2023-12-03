@@ -4,6 +4,14 @@ import { fromEvent, merge } from 'rxjs';
 import { SVG_STICKER } from 'constant';
 
 const defaultStopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, 'mouseup'));
+const getScaledBoundingRect = (boundingRect, scale, pass, pageId = 'page_123') => {
+    if(pass) {
+        return boundingRect;
+    }
+    const {left, right, top, bottom, width, height} = boundingRect;
+    const {left: pageLeft, top: pageTop} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
+    return {height: height * (1/scale), width: width * (1/scale), left: (left - pageLeft)*(1/scale), right: (right - pageTop )*(1/scale), top: (top-pageTop)*(1/scale), bottom: (bottom - pageTop)*(1/scale)}
+}
 const getLeftRightCord = (obj, type, getMax) => {
     const value = Object.keys(obj).reduce(
         (accumulator, key) => {
@@ -123,7 +131,7 @@ const getMappedPostion = ({mappedCord: oldCord = {}, boundingRect, updatedBoundi
     return mappedCord;
 }
 const calculateResizeOrRotateStyles = params => {
-    const {mappedCord, boundingRect, e, mouseX, mouseY, movemenetType, stickerRef, startX, startY, styles, stickerId, pageId } = params;
+    const {mappedCord, boundingRect, e, mouseX, mouseY, movemenetType, stickerRef, startX, startY, styles, stickerId, pageId, scale } = params;
     const {rotation :{rotation = 0} = {}, position: {left, top} = {}} = styles;
     const sticker = stickerRef.current;
     const {
@@ -133,19 +141,22 @@ const calculateResizeOrRotateStyles = params => {
         height,
         left: activeBoundingLeft,
         top: activeBoundingTop,
-    } = sticker.getBoundingClientRect();
+    } = getScaledBoundingRect(sticker.getBoundingClientRect(), scale, true);
+    const {left: pageLeft, top: pageTop} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
     const { offsetWidth } = sticker; /* todo:  check and make var name batter */
     e.stopPropagation();
     switch(movemenetType) {
         case 'DRAG': {
-            const translateX = mouseX - startX;
-            const translateY = mouseY - startY;
+            debugger
+            const translateX = (mouseX - startX)*(1/scale);
+            const translateY = (mouseY - startY)*(1);
+            console.log({translateY, translateX, scale})
             const transform = stickerRef.current.style.transform;
             const beforeData = transform.split('translate(')[0];
             const afterData = transform.split('px')[0];
             stickerRef.current.style.transform = `${beforeData} translate(${translateX}px, ${translateY}px) ${afterData}`; /* todo: to get top after rotation before render */
-            const {left: l, top: t, right: r, bottom: b} = stickerRef.current.getBoundingClientRect();
-            const {left: pageL, top: pageT} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
+            const {left: l, top: t, right: r, bottom: b} = getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale);
+            const {left1: pageL = 0, top1: pageT = 0} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
             const updatedBoundingRect = { l: Number((l - pageL).toFixed()), t: Number((t - pageT).toFixed()), r: Number((r  - pageL).toFixed()), b: Number((b - pageT).toFixed()) };
             const updatedMappedCord = getMappedPostion({mappedCord, boundingRect, updatedBoundingRect, stickerId, pageId});
             const drawPoints = getDrawPoints(updatedMappedCord, stickerId);
@@ -163,9 +174,10 @@ const calculateResizeOrRotateStyles = params => {
         case 'rightResize': {
             const { left: handlerLeft, top: handlerTop } =
                 movemenetType === 'rightResize'
-                    ? document.querySelector('.sticker.active #handle-right').getBoundingClientRect()
-                    : document.querySelector('.sticker.active #handle-left').getBoundingClientRect();
+                    ? getScaledBoundingRect(document.querySelector('.sticker.active #handle-right').getBoundingClientRect(), scale, true)
+                    : getScaledBoundingRect(document.querySelector('.sticker.active #handle-left').getBoundingClientRect(), scale, true);
             const rad = rotation || 0;
+            debugger
             const y = (mouseY - handlerTop) * (mouseY - handlerTop);
             const x = (mouseX - handlerLeft) * (mouseX - handlerLeft);
             const slop = Math.atan((mouseY - handlerTop) / (mouseX - handlerLeft));
@@ -200,8 +212,8 @@ const calculateResizeOrRotateStyles = params => {
             const updateLeft = stickerRef.current.offsetLeft - leftDiff;
             const updatedTop = stickerRef.current.offsetTop + topDiff;
             const updatedWidth = stickerRef.current.offsetWidth;
-            const {left: l, top: t, right: r, bottom: b} = stickerRef.current.getBoundingClientRect();
-            const {left: pageL, top: pageT} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
+            const {left: l, top: t, right: r, bottom: b} = getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale);
+            const {left1: pageL = 0, top1: pageT = 0} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
             const updatedBoundingRect = { l: Number((l - pageL).toFixed()), t: Number((t - pageT).toFixed()), r: Number((r  - pageL).toFixed()), b: Number((b - pageT).toFixed()) };
             const updatedMappedCord = getMappedPostion({mappedCord, boundingRect, updatedBoundingRect, stickerId, pageId});
             const drawPoints = getDrawPoints(updatedMappedCord, stickerId);
@@ -218,8 +230,8 @@ const calculateResizeOrRotateStyles = params => {
                 beforeData = transform.split('rotate(')[0],
                 afterData = transform.split('deg)')[1];
             stickerRef.current.style.transform = `${beforeData} rotate(${deg}deg) ${afterData}`; /* todo: to get top after rotation before render */
-            const {left: pageL, top: pageT} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
-            const {left: l, top: t, right: r, bottom: b} = stickerRef.current.getBoundingClientRect();
+            const {left1: pageL = 0, top1: pageT = 0} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
+            const {left: l, top: t, right: r, bottom: b} = getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale);
             const updatedBoundingRect = { l: Number((l - pageL).toFixed()), t: Number((t - pageT).toFixed()), r: Number((r  - pageL).toFixed()), b: Number((b - pageT).toFixed()) };
             const updatedMappedCord = getMappedPostion({mappedCord, boundingRect, updatedBoundingRect, stickerId, pageId});
             const drawPoints = getDrawPoints(updatedMappedCord, stickerId);
@@ -227,7 +239,7 @@ const calculateResizeOrRotateStyles = params => {
                 mappedCord: updatedMappedCord,
                 rotation: {rotation,  unit: 'deg'},
                 bottom,
-                top: stickerRef.current.getBoundingClientRect().top + window.scrollY,
+                top: getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale).top + window.scroll,
                 right,
                 left,
                 position: { left, top },
@@ -244,12 +256,14 @@ const calculateResizeOrRotateStyles = params => {
     
 };
 
-export const calculateMovement = ({mappedCord, boundingRect, e,styles={}, stopEvents$ = defaultStopEvents$, stickerRef, movemenetType, stickerId, pageId}) => {
+export const calculateMovement = ({mappedCord, boundingRect, e,styles={}, stopEvents$ = defaultStopEvents$, stickerRef, movemenetType, stickerId, pageId, scale}) => {
+    
     const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
     const { pageX = touchPageX, pageY = touchPageY } = e;
     const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
-    const startX = pageX - lastOffsetX;
+    const startX = pageX - lastOffsetX*scale;
     const startY = pageY - lastOffsetY;
+    console.log(lastOffsetX)
     const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
         takeUntil(
             stopEvents$.pipe(
@@ -276,6 +290,7 @@ export const calculateMovement = ({mappedCord, boundingRect, e,styles={}, stopEv
                 boundingRect,
                 stickerId,
                 pageId,
+                scale,
             };
             return temp;
         }),
@@ -287,81 +302,81 @@ export const calculateMovement = ({mappedCord, boundingRect, e,styles={}, stopEv
 }
 
 
-export const calculateDrag = ({e, styles = {}, movemenetType, stopEvents$ = defaultStopEvents$}) => {
-    const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
-    const { pageX = touchPageX, pageY = touchPageY } = e;
+// export const calculateDrag = ({e, styles = {}, movemenetType, stopEvents$ = defaultStopEvents$}) => {
+//     const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
+//     const { pageX = touchPageX, pageY = touchPageY } = e;
 
-    const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
+//     const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
 
-    const startX = pageX - lastOffsetX;
-    const startY = pageY - lastOffsetY;
-    const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
-        takeUntil(
-            stopEvents$.pipe(
-                tap(() => {
-                    // this.m = NaN;
-                    // this.stopEvents({ state });
-                })
-            )
-        ),
-        throttleTime(100),
-        map(e => {
-            const { touches: { 0: { pageX: touchMouseX, pageY: touchMouseY } = {} } = [] } = e;
-            const { clientX: mouseX = touchMouseX, clientY: mouseY = touchMouseY } = e;
-            const temp = {
-                mouseX,
-                mouseY,
-                movemenetType,
-                e,
-                startX,
-                startY,
-                boundingClientRect: {}
-            };
-            return temp;
-        }),
-        map(calculateResizeOrRotateStyles),
-        distinctUntilChanged()
-    );
+//     const startX = pageX - lastOffsetX;
+//     const startY = pageY - lastOffsetY;
+//     const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
+//         takeUntil(
+//             stopEvents$.pipe(
+//                 tap(() => {
+//                     // this.m = NaN;
+//                     // this.stopEvents({ state });
+//                 })
+//             )
+//         ),
+//         throttleTime(100),
+//         map(e => {
+//             const { touches: { 0: { pageX: touchMouseX, pageY: touchMouseY } = {} } = [] } = e;
+//             const { clientX: mouseX = touchMouseX, clientY: mouseY = touchMouseY } = e;
+//             const temp = {
+//                 mouseX,
+//                 mouseY,
+//                 movemenetType,
+//                 e,
+//                 startX,
+//                 startY,
+//                 boundingClientRect: {}
+//             };
+//             return temp;
+//         }),
+//         map(calculateResizeOrRotateStyles),
+//         distinctUntilChanged()
+//     );
 
-    return resizeOrRotate$;
-};
+//     return resizeOrRotate$;
+// };
 
-export const calculateRoatation = (e, styles = {}, stopEvents$ = defaultStopEvents$) => {
-    const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
-    const { pageX = touchPageX, pageY = touchPageY } = e;
+// export const calculateRoatation = (e, styles = {}, stopEvents$ = defaultStopEvents$) => {
+//     const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
+//     const { pageX = touchPageX, pageY = touchPageY } = e;
 
-    const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
+//     const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
 
-    const startX = pageX - lastOffsetX;
-    const startY = pageY - lastOffsetY;
-    const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
-        takeUntil(
-            stopEvents$.pipe(
-                tap(() => {
-                    // this.m = NaN;
-                    // this.stopEvents({ state });
-                })
-            )
-        ),
-        throttleTime(100),
-        map(e => {
-            const { touches: { 0: { pageX: touchMouseX, pageY: touchMouseY } = {} } = [] } = e;
-            const { clientX: mouseX = touchMouseX, clientY: mouseY = touchMouseY } = e;
-            const temp = {
-                mouseX,
-                mouseY,
-                e,
-                startX,
-                startY,
-            };
-            return temp;
-        }),
-        map(calculateResizeOrRotateStyles),
-        distinctUntilChanged()
-    );
+//     const startX = pageX - lastOffsetX;
+//     const startY = pageY - lastOffsetY;
+//     const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
+//         takeUntil(
+//             stopEvents$.pipe(
+//                 tap(() => {
+//                     // this.m = NaN;
+//                     // this.stopEvents({ state });
+//                 })
+//             )
+//         ),
+//         throttleTime(100),
+//         map(e => {
+//             const { touches: { 0: { pageX: touchMouseX, pageY: touchMouseY } = {} } = [] } = e;
+//             const { clientX: mouseX = touchMouseX, clientY: mouseY = touchMouseY } = e;
+//             const temp = {
+//                 mouseX,
+//                 mouseY,
+//                 e,
+//                 startX,
+//                 startY,
+//             };
+//             return temp;
+//         }),
+//         map(calculateResizeOrRotateStyles),
+//         distinctUntilChanged()
+//     );
 
-    return resizeOrRotate$;
-};
+//     return resizeOrRotate$;
+// };
 
 export const getStyle = ({
     color,
