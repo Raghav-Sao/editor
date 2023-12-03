@@ -36,13 +36,13 @@ export const EditorToolbar = (props) => {
         [...Array(30)].map((x, i) => (
             <Dropdown.Item
             key={i}
-            value={i + 10}
+            value={i + 8}
             selected={
-                activeSticker.styles && i + 10 === activeSticker.styles.fontSize
+                activeSticker.styles && i + 8 === activeSticker.styles.fontSize
             }
             name="fontSize"
             onClick={onTextFontSizeChange}
-            >{`${i + 10}px`}</Dropdown.Item>
+            >{`${i + 8}px`}</Dropdown.Item>
     ));
     
     const handleColorChanges = color => {
@@ -227,7 +227,7 @@ export const EditorToolbar = (props) => {
                         <Dropdown
                             options={getFontSizeOptions()}
                             selection
-                            text={`${activeStickerStyles.fontSize || ''}`}
+                            text={`${activeStickerStyles.fontSize || ''}px`}
                             style={{ margin: '0 .25em 0 0' }}
                             onClick={preventPropagation}
                         />

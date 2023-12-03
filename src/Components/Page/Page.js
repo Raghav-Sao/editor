@@ -38,7 +38,7 @@ export const Page = props => {
     return (
         <div className="page--wrapper">
             <PageInfo pageInfo={`Page ${pageNo}`} />
-            <div className={`page content--row ${pageId}`} ref={drop}>
+            <div className={`page content--row ${pageId}`} ref={drop} style={ {transform: `scale(${1})`, width: '600px', transformOrigin: '0 0'}}>
                 <IF condition={showBackgroundImage}>
                     <img alt="img" src={backgroundImage} draggable="false" width="100%" ref={pageRef} />
                 </IF>

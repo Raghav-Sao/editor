@@ -35,6 +35,7 @@
   "scripts": {
     "start-js": "npm install -g serve && serve -s build",
     "start": "npm install -g serve && serve -s build",
+    "dev": "react-scripts start",
     "build-js": "react-scripts build",
     "build": "react-scripts build ",
     "postbuild": "rm -rf app/",
