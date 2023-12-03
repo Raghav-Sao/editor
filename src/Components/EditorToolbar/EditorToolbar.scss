@@ -24,7 +24,6 @@
       &.active {
         visibility: visible;
       }
-      
     }
     .download__button {
       min-width: 110px;
@@ -66,3 +65,9 @@
       display: none !important;
     }
   }
+  @media screen and (max-width: 1199px) {
+    .touchHidden {
+      display: none !important;
+    }
+  }
+  

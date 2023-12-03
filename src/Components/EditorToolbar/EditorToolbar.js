@@ -96,7 +96,7 @@ export const EditorToolbar = (props) => {
                 console.log('click')
             }}
         >
-            <Button className="download__button" onClick={hadleDownload}>{isDownloading ? <Loader size='mini' active/> : 'Download'}</Button>
+            <Button className="download__button touchHidden" onClick={hadleDownload}>{isDownloading ? <Loader size='mini' active/> : 'Download'}</Button>
             <div className={`toolbar ${activeType ? 'active': ''}`}>
             <>
                 <Popup
