@@ -1,5 +1,8 @@
 .pagesContainer {
+    display: flex;
+    justify-content: center;
     flex-grow: 1;
     height: 100%;
-    margin: 50px 50px 0;
+    margin: 20px 10px 20px;
+
 }
