@@ -80,7 +80,7 @@ export const EditorToolbar = (props) => {
         setTimeout(handleCaptureClick, 500);
     }
     const handleCaptureClick = async () => {
-        const canvas = await html2canvas(document.querySelector(`.page.content--row.${activePageId}`));
+        const canvas = await html2canvas(document.querySelector(`.page--container`));
         const dataURL = canvas.toDataURL('image/png');
         downloadjs(dataURL, 'download.png', 'image/png');
         setIsDownloading(false);
@@ -96,7 +96,7 @@ export const EditorToolbar = (props) => {
                 console.log('click')
             }}
         >
-            <Button className="download__button touchHidden" onClick={hadleDownload}>{isDownloading ? <Loader size='mini' active/> : 'Download'}</Button>
+            <Button className="download__button" onClick={hadleDownload}>{isDownloading ? <Loader size='mini' active/> : 'Download'}</Button>
             <div className={`toolbar ${activeType ? 'active': ''}`}>
             <>
                 <Popup
