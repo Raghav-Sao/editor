@@ -80,7 +80,7 @@ export const EditorToolbar = (props) => {
         setTimeout(handleCaptureClick, 500);
     }
     const handleCaptureClick = async () => {
-        const canvas = await html2canvas(document.querySelector(`.page--container`));
+        const canvas = await html2canvas(document.querySelector(`.page--container.${activePageId}`));
         const dataURL = canvas.toDataURL('image/png');
         downloadjs(dataURL, 'download.png', 'image/png');
         setIsDownloading(false);

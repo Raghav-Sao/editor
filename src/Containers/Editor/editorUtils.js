@@ -4,7 +4,7 @@ import { fromEvent, merge } from 'rxjs';
 import { SVG_STICKER } from 'constant';
 
 const defaultStopEvents$ = merge(fromEvent(document, 'touchend'), fromEvent(document, 'mouseup'));
-const getScaledBoundingRect = (boundingRect, scale, pass, pageId = 'page_123') => {
+const getScaledBoundingRect = (boundingRect, scale, pageId, pass,) => {
     if(pass) {
         return boundingRect;
     }
@@ -141,7 +141,7 @@ const calculateResizeOrRotateStyles = params => {
         height,
         left: activeBoundingLeft,
         top: activeBoundingTop,
-    } = getScaledBoundingRect(sticker.getBoundingClientRect(), scale, true);
+    } = sticker.getBoundingClientRect();
     const {left: pageLeft, top: pageTop} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
     const { offsetWidth } = sticker; /* todo:  check and make var name batter */
     e.stopPropagation();
@@ -155,7 +155,7 @@ const calculateResizeOrRotateStyles = params => {
             const beforeData = transform.split('translate(')[0];
             const afterData = transform.split('px')[0];
             stickerRef.current.style.transform = `${beforeData} translate(${translateX}px, ${translateY}px) ${afterData}`; /* todo: to get top after rotation before render */
-            const {left: l, top: t, right: r, bottom: b} = getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale);
+            const {left: l, top: t, right: r, bottom: b} = getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale, pageId);
             const {left1: pageL = 0, top1: pageT = 0} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
             const updatedBoundingRect = { l: Number((l - pageL).toFixed()), t: Number((t - pageT).toFixed()), r: Number((r  - pageL).toFixed()), b: Number((b - pageT).toFixed()) };
             const updatedMappedCord = getMappedPostion({mappedCord, boundingRect, updatedBoundingRect, stickerId, pageId});
@@ -174,8 +174,8 @@ const calculateResizeOrRotateStyles = params => {
         case 'rightResize': {
             const { left: handlerLeft, top: handlerTop } =
                 movemenetType === 'rightResize'
-                    ? getScaledBoundingRect(document.querySelector('.sticker.active #handle-right').getBoundingClientRect(), scale, true)
-                    : getScaledBoundingRect(document.querySelector('.sticker.active #handle-left').getBoundingClientRect(), scale, true);
+                    ? document.querySelector('.sticker.active #handle-right').getBoundingClientRect()
+                    : document.querySelector('.sticker.active #handle-left').getBoundingClientRect();
             const rad = rotation || 0;
             debugger
             const y = (mouseY - handlerTop) * (mouseY - handlerTop);
@@ -212,7 +212,7 @@ const calculateResizeOrRotateStyles = params => {
             const updateLeft = stickerRef.current.offsetLeft - leftDiff;
             const updatedTop = stickerRef.current.offsetTop + topDiff;
             const updatedWidth = stickerRef.current.offsetWidth;
-            const {left: l, top: t, right: r, bottom: b} = getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale);
+            const {left: l, top: t, right: r, bottom: b} = getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale, pageId);
             const {left1: pageL = 0, top1: pageT = 0} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
             const updatedBoundingRect = { l: Number((l - pageL).toFixed()), t: Number((t - pageT).toFixed()), r: Number((r  - pageL).toFixed()), b: Number((b - pageT).toFixed()) };
             const updatedMappedCord = getMappedPostion({mappedCord, boundingRect, updatedBoundingRect, stickerId, pageId});
@@ -231,7 +231,7 @@ const calculateResizeOrRotateStyles = params => {
                 afterData = transform.split('deg)')[1];
             stickerRef.current.style.transform = `${beforeData} rotate(${deg}deg) ${afterData}`; /* todo: to get top after rotation before render */
             const {left1: pageL = 0, top1: pageT = 0} = document.querySelector(`.page.${pageId}`).getBoundingClientRect();
-            const {left: l, top: t, right: r, bottom: b} = getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale);
+            const {left: l, top: t, right: r, bottom: b} = getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale, pageId);
             const updatedBoundingRect = { l: Number((l - pageL).toFixed()), t: Number((t - pageT).toFixed()), r: Number((r  - pageL).toFixed()), b: Number((b - pageT).toFixed()) };
             const updatedMappedCord = getMappedPostion({mappedCord, boundingRect, updatedBoundingRect, stickerId, pageId});
             const drawPoints = getDrawPoints(updatedMappedCord, stickerId);
@@ -239,7 +239,7 @@ const calculateResizeOrRotateStyles = params => {
                 mappedCord: updatedMappedCord,
                 rotation: {rotation,  unit: 'deg'},
                 bottom,
-                top: getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale).top + window.scroll,
+                top: getScaledBoundingRect(stickerRef.current.getBoundingClientRect(), scale, pageId).top + window.scroll,
                 right,
                 left,
                 position: { left, top },

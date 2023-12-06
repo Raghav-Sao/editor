@@ -44,7 +44,7 @@ export const Page = props => {
             <Placeholder className={isBackgroundLoaded ? 'comp--hide' : 'comp--visible'}     style={{ height: "300px", width: "100%", visibility: isBackgroundLoaded ? 'hidden' : 'visible' }}>
                 <Placeholder.Image />
             </Placeholder>
-            <div class="page--container" style={ {transform: `scale(${scale})`, width: '681px', height: '400px', transformOrigin: '0 0', marginTop: '20px'}}>
+            <div class={`page--container ${pageId}`} style={ {transform: `scale(${scale})`, width: '681px', height: '400px', transformOrigin: '0 0', marginTop: '20px'}}>
             <div className={`page ${pageId} ${isBackgroundLoaded ? 'comp--visble' : 'comp--hide'}`} ref={drop} style={ {transform: `scale(${1})`, width: '681px', height: '400px', transformOrigin: '0 0'}}>
                 <IF condition={showBackgroundImage}>
                     <img alt="img" src={backgroundImage} draggable="false" width="100%" ref={pageRef} onLoad={() => setIsBackgroundLoaded(true)}/>
