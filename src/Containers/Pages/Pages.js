@@ -1,27 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { calculateMovement } from 'Containers/Editor/editorUtils';
 
 import { Page } from 'Components';
 import './Pages.scss';
 export const Pages = props => {
-    let activeMovementType = null; /* todo: handle it batter */
+    const ref = useRef({
+        activeMovementType: null
+    });
     const [activeType, setActiveType] = useState(null);
     const { scale, pages = {}, pages: {activeSticker: {id: activeStickerId} = {}} = {}} = props;
 
     const handleDrag = (e, type, styles, stickerRef, stickerId, pageId) => {
         if(type=== 'END_DRAG') {
-            activeMovementType = null;
+            if(ref?.current?.activeMovementType === 'DRAG') {
+                props.updateActiveStickerId({stickerId, pageId});
+            }
+            ref.current.activeMovementType = null;
             setActiveType(null);
-            props.updateActiveStickerId({stickerId, pageId});
             return
         }
-        if(activeMovementType && type !== activeMovementType) {
-            console.log("returning movement type:", {type, activeMovementType})
+        if(ref?.current?.activeMovementType && type !== ref?.current?.activeMovementType) {
             return;
         }
-        if(activeMovementType === null) {
-            activeMovementType = type;
+        if(ref?.current?.activeMovementType === null ) {
+            ref.current.activeMovementType = type;
             setActiveType(type);
         }
         const {[pageId]:{stickers: {[stickerId]: {boundingRect = {} } = {}}, mappedCord = {}} = {}} = pages;
@@ -33,7 +36,6 @@ export const Pages = props => {
 
     return (
         <div className="pages">
-           
             {Object.keys(pages).map((key, index) => (
                 <Page
                     key={key}

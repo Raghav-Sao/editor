@@ -37,10 +37,28 @@ export const Sticker = props => {
         'leftResize': `W: ${styles?.width}`,
         'rightResize': `W: ${styles?.width}`
     }
+    const getCursoreStyle = ({rotation: {rotation = 0} = {}}) => {
+        if(rotation < 0) {
+            rotation = rotation +180
+        }
+        if(rotation > 0 && rotation <15) {
+            return 'ew-resize'
+        }
+        if(rotation >= 15 && rotation <=75) {
+            return 'nwse-resize';
+        }
+        if(rotation > 75 && rotation < 105) {
+            return 'ns-resize';
+        }
+        if(rotation >= 105 && rotation <=165) {
+            return 'nesw-resize'
+        }
+        return 'ew-resize'
+    }
     return (
         
         <div
-            class={`sticker ${type} ${activeMovementType} ${pageId === activePageId && activeStickerId === stickerId ? 'active': ''}`}
+            class={`sticker ${type} ${activeMovementType ? 'movementFlag' : ''}  ${pageId === activePageId && activeStickerId === stickerId ? 'active': ''}`}
             style={getStyle(styles)}
             onMouseDown={e => handleDrag(e, 'DRAG', styles, stickerRef, stickerId, pageId)} /* Todo: use id from key and make better for isRotating true event */
             onTouchStart={e => handleDrag(e, 'DRAG', styles, stickerRef, stickerId, pageId)}
@@ -59,6 +77,7 @@ export const Sticker = props => {
                     className="h-l"
                     onMouseDown={e => handleDrag(e, 'leftResize', styles, stickerRef, stickerId, pageId)}
                     onTouchStart={e => handleDrag(e, 'leftResize', styles, stickerRef, stickerId, pageId)}
+                    style={{cursor: getCursoreStyle(styles)}}
                 >
                     <span id="handle-left" />
             </div>
@@ -66,6 +85,7 @@ export const Sticker = props => {
                 className="h-r"
                 onMouseDown={e => handleDrag(e, 'rightResize', styles, stickerRef, stickerId, pageId)}
                 onTouchStart={e => handleDrag(e, 'rightResize', styles, stickerRef, stickerId, pageId)}
+                style={{cursor: getCursoreStyle(styles)}}
             >
                 <span id="handle-right" />
             </div>
@@ -73,6 +93,7 @@ export const Sticker = props => {
                 className="handle rotate"
                 onMouseDown={e => handleDrag(e, 'rotation', styles, stickerRef, stickerId, pageId)}
                 onTouchStart={e => handleDrag(e, 'rotation', styles, stickerRef, stickerId, pageId)}
+                
             /> {/* todo: move icon for rotated */}
         </div>
     );

@@ -263,7 +263,6 @@ export const calculateMovement = ({mappedCord, boundingRect, e,styles={}, stopEv
     const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
     const startX = pageX - lastOffsetX*scale;
     const startY = pageY - lastOffsetY;
-    console.log(lastOffsetX)
     const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
         takeUntil(
             stopEvents$.pipe(
@@ -300,83 +299,6 @@ export const calculateMovement = ({mappedCord, boundingRect, e,styles={}, stopEv
     return resizeOrRotate$;
 
 }
-
-
-// export const calculateDrag = ({e, styles = {}, movemenetType, stopEvents$ = defaultStopEvents$}) => {
-//     const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
-//     const { pageX = touchPageX, pageY = touchPageY } = e;
-
-//     const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
-
-//     const startX = pageX - lastOffsetX;
-//     const startY = pageY - lastOffsetY;
-//     const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
-//         takeUntil(
-//             stopEvents$.pipe(
-//                 tap(() => {
-//                     // this.m = NaN;
-//                     // this.stopEvents({ state });
-//                 })
-//             )
-//         ),
-//         throttleTime(100),
-//         map(e => {
-//             const { touches: { 0: { pageX: touchMouseX, pageY: touchMouseY } = {} } = [] } = e;
-//             const { clientX: mouseX = touchMouseX, clientY: mouseY = touchMouseY } = e;
-//             const temp = {
-//                 mouseX,
-//                 mouseY,
-//                 movemenetType,
-//                 e,
-//                 startX,
-//                 startY,
-//                 boundingClientRect: {}
-//             };
-//             return temp;
-//         }),
-//         map(calculateResizeOrRotateStyles),
-//         distinctUntilChanged()
-//     );
-
-//     return resizeOrRotate$;
-// };
-
-// export const calculateRoatation = (e, styles = {}, stopEvents$ = defaultStopEvents$) => {
-//     const { touches: { 0: { pageX: touchPageX, pageY: touchPageY } = {} } = [] } = e;
-//     const { pageX = touchPageX, pageY = touchPageY } = e;
-
-//     const { translate: { translateX: lastOffsetX = 0, translateY: lastOffsetY = 0 } = {} } = styles;
-
-//     const startX = pageX - lastOffsetX;
-//     const startY = pageY - lastOffsetY;
-//     const resizeOrRotate$ = merge(fromEvent(document, 'touchmove'), fromEvent(document, 'mousemove')).pipe(
-//         takeUntil(
-//             stopEvents$.pipe(
-//                 tap(() => {
-//                     // this.m = NaN;
-//                     // this.stopEvents({ state });
-//                 })
-//             )
-//         ),
-//         throttleTime(100),
-//         map(e => {
-//             const { touches: { 0: { pageX: touchMouseX, pageY: touchMouseY } = {} } = [] } = e;
-//             const { clientX: mouseX = touchMouseX, clientY: mouseY = touchMouseY } = e;
-//             const temp = {
-//                 mouseX,
-//                 mouseY,
-//                 e,
-//                 startX,
-//                 startY,
-//             };
-//             return temp;
-//         }),
-//         map(calculateResizeOrRotateStyles),
-//         distinctUntilChanged()
-//     );
-
-//     return resizeOrRotate$;
-// };
 
 export const getStyle = ({
     color,
