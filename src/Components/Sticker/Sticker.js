@@ -58,10 +58,11 @@ export const Sticker = props => {
     return (
         
         <div
-            class={`sticker ${type} ${activeMovementType ? 'movementFlag' : ''}  ${pageId === activePageId && activeStickerId === stickerId ? 'active': ''}`}
+            class={`sticker ${type} ${activeMovementType} ${activeMovementType ? 'movementFlag' : ''}  ${pageId === activePageId && activeStickerId === stickerId ? 'active': ''}`}
             style={getStyle(styles)}
             onMouseDown={e => handleDrag(e, 'DRAG', styles, stickerRef, stickerId, pageId)} /* Todo: use id from key and make better for isRotating true event */
             onTouchStart={e => handleDrag(e, 'DRAG', styles, stickerRef, stickerId, pageId)}
+            onTouchEnd={e => handleDrag(e, 'END_DRAG', styles, stickerRef, stickerId, pageId)}
             onMouseUp={e => handleDrag(e, 'END_DRAG', styles, stickerRef, stickerId, pageId)} /* Todo: use id from key and make better for isRotating true event */
             ref={stickerRef}
         >

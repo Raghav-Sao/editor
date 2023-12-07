@@ -150,7 +150,6 @@ const calculateResizeOrRotateStyles = params => {
             debugger
             const translateX = (mouseX - startX)*(1/scale);
             const translateY = (mouseY - startY)*(1);
-            console.log({translateY, translateX, scale})
             const transform = stickerRef.current.style.transform;
             const beforeData = transform.split('translate(')[0];
             const afterData = transform.split('px')[0];
