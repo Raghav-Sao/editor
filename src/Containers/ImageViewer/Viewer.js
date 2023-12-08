@@ -29,10 +29,10 @@ export const Viewer = (props) => {
    
     return (
         <div className='Viewer'>
-        <Button basic color='purple' className='prevButton'>
+        {/* <Button basic color='purple' className='prevButton'>
             Previous
-        </Button>
-        <div onClick={handleImageClick} className="ImageViewer" ref={imagesRef} style={{position: 'relative', padding: "0px", perspective: '3000px'}}>
+        </Button> */}
+        <div onClick={handleImageClick} className="ImageViewer" ref={imagesRef} style={{position: 'relative', padding: "0px", perspective: '3000px', minHeight: "300px"}}>
             {Object.keys(images).map((id, index) => {
                 const item = images[id];
                 const trans = index*3;
@@ -41,9 +41,9 @@ export const Viewer = (props) => {
             })}
              <span className='ripple'></span>
         </div>
-        <Button basic color='purple' className='nextButton'>
+        {/* <Button basic color='purple' className='nextButton'>
         Next
-    </Button>
+    </Button> */}
     </div>
     )
 }
