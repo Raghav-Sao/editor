@@ -39,7 +39,7 @@ export const Viewer = (props) => {
                 // return <img src={item.src} style={{...item.style, transform: 'rotateY(0deg)', position: 'absolute', border: '1px solid', borderRight: '2px black white', width:"500px", transformOrigin: '0 0', transition: 'transform 0.5s ease-out'}} />
                 return <img data-id={id} class={`img-${id}`} src={item.src} style={{...item.style, transform: 'rotateX(10deg) rotateY(0deg)  rotateZ(0deg)', position: 'absolute', border: '1px solid', borderRight: '2px black white', width:"100%", transformOrigin: '0 0', transition: 'transform 1s ease-out'}} />
             })}
-             <span className='ripple'></span>
+             {/* <span className='ripple'></span> */}
         </div>
         {/* <Button basic color='purple' className='nextButton'>
         Next
