@@ -28,7 +28,7 @@ class Root extends React.Component {
                 {/* <Route path="/gallery" component={Gallery} /> */}
                 <Route path="/editor" component={EditorSpace} />
                 <Route path="/album-viewer" component={ImageViewer} />
-                <Route default component={ImageViewer} />
+                {/* <Route default component={ImageViewer} /> */}
                 {/* <Redirect to="/editor"  /> */}
                 {/* {!isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" />} */}
                 {/*! isLoggedIn() ? (<Redirect to="/login" />) : <Redirect to="/gallery" /> */}
