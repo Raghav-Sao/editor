@@ -1,0 +1,41 @@
+.Viewer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .ImageViewer {
+        display: flex;
+        margin-left: 50%;
+        align-items: center;
+        width: 40%;
+        height: 600px;
+    }
+    .prevButton, .nextButton {
+        position: absolute;
+        top: 100%
+    }
+    img {
+       cursor: pointer;
+    }
+}
+@keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+//     .img-5::after {
+//     content: '';
+//     display: block;
+//     position: relative; /* The absolute position we mentioned earlier */
+//     border-radius: 50%;
+//     width: 33px;
+//     height: 100%;
+//     right: -4px;
+//     transform: scale(1);
+//     // animation: ripple 600ms linear;
+//     background-color: rgba(0, 0, 0, 0.7);
+// }
+  
