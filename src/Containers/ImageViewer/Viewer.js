@@ -7,6 +7,10 @@ export const Viewer = (props) => {
     const imagesRef = useRef();
     const images = props.images || [];
     const handleImageClick = (current) => {
+        if(!current.target.getAttribute('data-id')) {
+            return;
+        };
+        
         if(processing) {
             return;
         }
