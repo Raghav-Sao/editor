@@ -1,7 +1,7 @@
 .AlbumPage {
     position: absolute;
     transform-origin: 0 50%;
-    border: 1px solid black;
+    border: 1px solid rgb(226, 215, 215);
     transition: transform 1s ease-out;
     transform: rotateX(20deg) rotateY(0deg) translateY(0%) rotateZ(0deg);
     left: 0;
