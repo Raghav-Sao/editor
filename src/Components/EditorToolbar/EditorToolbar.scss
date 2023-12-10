@@ -7,7 +7,9 @@
     padding: 2px;
     width: 100%;
     padding: 10px 10px;
-    overflow-x: scroll;
+    @media screen and (max-width: 454px){
+      overflow-x: auto;
+    }
     padding-right: 150px;
   /* Hide scrollbar for IE, Edge and Firefox */
     -ms-overflow-style: none;  /* IE and Edge */

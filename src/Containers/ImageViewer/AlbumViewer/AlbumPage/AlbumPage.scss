@@ -1,0 +1,11 @@
+.AlbumPage {
+    position: absolute;
+    transform-origin: 0 50%;
+    border: 1px solid black;
+    transition: transform 1s ease-out;
+    transform: rotateX(20deg) rotateY(0deg) translateY(0%) rotateZ(0deg);
+    left: 0;
+    top: 50%;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}

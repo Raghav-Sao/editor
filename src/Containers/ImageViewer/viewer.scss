@@ -19,23 +19,3 @@
        cursor: pointer;
     }
 }
-@keyframes ripple {
-    to {
-      transform: scale(4);
-      opacity: 0;
-    }
-  }
-
-//     .img-5::after {
-//     content: '';
-//     display: block;
-//     position: relative; /* The absolute position we mentioned earlier */
-//     border-radius: 50%;
-//     width: 33px;
-//     height: 100%;
-//     right: -4px;
-//     transform: scale(1);
-//     // animation: ripple 600ms linear;
-//     background-color: rgba(0, 0, 0, 0.7);
-// }
-  
